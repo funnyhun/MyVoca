@@ -1,8 +1,9 @@
 const LightTheme = {
+  background: "#C8DEF5",
+  sub: "#666666",
   themeColor: "#fff",
   inverseColor: "#000",
   color: "#333333",
-  subColor: "#666666",
   accentColor: "#f3f2f2",
   borderColor: "#DEDEDE",
 };

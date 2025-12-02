@@ -2,14 +2,14 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    font-size : 10px;
+    font-size : 16px;
 	font-family: 'Noto Sans', sans-serif;
 	color: ${({ theme }) => theme.color};
   }
 
-  @media (min-width: 600px) { :root { font-size: 12px; } }
-  @media (min-width: 768px) { :root { font-size: 14px; } }
-  @media (min-width: 1024px) { :root { font-size: 16px; } }
+  @media (min-width: 600px) { :root { font-size: 18px } }
+  @media (min-width: 768px) { :root { font-size: 20px } }
+  @media (min-width: 1024px) { :root { font-size: 22px } }
 
   html, body, #root {
     height: 100%;
@@ -60,13 +60,13 @@ export const GlobalStyle = createGlobalStyle`
 
   input, option, ul, ol, a{
     font-family: inherit;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: ${({ theme }) => theme.color};
   }
 
   ul, ol {
 	list-style-position: inside;
-	font-size: 0.8rem;
+	font-size: 1rem;
   }
 
   a {
