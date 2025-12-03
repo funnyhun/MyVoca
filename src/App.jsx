@@ -8,6 +8,7 @@ import { GlobalStyle } from "./styles/GlobalStyle";
 import { Header, Navigation } from "./layout";
 
 const Wrapper = styled.div`
+  min-width: 360px;
   padding-top: 3.8rem;
   padding-bottom: 4rem;
   background-color: ${({ theme }) => theme.background};
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 
-  /* margin: 0 auto; */
+  margin: 0 auto;
 `;
 
 export const App = () => {
