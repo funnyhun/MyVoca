@@ -6,6 +6,9 @@ const LightTheme = {
   sub: "#666666",
   label: "#aaaaaa",
   brand: "#137FEC",
+  week: "#C8DEF5",
+  success: "#34C759",
+  danger: "#FF3B30",
 };
 
 const DarkTheme = {
