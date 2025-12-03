@@ -1,11 +1,11 @@
 const LightTheme = {
-  background: "#C8DEF5",
+  main: "#fff",
+  inverse: "#000",
+  background: "#F6F7F8",
+  font: "#1f1f1f",
   sub: "#666666",
-  themeColor: "#fff",
-  inverseColor: "#000",
-  color: "#333333",
-  accentColor: "#f3f2f2",
-  borderColor: "#DEDEDE",
+  label: "#aaaaaa",
+  brand: "#137FEC",
 };
 
 const DarkTheme = {

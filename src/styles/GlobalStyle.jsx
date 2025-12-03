@@ -4,17 +4,17 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     font-size : 16px;
 	font-family: 'Noto Sans', sans-serif;
-	color: ${({ theme }) => theme.color};
+	color: ${({ theme }) => theme.font};
   }
 
-  @media (min-width: 600px) { :root { font-size: 18px } }
-  @media (min-width: 768px) { :root { font-size: 20px } }
-  @media (min-width: 1024px) { :root { font-size: 22px } }
+  @media (min-width: 768px) { :root { font-size: 18px } }
+  @media (min-width: 1024px) { :root { font-size: 20px } }
+  @media (min-width: 1280px) { :root { font-size: 22px } }
 
   html, body, #root {
     height: 100%;
     width: 100%;
-	scrollbar-gutter: stable;
+	/* scrollbar-gutter: stable; */
   }
 
   *, *::before, *::after {
@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${({ theme }) => theme.themeColor};
+    background-color: ${({ theme }) => theme.background};
     font-size: 1rem;
 	font-weight: 400;
   }
@@ -55,13 +55,13 @@ export const GlobalStyle = createGlobalStyle`
   textarea, button, select {
     font-family: inherit;
     font-size: 1rem; 
-    color: ${({ theme }) => theme.color};
+    color: ${({ theme }) => theme.font};
   }
 
   input, option, ul, ol, a{
     font-family: inherit;
     font-size: 1rem;
-    color: ${({ theme }) => theme.color};
+    color: ${({ theme }) => theme.font};
   }
 
   ul, ol {
@@ -74,7 +74,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   svg {
-	color: ${(theme) => theme.color};
+	width: 1.5rem;
+	height: 1.5rem;
+	color: ${({ theme }) => theme.font};
 
 	& * {
     	fill: currentColor;
