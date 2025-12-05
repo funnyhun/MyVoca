@@ -76,7 +76,7 @@ export const GlobalStyle = createGlobalStyle`
   svg {
 	width: 1.5rem;
 	height: 1.5rem;
-	color: ${({ theme }) => theme.font};
+	color: ${({ theme }) => theme.sub};
 
 	& * {
     	fill: currentColor;

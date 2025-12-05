@@ -9,6 +9,8 @@ import { Header, Navigation } from "./layout";
 
 const Wrapper = styled.div`
   min-width: 360px;
+  height: 100%;
+
   padding-top: 3.8rem;
   padding-bottom: 4rem;
   background-color: ${({ theme }) => theme.background};
