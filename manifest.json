@@ -1,7 +1,7 @@
 {
   "name": "MyVoca",
   "short_name": "MyVoca",
-  "start_url": "/index.html",
+  "start_url": "/MyVoca",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3f51b5",
