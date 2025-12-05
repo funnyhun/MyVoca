@@ -6,33 +6,9 @@ import { BorderBox } from "../../components/StyledBox";
 import { calculateCalendarData } from "./util";
 import { LeftIcon, RightIcon } from "../../assets/iconList";
 
-const Week = styled.div`
-  display: flex;
-  gap: 0.1rem;
-`;
-
-const DayCircle = styled.div`
-  width: 2.5rem;
-  height: 2.5rem;
-
-  visibility: ${({ $learned }) => ($learned !== null ? "visible" : "hidden")};
-
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: ${({ $sunday, theme }) => $sunday && theme.danger};
-
-  background-color: ${({ $learned, theme }) => $learned && theme.week};
-
-  padding: 0.5rem;
-  border-radius: 2.5rem;
-`;
-
 const Header = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 `;
 
 const Title = styled.h2`
@@ -49,13 +25,43 @@ const Label = styled.p`
 
 const Pannel = styled.div`
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
 `;
 
 const TargetDate = styled.p`
   font-weight: 600;
   padding-bottom: 0.1rem;
+`;
+
+const Week = styled.div`
+  display: flex;
+  gap: 0.1rem;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+`;
+
+const DayContainer = styled.div``;
+
+const DayCircle = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+
+  visibility: ${({ $learned }) => ($learned !== null ? "visible" : "hidden")};
+
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: ${({ $sunday, theme }) => $sunday && theme.danger};
+
+  background-color: ${({ $learned, theme }) => $learned && theme.week};
+
+  padding: 0.5rem;
+  border-radius: 2.5rem;
 `;
 
 export const Calendar = (mode, learnRecord) => {
@@ -93,16 +99,22 @@ export const Calendar = (mode, learnRecord) => {
           <RightIcon onClick={nextMonth} />
         </Pannel>
       </Header>
+      <Week>
+        {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
+          <DayContainer>{day}</DayContainer>
+        ))}
+      </Week>
       {data.map((week, i) => {
-        const lastDay = i * 7;
         return (
           <Week key={i}>
             {week.map((learned, j) => {
               const today = i * 7 + j - startDay;
               return (
-                <DayCircle key={j} $learned={learned} $sunday={j === 0}>
-                  {today}
-                </DayCircle>
+                <DayContainer>
+                  <DayCircle key={j} $learned={learned} $sunday={j === 0}>
+                    {today}
+                  </DayCircle>
+                </DayContainer>
               );
             })}
           </Week>

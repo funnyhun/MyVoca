@@ -33,7 +33,7 @@ const Item = styled.li`
   font-weight: 300;
 
   & > svg {
-    color: ${({ $located, theme }) => ($located ? theme.brand : theme.color)};
+    color: ${({ $located, theme }) => ($located ? theme.brand : theme.sub)};
   }
 `;
 
