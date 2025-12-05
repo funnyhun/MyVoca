@@ -34,40 +34,41 @@ const TargetDate = styled.p`
 
 const Week = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 0.1rem;
-
-  & > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-  }
 `;
 
-const DayContainer = styled.div``;
+const DayContainer = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+
+  text-align: center;
+  color: ${({ $sunday, theme }) => ($sunday ? theme.danger : theme.sub)};
+
+  padding: 0.5rem;
+`;
 
 const DayCircle = styled.div`
   width: 2.5rem;
   height: 2.5rem;
-  flex-shrink: 0;
 
   visibility: ${({ $learned }) => ($learned !== null ? "visible" : "hidden")};
 
   text-align: center;
   font-size: 0.9rem;
   font-weight: 600;
-  color: ${({ $sunday, theme }) => $sunday && theme.danger};
+  color: ${({ $today, $sunday, theme }) => ($today ? theme.main : $sunday && theme.danger)};
 
-  background-color: ${({ $learned, theme }) => $learned && theme.week};
+  background-color: ${({ $today, $learned, theme }) => ($today ? theme.brand : $learned && theme.week)};
 
   padding: 0.5rem;
   border-radius: 2.5rem;
 `;
 
 export const Calendar = (mode, learnRecord) => {
-  const today = new Date();
-  const [year, setYear] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth());
+  const DateObj = new Date();
+  const [year, setYear] = useState(DateObj.getFullYear());
+  const [month, setMonth] = useState(DateObj.getMonth());
   const data = calculateCalendarData(year, month, [1, 2, 3]);
 
   const prevMonth = () => {
@@ -85,6 +86,7 @@ export const Calendar = (mode, learnRecord) => {
   };
 
   const startDay = new Date(year, month, 1).getDay() - 1;
+  const today = DateObj.getDay();
 
   return (
     <BorderBox>
@@ -101,20 +103,20 @@ export const Calendar = (mode, learnRecord) => {
       </Header>
       <Week>
         {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
-          <DayContainer>{day}</DayContainer>
+          <DayContainer key={day} $sunday={day === "일"}>
+            {day}
+          </DayContainer>
         ))}
       </Week>
       {data.map((week, i) => {
         return (
           <Week key={i}>
             {week.map((learned, j) => {
-              const today = i * 7 + j - startDay;
+              const day = i * 7 + j - startDay;
               return (
-                <DayContainer>
-                  <DayCircle key={j} $learned={learned} $sunday={j === 0}>
-                    {today}
-                  </DayCircle>
-                </DayContainer>
+                <DayCircle key={`${i}_${j}`} $learned={learned} $sunday={j === 0} $today={day === today}>
+                  {day}
+                </DayCircle>
               );
             })}
           </Week>
