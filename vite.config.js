@@ -7,6 +7,7 @@ import basicSsl from "@vitejs/plugin-basic-ssl";
 export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), vitePluginSvgr(), basicSsl()],
+    base: "/MyVoca/",
     server: {
       https: true,
     },
