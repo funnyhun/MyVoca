@@ -26,6 +26,6 @@ const routes = [
 ];
 
 export const AppRouter = () => {
-  const router = createBrowserRouter(routes);
+  const router = createBrowserRouter(routes, { basename: "/MyVoca" });
   return <RouterProvider router={router} />;
 };
