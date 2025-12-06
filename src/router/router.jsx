@@ -25,8 +25,10 @@ const routes = [
   },
 ];
 
-// const basename = "/MyVoca";
-const basename = "/";
+const currentMode = import.meta.env.MODE;
+const isProd = currentMode === "production";
+
+const basename = isProd ? "/MyVoca" : "/";
 
 export const AppRouter = () => {
   const router = createBrowserRouter(routes, { basename });
