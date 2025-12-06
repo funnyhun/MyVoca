@@ -12,7 +12,7 @@ const Wrapper = styled.ul`
   z-index: 999;
 
   width: 100%;
-  height: calc(3rem + env(safe-area-inset-bottom));
+  height: calc(3.5rem + env(safe-area-inset-bottom));
   background-color: ${({ theme }) => theme.main};
 
   display: flex;
