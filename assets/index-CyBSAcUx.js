@@ -194,7 +194,7 @@ Please change the parent <Route path="${Q}"> to <Route path="${Q==="/"?"*":`${Q}
   z-index: 999;
 
   width: 100%;
-  height: calc(3rem + env(safe-area-inset-bottom));
+  height: calc(3.5rem + env(safe-area-inset-bottom));
   background-color: ${({theme:n})=>n.main};
 
   display: flex;
