@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { pages } from "../router/router";
@@ -13,7 +12,7 @@ const Wrapper = styled.ul`
   z-index: 999;
 
   width: 100%;
-  height: 3rem;
+  height: calc(3rem + env(safe-area-inset-bottom));
   background-color: ${({ theme }) => theme.main};
 
   display: flex;
