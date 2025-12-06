@@ -5,11 +5,11 @@ import basicSsl from "@vitejs/plugin-basic-ssl";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  return {
+  const config = {
     plugins: [react(), vitePluginSvgr(), basicSsl()],
-    base: "./",
-    server: {
-      https: true,
-    },
+    base: mode === "dev" ? "/" : "./",
+    server: mode === "dev" ? { https: true } : undefined,
   };
+
+  return config;
 });

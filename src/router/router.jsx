@@ -25,7 +25,10 @@ const routes = [
   },
 ];
 
+// const basename = "/MyVoca";
+const basename = "/";
+
 export const AppRouter = () => {
-  const router = createBrowserRouter(routes, { basename: "/MyVoca" });
+  const router = createBrowserRouter(routes, { basename });
   return <RouterProvider router={router} />;
 };
