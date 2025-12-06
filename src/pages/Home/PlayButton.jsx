@@ -21,7 +21,7 @@ export const PlayButton = () => {
   const navigation = useNavigate();
 
   const onClick = () => {
-    navigation("/quiz");
+    navigation("/play");
   };
 
   return (
