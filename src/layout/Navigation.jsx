@@ -19,6 +19,8 @@ const Wrapper = styled.ul`
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  padding-bottom: env(safe-area-inset-bottom);
 `;
 
 const Item = styled.li`

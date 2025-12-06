@@ -26,10 +26,12 @@ const Progress = styled.div`
   position: relative;
   top: -1.5rem;
 
-  align-self: flex-start;
-
   width: ${({ $progress }) => `${$progress}%`};
   height: 1rem;
+
+  align-self: flex-start;
+
+  margin-bottom: -1rem;
 
   background-color: ${({ theme }) => theme.brand};
   border-radius: ${({ $progress }) => ($progress === 100 ? "1rem" : "1rem 0 0 1rem")};

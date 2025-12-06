@@ -9,10 +9,11 @@ import { Header, Navigation } from "./layout";
 
 const Wrapper = styled.div`
   min-width: 360px;
-  height: 100%;
 
-  padding-top: 3.8rem;
-  padding-bottom: 4rem;
+  // Navigation + ios-bottom-area
+  height: calc(100vh - 4rem - env(safe-area-inset-bottom));
+
+  padding-top: 3.5rem;
   background-color: ${({ theme }) => theme.background};
 
   display: flex;
@@ -20,6 +21,8 @@ const Wrapper = styled.div`
   gap: 0.5rem;
 
   margin: 0 auto;
+
+  overflow-y: auto;
 `;
 
 export const App = () => {

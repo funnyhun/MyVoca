@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
   @media (min-width: 1280px) { :root { font-size: 22px } }
 
   html, body, #root {
-    height: 100%;
+    height: 100vh;
     width: 100%;
 	/* scrollbar-gutter: stable; */
   }

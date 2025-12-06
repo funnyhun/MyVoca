@@ -14,6 +14,8 @@ const CustomBorderBox = styled(BorderBox)`
 const IconWrapper = styled.div`
   align-self: flex-end;
 
+  padding-bottom: 0.5rem;
+
   & > svg {
     width: 2.5rem;
     height: 2.5rem;
@@ -50,26 +52,26 @@ const Value = styled.p`
   color: ${({ theme }) => theme.sub};
   font-size: 2rem;
   font-weight: 500;
-
-  padding-top: 1rem;
 `;
 
 export const Card = ({ word, status }) => {
   return (
-    <CustomBorderBox>
+    <>
       <IconWrapper>
         <SpeakIcon />
       </IconWrapper>
-      <Content $status={status}>
-        {status === "front" ? (
-          <>
-            <Word $length={word.name.length}>{word.name}</Word>
-            <Example>{`" ${word.exp} "`}</Example>
-          </>
-        ) : (
-          <Value>{`${word.class}. ${word.value}`}</Value>
-        )}
-      </Content>
-    </CustomBorderBox>
+      <CustomBorderBox>
+        <Content $status={status}>
+          {status === "front" ? (
+            <>
+              <Word $length={word.name.length}>{word.name}</Word>
+              <Example>{`" ${word.exp} "`}</Example>
+            </>
+          ) : (
+            <Value>{`${word.class}. ${word.value}`}</Value>
+          )}
+        </Content>
+      </CustomBorderBox>
+    </>
   );
 };
