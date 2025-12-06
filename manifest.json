@@ -4,7 +4,7 @@
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3f51b5",
+  "theme_color": "#F6F7F8",
   "icons": [
     {
       "src": "/vite.svg",
