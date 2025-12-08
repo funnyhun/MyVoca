@@ -13,9 +13,11 @@ const Wrapper = styled.div`
   z-index: 999;
 
   width: 100%;
-  height: 2.8rem;
+  height: calc(2.8rem + env(safe-area-inset-top));
 
-  padding: 0.3rem 1rem;
+  padding-top: env(safe-area-inset-top);
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   display: flex;
   justify-content: space-between;
