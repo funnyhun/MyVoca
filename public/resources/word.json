@@ -1,0 +1,550 @@
+[
+  {
+    "word": "completely",
+    "definitions": [
+      {
+        "class": "adv",
+        "value": "전적으로, 완전히",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "refuse",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "거절하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "temporarily",
+    "definitions": [
+      {
+        "class": "adv",
+        "value": "일시적으로",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "dealer",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "판매업자, 상인",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "bulk",
+    "definitions": [
+      {
+        "class": "adj",
+        "value": "대량의",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "inventory",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "재고품, 재고 목록",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "short",
+    "definitions": [
+      {
+        "class": "adj",
+        "value": "부족한",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "cost",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "비용",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "selection",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "선택된 것, 선정품목",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "commercial",
+    "definitions": [
+      {
+        "class": "adj",
+        "value": "상업의,상업적인",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "n",
+        "value": "광고",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "order",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "주문하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "n",
+        "value": "주문, 주문품",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "provide",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "공급하다, 제공하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "contact",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "~와 연락하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "n",
+        "value": "교섭하고 있는 사람(상업적)",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "invoice",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "송장",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "move",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "옮기다, 움직이다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "n",
+        "value": "조치, 수단, 이동, 이사",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "supply",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "공급하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "n",
+        "value": "공급, 비품, 소모품",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "discount",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "할인",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "distribute",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "배포하다, 배급하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "acquisition",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "인수, 구입한 것",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "assure",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "~에게 보장하다, ~을 안심시키다, 장담하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "subject",
+    "definitions": [
+      {
+        "class": "adj",
+        "value": "~의 영향을 받기 쉬운, 조건으로 하는",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "v",
+        "value": "~에게 (~을) 받게 하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "seek",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "구하다, 찾다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "satisfactory",
+    "definitions": [
+      {
+        "class": "adj",
+        "value": "만족스러운",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "confirmation",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "확인, 확증",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "unable",
+    "definitions": [
+      {
+        "class": "adj",
+        "value": "~할 수 없는",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "payment",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "지불, 납입",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "measure",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "대책, 조치, 수단",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "v",
+        "value": "측정하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "bargain",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "특가품, 흥정",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "stock",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "재고, 주식",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "affordability",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "감당할 수 있는 비용",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "clientele",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "고객들, 모든 의뢰인",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "acclaim",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "호평, 찬사",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "represent",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "~을 대표하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "rating",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "등급, 평가",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "encompass",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "포함하다, 둘러싸다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "finalize",
+    "definitions": [
+      {
+        "class": "v",
+        "value": "마무리 짓다, 완결하다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "market",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "시장",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "retail",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "소매",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "commodity",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "상품, 산물",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "quote",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "견적(액)",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      },
+      {
+        "class": "v",
+        "value": "견적을 내다",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  },
+  {
+    "word": "consignment",
+    "definitions": [
+      {
+        "class": "n",
+        "value": "위탁판매",
+        "pronunce": "",
+        "audio": "",
+        "exp": ""
+      }
+    ]
+  }
+]

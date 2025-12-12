@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: calc(2.8rem + env(safe-area-inset-top));
 
-  padding-top: env(safe-area-inset-top);
+  padding-top: calc(env(safe-area-inset-top) - 0.5rem);
   padding-left: 1rem;
   padding-right: 1rem;
 

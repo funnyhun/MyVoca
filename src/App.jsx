@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   // Navigation + ios-bottom-area
   height: calc(100vh - 4rem - env(safe-area-inset-bottom));
 
-  padding-top: 3.5rem;
+  padding-top: calc(3.8rem + env(safe-area-inset-top));
   background-color: ${({ theme }) => theme.background};
 
   display: flex;

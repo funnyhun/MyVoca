@@ -54,7 +54,8 @@ const Value = styled.p`
   font-weight: 500;
 `;
 
-export const Card = ({ word, status }) => {
+export const Card = ({ set, status }) => {
+  const { word, definitions } = set;
   return (
     <>
       <IconWrapper>
@@ -64,11 +65,11 @@ export const Card = ({ word, status }) => {
         <Content $status={status}>
           {status === "front" ? (
             <>
-              <Word $length={word.name.length}>{word.name}</Word>
-              <Example>{`" ${word.exp} "`}</Example>
+              <Word $length={word.length}>{word}</Word>
+              <Example>{`" ${definitions[0].exp} "`}</Example>
             </>
           ) : (
-            <Value>{`${word.class}. ${word.value}`}</Value>
+            <Value>{`${definitions[0].class}. ${definitions[0].value}`}</Value>
           )}
         </Content>
       </CustomBorderBox>
