@@ -27,7 +27,7 @@ export const Play = () => {
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const res = await fetch("/resources/word.json");
+        const res = await fetch("./resources/word.json");
 
         if (!res.ok) {
           throw new Error("Play : 단어 불러오기 실패");
