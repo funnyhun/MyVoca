@@ -1,14 +1,5 @@
 import styled from "styled-components";
 
-export const IconBox = styled.div`
-  display: flex;
-  flex: 0 0 0;
-  cursor: pointer;
-
-  & > svg {
-  }
-`;
-
 export const BorderBox = styled.div`
   display: flex;
   flex-direction: column;
