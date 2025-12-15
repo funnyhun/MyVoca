@@ -8,6 +8,7 @@ import { Card } from "./Card/Card";
 import { PlayPannel } from "./PlayPannel";
 
 import { CardPannel } from "./Card/CardPannel";
+import { useOutletContext } from "react-router-dom";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -20,29 +21,9 @@ const Wrapper = styled.div`
 `;
 
 export const Play = () => {
-  const [words, setWords] = useState([]);
+  const words = useOutletContext();
   const [point, setPoint] = useState(0);
   const [status, setStatus] = useState("front");
-
-  useEffect(() => {
-    const fetchWords = async () => {
-      try {
-        const res = await fetch("./resources/word.json");
-
-        if (!res.ok) {
-          throw new Error("Play : 단어 불러오기 실패");
-        }
-
-        const words = await res.json();
-
-        setWords(words);
-      } catch (err) {
-        console.error("데이터 로딩 중 오류 발생:", err);
-      }
-    };
-
-    fetchWords();
-  }, []);
 
   const prevWord = () => {
     if (point === 0) return;
@@ -59,8 +40,6 @@ export const Play = () => {
   const changeStatus = () => {
     setStatus((prev) => (prev === "front" ? "back" : "front"));
   };
-
-  console.log(words, words.length);
 
   if (words.length === 0)
     return (

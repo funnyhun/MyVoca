@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
+import { useInitApp } from "./hooks/useInitApp";
+
 // Styles
 import { ThemeProvider as MyThemeProvider } from "./hooks/useTheme";
 import { GlobalStyle } from "./styles/GlobalStyle";
 
-import { Header, Navigation } from "./layout";
+import { Header, Navigation, Loading } from "./layout";
 
 const Wrapper = styled.div`
   min-width: 360px;
@@ -26,14 +28,22 @@ const Wrapper = styled.div`
 `;
 
 export const App = () => {
+  const { words, isLoading } = useInitApp();
+
   return (
     <MyThemeProvider>
       <GlobalStyle />
-      <Header />
-      <Wrapper>
-        <Outlet />
-      </Wrapper>
-      <Navigation />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Header />
+          <Wrapper>
+            <Outlet context={words} />
+          </Wrapper>
+          <Navigation />
+        </>
+      )}
     </MyThemeProvider>
   );
 };
