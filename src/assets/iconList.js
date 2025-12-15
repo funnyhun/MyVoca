@@ -1,6 +1,7 @@
 import AccountIcon from "./icon/account.svg?react";
 
 // layout
+import BrandIcon from "./icon/brand.svg?react";
 import QuizIcon from "./icon/quiz.svg?react";
 import LeftIcon from "./icon/left.svg?react";
 import RightIcon from "./icon/right.svg?react";
@@ -17,7 +18,7 @@ import DayIcon from "./icon/day.svg?react";
 import DoneIcon from "./icon/done.svg?react";
 
 export { AccountIcon };
-export { QuizIcon, LeftIcon, RightIcon };
+export { BrandIcon, QuizIcon, LeftIcon, RightIcon };
 export { HomeIcon, PlayIcon, WordIcon };
 export { SpeakIcon };
 export { DayIcon, DoneIcon };
