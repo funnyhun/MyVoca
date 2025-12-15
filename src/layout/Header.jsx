@@ -3,8 +3,6 @@ import styled from "styled-components";
 // icon
 import { AccountIcon } from "../assets/iconList";
 
-import { IconBox } from "../components/StyledBox";
-
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
@@ -37,9 +35,7 @@ export const Header = () => {
   return (
     <Wrapper>
       <Title>MyVoca</Title>
-      <IconBox>
-        <AccountIcon />
-      </IconBox>
+      <AccountIcon />
     </Wrapper>
   );
 };
