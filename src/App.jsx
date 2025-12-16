@@ -2,10 +2,7 @@ import { Suspense, useState } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
-import { useInitApp } from "./hooks/useInitApp";
-
-import { Header, Navigation, Loading } from "./layout";
-import { useWordData } from "./context/WordDataContext";
+import { Header, Navigation } from "./layout";
 
 const Wrapper = styled.div`
   min-width: 360px;
