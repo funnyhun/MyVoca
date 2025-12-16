@@ -1,14 +1,11 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Suspense, useState } from "react";
+import { Outlet, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 import { useInitApp } from "./hooks/useInitApp";
 
-// Styles
-import { ThemeProvider as MyThemeProvider } from "./hooks/useTheme";
-import { GlobalStyle } from "./styles/GlobalStyle";
-
 import { Header, Navigation, Loading } from "./layout";
+import { useWordData } from "./context/WordDataContext";
 
 const Wrapper = styled.div`
   min-width: 360px;
@@ -29,25 +26,18 @@ const Wrapper = styled.div`
 `;
 
 export const App = () => {
-  const { words, isLoading } = useInitApp();
   const now = new Date();
-
-  console.log(now);
+  const { nick, wordMap, userData } = useLoaderData();
 
   return (
-    <MyThemeProvider>
-      <GlobalStyle />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Header />
-          <Wrapper>
-            <Outlet context={{ words: words[0], now }} />
-          </Wrapper>
-          <Navigation />
-        </>
-      )}
-    </MyThemeProvider>
+    <>
+      <Header />
+      <Wrapper>
+        <Suspense>
+          <Outlet context={{ nick, wordMap, userData, now }} />
+        </Suspense>
+      </Wrapper>
+      <Navigation />
+    </>
   );
 };

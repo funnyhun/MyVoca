@@ -13,16 +13,20 @@ const Content = styled.p`
   font-weight: 900;
 `;
 
-export const UserDataSection = () => {
+export const UserDataSection = ({ userData }) => {
+  const { today, learned } = userData;
+
+  console.log(today, learned);
+
   return (
     <BoxGroup>
       <BorderBox>
         <Title>오늘 학습한 단어</Title>
-        <Content>20</Content>
+        <Content>{today}</Content>
       </BorderBox>
       <BorderBox>
         <Title>총 암기한 단어</Title>
-        <Content>250</Content>
+        <Content>{learned}</Content>
       </BorderBox>
     </BoxGroup>
   );

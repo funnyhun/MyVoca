@@ -1,11 +1,20 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-// 라우팅 진입점
 import { AppRouter } from "./router/router";
 
+import { ThemeProvider as MyThemeProvider } from "./hooks/useTheme";
+import { GlobalStyle } from "./styles/GlobalStyle";
+
+import { WordDataProvider } from "./context/WordDataContext";
+
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <AppRouter />
-  </StrictMode>
+  //   <StrictMode>
+  <MyThemeProvider>
+    <GlobalStyle />
+    <WordDataProvider>
+      <AppRouter />
+    </WordDataProvider>
+  </MyThemeProvider>
+  //   </StrictMode>
 );

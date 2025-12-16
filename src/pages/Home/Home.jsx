@@ -14,11 +14,11 @@ const Wrapper = styled.div`
 `;
 
 export const Home = () => {
-  const { now } = useOutletContext();
+  const { nick, userData, now } = useOutletContext();
 
   return (
     <Wrapper>
-      <UserDataSection />
+      <UserDataSection userData={userData} />
       <PlayButton />
       <Calendar mode={"compact"} now={now} />
     </Wrapper>
