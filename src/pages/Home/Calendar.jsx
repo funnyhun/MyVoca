@@ -65,11 +65,19 @@ const DayCircle = styled.div`
   border-radius: 2.5rem;
 `;
 
-export const Calendar = (mode, learnRecord) => {
-  const DateObj = new Date();
+export const Calendar = ({ mode, now }) => {
+  const DateObj = new Date(now);
+
+  const currentYear = DateObj.getFullYear();
+  const currentMonth = DateObj.getMonth();
+  const currentDay = DateObj.getDate();
+
   const [year, setYear] = useState(DateObj.getFullYear());
   const [month, setMonth] = useState(DateObj.getMonth());
+
   const data = calculateCalendarData(year, month, [1, 2, 3]);
+
+  const startDay = new Date(year, month, 1).getDay() - 1;
 
   const prevMonth = () => {
     if (month === 0) {
@@ -84,9 +92,6 @@ export const Calendar = (mode, learnRecord) => {
       setMonth(0);
     } else setMonth((prev) => prev + 1);
   };
-
-  const startDay = new Date(year, month, 1).getDay() - 1;
-  const today = DateObj.getDay();
 
   return (
     <BorderBox>
@@ -113,8 +118,9 @@ export const Calendar = (mode, learnRecord) => {
           <Week key={i}>
             {week.map((learned, j) => {
               const day = i * 7 + j - startDay;
+              const $today = currentYear === year && currentMonth === month && currentDay === day;
               return (
-                <DayCircle key={`${i}_${j}`} $learned={learned} $sunday={j === 0} $today={day === today}>
+                <DayCircle key={`${i}_${j}`} $learned={learned} $sunday={j === 0} $today={$today}>
                   {day}
                 </DayCircle>
               );

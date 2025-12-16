@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
@@ -29,6 +30,9 @@ const Wrapper = styled.div`
 
 export const App = () => {
   const { words, isLoading } = useInitApp();
+  const now = new Date();
+
+  console.log(now);
 
   return (
     <MyThemeProvider>
@@ -39,7 +43,7 @@ export const App = () => {
         <>
           <Header />
           <Wrapper>
-            <Outlet context={words} />
+            <Outlet context={{ words: words[0], now }} />
           </Wrapper>
           <Navigation />
         </>

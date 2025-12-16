@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { UserDataSection } from "./UserDataSection";
 import { PlayButton } from "./PlayButton";
 import { Calendar } from "./Calendar";
+import { useOutletContext } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,11 +14,13 @@ const Wrapper = styled.div`
 `;
 
 export const Home = () => {
+  const { now } = useOutletContext();
+
   return (
     <Wrapper>
       <UserDataSection />
       <PlayButton />
-      <Calendar mode={"compact"} />
+      <Calendar mode={"compact"} now={now} />
     </Wrapper>
   );
 };
