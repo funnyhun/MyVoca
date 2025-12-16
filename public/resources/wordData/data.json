@@ -1,5 +1,6 @@
 [
   {
+    "id": "W0001",
     "word": "completely",
     "definitions": [
       {
@@ -12,6 +13,7 @@
     ]
   },
   {
+    "id": "W0002",
     "word": "refuse",
     "definitions": [
       {
@@ -24,6 +26,7 @@
     ]
   },
   {
+    "id": "W0003",
     "word": "temporarily",
     "definitions": [
       {
@@ -36,6 +39,7 @@
     ]
   },
   {
+    "id": "W0004",
     "word": "dealer",
     "definitions": [
       {
@@ -48,6 +52,7 @@
     ]
   },
   {
+    "id": "W0005",
     "word": "bulk",
     "definitions": [
       {
@@ -60,6 +65,7 @@
     ]
   },
   {
+    "id": "W0006",
     "word": "inventory",
     "definitions": [
       {
@@ -72,6 +78,7 @@
     ]
   },
   {
+    "id": "W0007",
     "word": "short",
     "definitions": [
       {
@@ -84,6 +91,7 @@
     ]
   },
   {
+    "id": "W0008",
     "word": "cost",
     "definitions": [
       {
@@ -96,6 +104,7 @@
     ]
   },
   {
+    "id": "W0009",
     "word": "selection",
     "definitions": [
       {
@@ -108,6 +117,7 @@
     ]
   },
   {
+    "id": "W0010",
     "word": "commercial",
     "definitions": [
       {
@@ -127,6 +137,7 @@
     ]
   },
   {
+    "id": "W0011",
     "word": "order",
     "definitions": [
       {
@@ -146,6 +157,7 @@
     ]
   },
   {
+    "id": "W0012",
     "word": "provide",
     "definitions": [
       {
@@ -158,6 +170,7 @@
     ]
   },
   {
+    "id": "W0013",
     "word": "contact",
     "definitions": [
       {
@@ -177,6 +190,7 @@
     ]
   },
   {
+    "id": "W0014",
     "word": "invoice",
     "definitions": [
       {
@@ -189,6 +203,7 @@
     ]
   },
   {
+    "id": "W0015",
     "word": "move",
     "definitions": [
       {
@@ -208,6 +223,7 @@
     ]
   },
   {
+    "id": "W0016",
     "word": "supply",
     "definitions": [
       {
@@ -227,6 +243,7 @@
     ]
   },
   {
+    "id": "W0017",
     "word": "discount",
     "definitions": [
       {
@@ -239,6 +256,7 @@
     ]
   },
   {
+    "id": "W0018",
     "word": "distribute",
     "definitions": [
       {
@@ -251,6 +269,7 @@
     ]
   },
   {
+    "id": "W0019",
     "word": "acquisition",
     "definitions": [
       {
@@ -263,6 +282,7 @@
     ]
   },
   {
+    "id": "W0020",
     "word": "assure",
     "definitions": [
       {
@@ -275,6 +295,7 @@
     ]
   },
   {
+    "id": "W0021",
     "word": "subject",
     "definitions": [
       {
@@ -294,6 +315,7 @@
     ]
   },
   {
+    "id": "W0022",
     "word": "seek",
     "definitions": [
       {
@@ -306,6 +328,7 @@
     ]
   },
   {
+    "id": "W0023",
     "word": "satisfactory",
     "definitions": [
       {
@@ -318,6 +341,7 @@
     ]
   },
   {
+    "id": "W0024",
     "word": "confirmation",
     "definitions": [
       {
@@ -330,6 +354,7 @@
     ]
   },
   {
+    "id": "W0025",
     "word": "unable",
     "definitions": [
       {
@@ -342,6 +367,7 @@
     ]
   },
   {
+    "id": "W0026",
     "word": "payment",
     "definitions": [
       {
@@ -354,6 +380,7 @@
     ]
   },
   {
+    "id": "W0027",
     "word": "measure",
     "definitions": [
       {
@@ -373,6 +400,7 @@
     ]
   },
   {
+    "id": "W0028",
     "word": "bargain",
     "definitions": [
       {
@@ -385,6 +413,7 @@
     ]
   },
   {
+    "id": "W0029",
     "word": "stock",
     "definitions": [
       {
@@ -397,6 +426,7 @@
     ]
   },
   {
+    "id": "W0030",
     "word": "affordability",
     "definitions": [
       {
@@ -409,6 +439,7 @@
     ]
   },
   {
+    "id": "W0031",
     "word": "clientele",
     "definitions": [
       {
@@ -421,6 +452,7 @@
     ]
   },
   {
+    "id": "W0032",
     "word": "acclaim",
     "definitions": [
       {
@@ -433,6 +465,7 @@
     ]
   },
   {
+    "id": "W0033",
     "word": "represent",
     "definitions": [
       {
@@ -445,6 +478,7 @@
     ]
   },
   {
+    "id": "W0034",
     "word": "rating",
     "definitions": [
       {
@@ -457,6 +491,7 @@
     ]
   },
   {
+    "id": "W0035",
     "word": "encompass",
     "definitions": [
       {
@@ -469,6 +504,7 @@
     ]
   },
   {
+    "id": "W0036",
     "word": "finalize",
     "definitions": [
       {
@@ -481,6 +517,7 @@
     ]
   },
   {
+    "id": "W0037",
     "word": "market",
     "definitions": [
       {
@@ -493,6 +530,7 @@
     ]
   },
   {
+    "id": "W0038",
     "word": "retail",
     "definitions": [
       {
@@ -505,6 +543,7 @@
     ]
   },
   {
+    "id": "W0039",
     "word": "commodity",
     "definitions": [
       {
@@ -517,6 +556,7 @@
     ]
   },
   {
+    "id": "W0040",
     "word": "quote",
     "definitions": [
       {
@@ -536,6 +576,7 @@
     ]
   },
   {
+    "id": "W0041",
     "word": "consignment",
     "definitions": [
       {
