@@ -1,3 +1,8 @@
+const currentMode = import.meta.env.MODE;
+const isProd = currentMode === "production";
+
+const basename = isProd ? "/MyVoca" : "";
+
 const fetchData = async (path) => {
   const res = await fetch(path);
 
@@ -16,9 +21,9 @@ const fetchData = async (path) => {
 };
 
 export const fetchWordData = async () => {
-  return fetchData("/resources/wordData/data.json");
+  return fetchData(`${basename}/resources/wordData/data.json`);
 };
 
 export const fetchMetaData = async () => {
-  return fetchData("/resources/metaData.json");
+  return fetchData(`${basename}/resources/metaData.json`);
 };
