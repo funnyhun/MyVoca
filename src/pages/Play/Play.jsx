@@ -9,6 +9,7 @@ import { PlayPannel } from "./PlayPannel";
 
 import { CardPannel } from "./Card/CardPannel";
 import { useOutletContext } from "react-router-dom";
+import { useWordData } from "../../context/WordDataContext";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -21,9 +22,14 @@ const Wrapper = styled.div`
 `;
 
 export const Play = () => {
-  const words = useOutletContext();
+  const { wordMap, now } = useOutletContext();
+  const wordData = useWordData();
+
+  const [words, setWords] = useState([]);
   const [point, setPoint] = useState(0);
   const [status, setStatus] = useState("front");
+
+  useEffect(() => {}, []);
 
   const prevWord = () => {
     if (point === 0) return;
