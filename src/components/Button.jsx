@@ -3,17 +3,20 @@ import styled from "styled-components";
 import { BorderBox } from "./StyledBox";
 
 const CustomBorderBox = styled(BorderBox)`
+  flex: 0 0 auto;
   justify-content: center;
   background-color: ${({ $bg, theme }) => theme[$bg]};
   cursor: pointer;
+
+  border: 0px;
 `;
 
-const Label = styled.p`
+const ButtonLabel = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  line-height: 0;
+  line-height: 1.5;
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.1rem;
@@ -24,10 +27,16 @@ const Label = styled.p`
   }
 `;
 
-export const Button = ({ label, color, bg, onClick }) => {
+const Button = ({ label, color, bg, onClick, className }) => {
   return (
-    <CustomBorderBox onClick={onClick} $bg={bg}>
-      <Label $color={color}>{label}</Label>
+    <CustomBorderBox className={className} onClick={onClick} $bg={bg}>
+      <ButtonLabel $color={color}>{label}</ButtonLabel>
     </CustomBorderBox>
   );
 };
+
+const BottomButton = styled(Button)`
+  margin-top: auto;
+`;
+
+export { Button, BottomButton };

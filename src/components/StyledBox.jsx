@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BorderBox = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 0 0;
+  flex: 1 0 auto;
   gap: 0.5rem;
 
   padding: 0.75rem;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { BorderBox } from "../../components/StyledBox";
 import { LeftIcon, RightIcon } from "../../assets/iconList";
 import { Button } from "../../components/Button";
 
@@ -19,8 +18,8 @@ export const PlayPannel = ({ prevEvent, nextEvent }) => {
             <LeftIcon /> 이전
           </>
         }
-        color={"sub"}
-        bg={"week"}
+        color="sub"
+        bg="week"
         onClick={prevEvent}
       />
       <Button
@@ -30,8 +29,8 @@ export const PlayPannel = ({ prevEvent, nextEvent }) => {
             <RightIcon />
           </>
         }
-        color={"main"}
-        bg={"brand"}
+        color="main"
+        bg="brand"
         onClick={nextEvent}
       />
     </Wrapper>
