@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { loadLocalStorage } from "../utils/loadLocalStorage";
+import { loadLocalStorage } from "../utils/utils";
 
 export const loadUserData = async () => {
   const nick = loadLocalStorage("nick");
@@ -7,7 +7,7 @@ export const loadUserData = async () => {
   const userData = loadLocalStorage("userData");
 
   if (!nick) return redirect("/onboard/nickname");
-  if (!wordMap || !userData) return redirect("/loading/generate-data");
+  if (!wordMap || !userData) return redirect("/onboard/generate-data");
 
   return {
     nick,
