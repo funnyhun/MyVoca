@@ -15,3 +15,13 @@ export const loadLocalStorage = (key) => {
     return null;
   }
 };
+
+// 1000 * 60 * 60 * 24
+const msToDay = 86400000;
+
+export const calculateDate = (now, startedTime) => {
+  const currentTime = new Date(now).setHours(0, 0, 0, 0);
+  const diff = startedTime - currentTime;
+
+  return Math.floor(diff / msToDay);
+};

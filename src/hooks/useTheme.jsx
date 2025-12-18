@@ -2,7 +2,7 @@ import { useState, createContext, useContext, useEffect, useCallback } from "rea
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 import { LightTheme, DarkTheme } from "../styles/theme";
-import { loadLocalStorage } from "../utils/loadLocalStorage";
+import { loadLocalStorage } from "../utils/utils";
 
 const themeContext = createContext({
   theme: "light",
