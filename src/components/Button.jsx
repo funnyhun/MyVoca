@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { BorderBox } from "./StyledBox";
 
 const CustomBorderBox = styled(BorderBox)`
-  flex: 0 0 auto;
+  flex: 1 0 auto;
   justify-content: center;
   background-color: ${({ $bg, theme }) => theme[$bg]};
   cursor: pointer;
-
   border: 0px;
+
+  margin-top: auto;
 `;
 
 const ButtonLabel = styled.span`
@@ -35,8 +36,9 @@ const Button = ({ label, color, bg, onClick, className }) => {
   );
 };
 
-const BottomButton = styled(Button)`
-  margin-top: auto;
+// flex layout - column
+const ColumnButton = styled(Button)`
+  flex: 0 0 auto;
 `;
 
-export { Button, BottomButton };
+export { Button, ColumnButton };

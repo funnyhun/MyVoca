@@ -3,8 +3,8 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ProgressBar } from "../components/ProgressBar";
-import { BottomButton } from "../components/Button";
-import { initAppData, initUserData, initWordMap } from "../utils/initWordMap";
+import { ColumnButton } from "../components/Button";
+import { initAppData } from "../utils/initAppData";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -112,7 +112,7 @@ export const StepToData = () => {
         </ProgressHeader>
         <ProgressBar status={status} />
       </ProgressUI>
-      {status === 100 && <BottomButton label="다음으로" color="main" bg="brand" onClick={startApp} />}
+      {status === 100 && <ColumnButton label="다음으로" color="main" bg="brand" onClick={startApp} />}
     </Wrapper>
   );
 };
