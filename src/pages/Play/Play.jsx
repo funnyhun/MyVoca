@@ -22,14 +22,17 @@ const Wrapper = styled.div`
 `;
 
 export const Play = () => {
-  const { wordMap, now } = useOutletContext();
+  const { wordMap, selectedDay } = useOutletContext();
   const wordData = useWordData();
 
   const [words, setWords] = useState([]);
   const [point, setPoint] = useState(0);
   const [status, setStatus] = useState("front");
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(wordMap, selectedDay);
+    setWords(wordMap[selectedDay].word.map((idx) => wordData[idx]));
+  }, [wordMap, selectedDay]);
 
   const prevWord = () => {
     if (point === 0) return;

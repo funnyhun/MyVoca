@@ -26,7 +26,7 @@ const shuffleArray = (array) => {
   return array;
 };
 
-export const initWordMap = async (length, bundle) => {
+const initWordMap = async (length, bundle) => {
   let wordNode = Array.from({ length: length }, (_, i) => i);
   const randomWordNode = shuffleArray(wordNode);
 
@@ -40,6 +40,7 @@ export const initWordMap = async (length, bundle) => {
     map.push({
       id: mapId++,
       word: chunk,
+      length: chunk.length,
       done: false,
     });
 
@@ -49,8 +50,11 @@ export const initWordMap = async (length, bundle) => {
   window.localStorage.setItem("wordMap", JSON.stringify(map));
 };
 
-export const initUserData = async () => {
+const initUserData = async () => {
+  const now = new Date();
+
   const UserData = {
+    startedTime: now.setHours(0, 0, 0, 0),
     continued: 0,
     today: 0,
     learned: 0,
