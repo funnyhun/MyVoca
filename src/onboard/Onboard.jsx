@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 export const Onboard = () => {
   return (
     <Wrapper>
-      <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
     </Wrapper>

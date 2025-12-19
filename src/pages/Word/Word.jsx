@@ -12,12 +12,13 @@ const Wrapper = styled.div`
 `;
 
 export const Word = () => {
-  const { wordData } = useOutletContext();
+  const { wordMap } = useOutletContext();
 
+  console.log(wordMap);
   return (
     <Wrapper>
-      {wordData.map(({ label, length }) => {
-        return <BorderBox>a</BorderBox>;
+      {wordMap.map(({ id, length, done }) => {
+        return <BorderBox>{`Day-${id} 단어 갯수 : ${length} Done : ${done}`}</BorderBox>;
       })}
     </Wrapper>
   );
