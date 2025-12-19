@@ -4,6 +4,7 @@ const isProd = currentMode === "production";
 const basename = isProd ? "/MyVoca" : "";
 
 const fetchData = async (path) => {
+  console.log(`fetchData : ${path}`);
   const res = await fetch(path);
 
   if (!res.ok) {
@@ -12,6 +13,7 @@ const fetchData = async (path) => {
 
   try {
     const data = await res.json();
+    console.log("fetch Data OK : ", data);
     return data;
   } catch (error) {
     throw new Error(`${path} : 데이터 파싱에 실패했습니다.`);

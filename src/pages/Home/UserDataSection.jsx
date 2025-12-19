@@ -16,8 +16,6 @@ const Content = styled.p`
 export const UserDataSection = ({ userData }) => {
   const { today, learned } = userData;
 
-  console.log(today, learned);
-
   return (
     <BoxGroup>
       <BorderBox>

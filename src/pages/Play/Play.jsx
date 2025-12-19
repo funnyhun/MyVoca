@@ -30,7 +30,6 @@ export const Play = () => {
   const [status, setStatus] = useState("front");
 
   useEffect(() => {
-    console.log(wordMap, selectedDay);
     setWords(wordMap[selectedDay].word.map((idx) => wordData[idx]));
   }, [wordMap, selectedDay]);
 
