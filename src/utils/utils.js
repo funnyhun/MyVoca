@@ -21,7 +21,7 @@ const msToDay = 86400000;
 
 export const calculateDate = (now, startedTime) => {
   const currentTime = new Date(now).setHours(0, 0, 0, 0);
-  const diff = startedTime - currentTime;
+  const diff = currentTime - startedTime;
 
   return Math.floor(diff / msToDay);
 };

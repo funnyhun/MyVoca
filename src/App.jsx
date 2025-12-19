@@ -24,16 +24,20 @@ const Wrapper = styled.div`
   overflow-y: auto;
 `;
 
+const validate = (max, selected) => (selected < max ? selected : max - 1);
+
 export const App = () => {
   const now = new Date();
   const { nick, wordMap, userData } = useLoaderData();
-  const [selectedDay, setSelectedDay] = useState(calculateDate(now, userData.startedTime));
+  const [selectedDay, setSelectedDay] = useState(
+    validate(wordMap.length, calculateDate(now, userData.startedTime))
+  );
 
   return (
     <>
       <Header />
       <Wrapper>
-        <Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
           <Outlet context={{ nick, wordMap, userData, now, selectedDay }} />
         </Suspense>
       </Wrapper>
