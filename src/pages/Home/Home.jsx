@@ -14,13 +14,13 @@ const Wrapper = styled.div`
 `;
 
 export const Home = () => {
-  const { nick, userData, now } = useOutletContext();
+  const { nick, userData, now, selectedDay, wordMap } = useOutletContext();
 
   return (
     <Wrapper>
       <UserDataSection userData={userData} />
       <PlayButton />
-      <Calendar mode={"compact"} now={now} />
+      <Calendar mode={"compact"} now={now} selectedDay={selectedDay} userData={userData} wordMap={wordMap}/>
     </Wrapper>
   );
 };

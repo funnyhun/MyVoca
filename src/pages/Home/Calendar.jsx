@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import styled from "styled-components";
 
 import { BorderBox } from "../../components/StyledBox";
@@ -25,11 +25,13 @@ const Label = styled.p`
 
 const Pannel = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const TargetDate = styled.p`
   font-weight: 600;
-  padding-bottom: 0.1rem;
+  line-height: 1;
+  padding-top: 0.3rem;
 `;
 
 const Week = styled.div`
@@ -43,7 +45,7 @@ const DayContainer = styled.div`
   height: 2.5rem;
 
   text-align: center;
-  color: ${({ $sunday, theme }) => ($sunday ? theme.danger : theme.sub)};
+  color: ${({ $isSunday, theme }) => ($isSunday ? theme.danger : theme.sub)};
 
   padding: 0.5rem;
 `;
@@ -52,21 +54,22 @@ const DayCircle = styled.div`
   width: 2.5rem;
   height: 2.5rem;
 
-  visibility: ${({ $learned }) => ($learned !== null ? "visible" : "hidden")};
+  visibility: ${({ $isLearned }) => ($isLearned !== null ? "visible" : "hidden")};
 
   text-align: center;
+  line-height: 1;
   font-size: 0.9rem;
   font-weight: 600;
-  color: ${({ $today, $sunday, theme }) => ($today ? theme.main : $sunday && theme.danger)};
+  color: ${({ $isToday, $isSunday, theme }) => ($isToday ? theme.main : $isSunday && theme.danger)};
 
-  background-color: ${({ $today, $learned, theme }) => ($today ? theme.brand : $learned && theme.week)};
+  background-color: ${({ $isToday, $isLearned, theme }) => ($isToday ? theme.brand : $isLearned && theme.week)};
 
-  padding: 0.5rem;
+  padding-top: 0.9rem;
   border-radius: 2.5rem;
 `;
 
-export const Calendar = ({ mode, now }) => {
-  const DateObj = new Date(now);
+export const Calendar = ({ mode, userData, now, wordMap }) => {
+  const DateObj = useMemo(() => new Date(now), [now]);
 
   const currentYear = DateObj.getFullYear();
   const currentMonth = DateObj.getMonth();
@@ -75,9 +78,7 @@ export const Calendar = ({ mode, now }) => {
   const [year, setYear] = useState(DateObj.getFullYear());
   const [month, setMonth] = useState(DateObj.getMonth());
 
-  const data = calculateCalendarData(year, month, [1, 2, 3]);
-
-  const startDay = new Date(year, month, 1).getDay() - 1;
+  const data = useMemo(() => calculateCalendarData(year, month, userData.startedTime, wordMap), [year, month]);
 
   const prevMonth = () => {
     if (month === 0) {
@@ -98,7 +99,7 @@ export const Calendar = ({ mode, now }) => {
       <Header>
         <Title>학습기록</Title>
         <Label>
-          연속 학습 <span>12일째</span>
+          연속 학습 <span>{`${userData.learned}일 째`}</span>
         </Label>
         <Pannel>
           <LeftIcon onClick={prevMonth} />
@@ -116,14 +117,11 @@ export const Calendar = ({ mode, now }) => {
       {data.map((week, i) => {
         return (
           <Week key={i}>
-            {week.map((learned, j) => {
-              const day = i * 7 + j - startDay;
-              const $today = currentYear === year && currentMonth === month && currentDay === day;
-              return (
-                <DayCircle key={`${i}_${j}`} $learned={learned} $sunday={j === 0} $today={$today}>
-                  {day}
-                </DayCircle>
-              );
+            {week.map((day, j) => {
+              const isValidYearMonth = year === currentYear && month === currentMonth;
+              const isToday = day && day.value === currentDay;
+              
+                return <DayCircle key={`${i}${j}`} $isSunday={j === 0} $isToday={isValidYearMonth && isToday} $isDone={day && day.status}>{day ? day.value : day}</DayCircle>
             })}
           </Week>
         );

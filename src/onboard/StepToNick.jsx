@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { Button } from "../components/Button";
+import { ColumnButton } from "../components/Button";
 import { Input } from "../components/Input";
 
 import { HiIcon } from "../assets/iconList";
@@ -90,7 +90,7 @@ export const StepToNick = () => {
         }}
         notice="한글, 영문, 숫자 포함 2~10 자로 입력해주세요."
       />
-      <Button label="다음으로" color="main" bg="brand" onClick={submitNick} />
+      <ColumnButton label="다음으로" color="main" bg="brand" onClick={submitNick} />
     </Wrapper>
   );
 };
