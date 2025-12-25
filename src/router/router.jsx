@@ -9,15 +9,28 @@ import { StepToNick } from "../onboard/StepToNick";
 import { StepToData } from "../onboard/StepToData";
 
 import { Home } from "../pages/Home/Home";
-import { Play } from "../pages/Play/Play";
+
+import { Play, Card, Quiz } from "../pages/Play";
+
 import { Word } from "../pages/Word/Word";
 
 import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
 import { loadMetaData } from "./loadMetaData";
 
+const playContents = [
+  { path: "/play/card", element: <Card />, name: "카드" },
+  { path: "/play/quiz", element: <Quiz />, name: "퀴즈" },
+];
+
 export const pages = [
   { path: "/home", element: <Home />, name: "홈", icon: <HomeIcon /> },
-  { path: "/play", element: <Play />, name: "시작하기", icon: <PlayIcon /> },
+  {
+    path: "/play",
+    element: <Play />,
+    name: "시작하기",
+    icon: <PlayIcon />,
+    children: [{ index: true, element: <Navigate to="/play/card" replace /> }, ...playContents],
+  },
   { path: "/word", element: <Word />, name: "단어장", icon: <WordIcon /> },
 ];
 
