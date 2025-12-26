@@ -1,8 +1,22 @@
+import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
+import { CardPannel } from "./CardPannel";
+import { ProgressBar } from "../ProgressBar";
 import { BorderBox } from "../../../components/StyledBox";
 
 import { SpeakIcon } from "../../../assets/iconList";
+import { Definition } from "./Definition";
+
+const AudioButton = styled(SpeakIcon)`
+  width: 2.5rem;
+  height: 2.5rem;
+  align-self: flex-end;
+  cursor: pointer;
+
+  margin-bottom: 0.5rem;
+`;
 
 const CustomBorderBox = styled(BorderBox)`
   flex-direction: column;
@@ -11,19 +25,14 @@ const CustomBorderBox = styled(BorderBox)`
   padding: 1rem;
 `;
 
-const IconWrapper = styled.div`
-  align-self: flex-end;
-
-  padding-bottom: 0.5rem;
-
-  & > svg {
-    width: 2.5rem;
-    height: 2.5rem;
-    color: ${({ theme }) => theme.label};
-  }
+const Title = styled.h3`
+  text-align: center;
+  font-size: ${({ $length }) => `clamp(1rem, ${3.5 - $length / 8}rem, 3.5rem)`};
+  font-weight: 600;
+  letter-spacing: 0.2rem;
 `;
 
-const Content = styled.div`
+const ContentWrapper = styled.div`
   height: 100%;
 
   display: flex;
@@ -33,46 +42,48 @@ const Content = styled.div`
   gap: 1.5rem;
 `;
 
-const Word = styled.h3`
-  text-align: center;
-  font-size: ${({ $length }) => `clamp(1rem, ${3.5 - $length / 8}rem, 3.5rem)`};
-  font-weight: 600;
-  letter-spacing: 0.2rem;
-`;
+export const Card = () => {
+  const { words } = useOutletContext();
 
-const Example = styled.p`
-  text-align: center;
-  color: ${({ theme }) => theme.label};
-  font-size: 1rem;
-  font-weight: 500;
-`;
+  const [point, setPoint] = useState(0);
+  const [status, setStatus] = useState("word");
 
-const Value = styled.p`
-  text-align: center;
-  color: ${({ theme }) => theme.sub};
-  font-size: 2rem;
-  font-weight: 500;
-`;
+  const prevWord = () => {
+    if (point === 0) return;
+    setPoint((prev) => prev - 1);
+    setStatus("word");
+  };
 
-export const Card = ({ set, status }) => {
-  const { word, definitions } = set;
+  const nextWord = () => {
+    if (point === words.length - 1) {
+      setPoint(0);
+      setStatus("complete");
+      return;
+    }
+    setPoint((prev) => prev + 1);
+    setStatus("word");
+  };
+
+  const changeStatus = () => {
+    setStatus((prev) => (prev === "word" ? "def" : "word"));
+  };
+
+  const CONTENTS = {
+    word: <Title>{words[point].word}</Title>,
+    def: <Definition />,
+    complete: null,
+  };
+
+  console.log(status);
+
   return (
     <>
-      <IconWrapper>
-        <SpeakIcon />
-      </IconWrapper>
+      <ProgressBar total={words.length} done={point} />
+      <AudioButton />
       <CustomBorderBox>
-        <Content $status={status}>
-          {status === "front" ? (
-            <>
-              <Word $length={word.length}>{word}</Word>
-              <Example>{`" ${definitions[0].exp} "`}</Example>
-            </>
-          ) : (
-            <Value>{`${definitions[0].class}. ${definitions[0].value}`}</Value>
-          )}
-        </Content>
+        <ContentWrapper>{CONTENTS[status]}</ContentWrapper>
       </CustomBorderBox>
+      <CardPannel changeEvent={changeStatus} prevEvent={prevWord} nextEvent={nextWord} />
     </>
   );
 };
