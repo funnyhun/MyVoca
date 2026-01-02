@@ -23,15 +23,15 @@ const Label = styled.p`
   }
 `;
 
-const Pannel = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const TargetDate = styled.p`
   font-weight: 600;
   line-height: 1;
-  padding-top: 0.3rem;
+  padding-bottom: 0.2rem;
+`;
+
+const Pannel = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Week = styled.div`
@@ -62,9 +62,10 @@ const DayCircle = styled.div`
   font-weight: 600;
   color: ${({ $isToday, $isSunday, theme }) => ($isToday ? theme.main : $isSunday && theme.danger)};
 
-  background-color: ${({ $isToday, $isLearned, theme }) => ($isToday ? theme.brand : $isLearned && theme.week)};
+  background-color: ${({ $isToday, $isLearned, theme }) =>
+    $isToday ? theme.brand : $isLearned && theme.week};
 
-  padding-top: 0.9rem;
+  padding-top: 0.8rem;
   border-radius: 2.5rem;
 `;
 
@@ -78,7 +79,10 @@ export const Calendar = ({ mode, userData, now, wordMap }) => {
   const [year, setYear] = useState(DateObj.getFullYear());
   const [month, setMonth] = useState(DateObj.getMonth());
 
-  const data = useMemo(() => calculateCalendarData(year, month, userData.startedTime, wordMap), [year, month]);
+  const data = useMemo(
+    () => calculateCalendarData(year, month, userData.startedTime, wordMap),
+    [year, month]
+  );
 
   const prevMonth = () => {
     if (month === 0) {
@@ -120,8 +124,17 @@ export const Calendar = ({ mode, userData, now, wordMap }) => {
             {week.map((day, j) => {
               const isValidYearMonth = year === currentYear && month === currentMonth;
               const isToday = day && day.value === currentDay;
-              
-                return <DayCircle key={`${i}${j}`} $isSunday={j === 0} $isToday={isValidYearMonth && isToday} $isDone={day && day.status}>{day ? day.value : day}</DayCircle>
+
+              return (
+                <DayCircle
+                  key={`${i}${j}`}
+                  $isSunday={j === 0}
+                  $isToday={isValidYearMonth && isToday}
+                  $isDone={day && day.status}
+                >
+                  {day ? day.value : day}
+                </DayCircle>
+              );
             })}
           </Week>
         );

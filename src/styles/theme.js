@@ -1,4 +1,10 @@
+const AppSetting = {
+  min_width: "320px",
+  max_width: "768px",
+};
+
 const LightTheme = {
+  ...AppSetting,
   main: "#fff",
   inverse: "#000",
   background: "#F6F7F8",
@@ -12,6 +18,7 @@ const LightTheme = {
 };
 
 const DarkTheme = {
+  ...AppSetting,
   themeColor: "#000",
   inverseColor: "#fff",
   color: "#F5F5F5",

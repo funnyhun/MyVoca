@@ -12,9 +12,12 @@ const CustomBorderBox = styled(BorderBox)`
     font-size: 1rem;
     font-weight: 600;
   }
+
   & > svg {
     color: ${({ theme }) => theme.brand};
   }
+
+  cursor: pointer;
 `;
 
 export const PlayButton = () => {

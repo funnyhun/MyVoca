@@ -6,10 +6,11 @@ const CustomBorderBox = styled(BorderBox)`
   flex: 1 0 auto;
   justify-content: center;
   background-color: ${({ $bg, theme }) => theme[$bg]};
-  cursor: pointer;
   border: 0px;
 
   margin-top: auto;
+
+  cursor: pointer;
 `;
 
 const ButtonLabel = styled.span`

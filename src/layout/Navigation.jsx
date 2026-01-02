@@ -11,6 +11,7 @@ const Wrapper = styled.ul`
   bottom: 0;
   z-index: 999;
 
+  max-width: ${({ theme }) => theme.max_width};
   width: 100%;
   height: calc(3.5rem + env(safe-area-inset-bottom));
   background-color: ${({ theme }) => theme.main};
@@ -20,10 +21,12 @@ const Wrapper = styled.ul`
   justify-content: space-around;
 
   padding-bottom: env(safe-area-inset-bottom);
+  margin: 0 auto;
 `;
 
 const Item = styled.li`
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
   gap: 0.1rem;
@@ -33,6 +36,8 @@ const Item = styled.li`
   font-size: 0.6rem;
   font-weight: 300;
 
+  cursor: pointer;
+
   & > svg {
     color: ${({ $located, theme }) => ($located ? theme.brand : theme.sub)};
   }
@@ -40,13 +45,19 @@ const Item = styled.li`
 
 export const Navigation = () => {
   const navigation = useNavigate();
-  const located = useLocation().pathname;
+  const located = useLocation().pathname.split("/")[1];
+
+  const isLocated = (path) => path === located;
 
   return (
     <Wrapper>
       {pages.map((page) => {
         return (
-          <Item key={page.path} onClick={() => navigation(page.path)} $located={located === page.path}>
+          <Item
+            key={page.path}
+            onClick={() => navigation(page.path)}
+            $located={isLocated(page.path.split("/")[1])}
+          >
             {page.icon}
             <p>{page.name}</p>
           </Item>

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // icon
@@ -10,6 +11,7 @@ const Wrapper = styled.div`
   right: 0;
   z-index: 999;
 
+  max-width: ${({ theme }) => theme.max_width};
   width: 100%;
   height: calc(2.8rem + env(safe-area-inset-top));
 
@@ -22,6 +24,7 @@ const Wrapper = styled.div`
   align-items: center;
 
   background-color: ${({ theme }) => theme.main};
+  margin: 0 auto;
 `;
 
 const Title = styled.h1`
@@ -29,12 +32,18 @@ const Title = styled.h1`
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.1rem;
+
+  cursor: pointer;
 `;
 
 export const Header = () => {
+  const navigation = useNavigate();
+
+  const navHome = () => navigation("/home");
+
   return (
     <Wrapper>
-      <Title>MyVoca</Title>
+      <Title onClick={navHome}>MyVoca</Title>
       <AccountIcon />
     </Wrapper>
   );
