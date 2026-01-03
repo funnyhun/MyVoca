@@ -17,8 +17,8 @@ export const Word = () => {
   console.log(wordMap);
   return (
     <Wrapper>
-      {wordMap.map(({ id, length, done }) => {
-        return <BorderBox>{`Day-${id} 단어 갯수 : ${length} Done : ${done}`}</BorderBox>;
+      {wordMap.map(({ id, length, done }, i) => {
+        return <BorderBox key={i}>{`Day-${id} 단어 갯수 : ${length} Done : ${done}`}</BorderBox>;
       })}
     </Wrapper>
   );
