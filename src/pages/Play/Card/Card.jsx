@@ -8,6 +8,7 @@ import { BorderBox } from "../../../components/StyledBox";
 
 import { SpeakIcon } from "../../../assets/iconList";
 import { Definition } from "./Definition";
+import { Complete } from "./Complete";
 
 const AudioButton = styled(SpeakIcon)`
   width: 2.5rem;
@@ -20,6 +21,7 @@ const AudioButton = styled(SpeakIcon)`
 
 const CustomBorderBox = styled(BorderBox)`
   flex-direction: column;
+  justify-content: center;
   gap: 1rem;
 
   padding: 1rem;
@@ -32,18 +34,8 @@ const Title = styled.h3`
   letter-spacing: 0.2rem;
 `;
 
-const ContentWrapper = styled.div`
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-`;
-
 export const Card = () => {
-  const { words } = useOutletContext();
+  const { words, changeMode } = useOutletContext();
 
   const [point, setPoint] = useState(0);
   const [status, setStatus] = useState("word");
@@ -56,7 +48,6 @@ export const Card = () => {
 
   const nextWord = () => {
     if (point === words.length - 1) {
-      setPoint(0);
       setStatus("complete");
       return;
     }
@@ -68,22 +59,26 @@ export const Card = () => {
     setStatus((prev) => (prev === "word" ? "def" : "word"));
   };
 
-  const CONTENTS = {
-    word: <Title>{words[point].word}</Title>,
-    def: <Definition />,
-    complete: null,
+  const replayCard = () => {
+    setPoint(0);
+    setStatus("word");
   };
 
-  console.log(status);
+  const { word, definitions } = words[point];
 
-  return (
+  const CONTENT = {
+    word: <Title $length={word.length}>{word}</Title>,
+    def: <Definition definitions={definitions} />,
+  };
+
+  return status !== "complete" ? (
     <>
       <ProgressBar total={words.length} done={point} />
       <AudioButton />
-      <CustomBorderBox>
-        <ContentWrapper>{CONTENTS[status]}</ContentWrapper>
-      </CustomBorderBox>
+      <CustomBorderBox>{CONTENT[status]}</CustomBorderBox>
       <CardPannel changeEvent={changeStatus} prevEvent={prevWord} nextEvent={nextWord} />
     </>
+  ) : (
+    <Complete changeMode={changeMode} replayCard={replayCard} />
   );
 };

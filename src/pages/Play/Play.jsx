@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import { Outlet, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
@@ -40,7 +40,8 @@ export const Play = () => {
 
   return (
     <Wrapper>
-      <Outlet context={{ words }} />
+      <Suspense fallback={<div>불러올 단어가 없습니다.</div>} />
+      <Outlet context={{ words, changeMode }} />
     </Wrapper>
   );
 };

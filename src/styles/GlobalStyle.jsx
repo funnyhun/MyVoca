@@ -14,6 +14,8 @@ export const GlobalStyle = createGlobalStyle`
   html, body, #root {
     height: 100vh;
     width: 100%;
+	
+	user-select: none;
 	/* scrollbar-gutter: stable; */
   }
 

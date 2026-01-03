@@ -10,8 +10,17 @@ const Example = styled.p`
 const Value = styled.p`
   text-align: center;
   color: ${({ theme }) => theme.sub};
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 500;
 `;
 
-export const Definition = () => {};
+export const Definition = ({ definitions }) => {
+  console.log(definitions);
+  return (
+    <>
+      {definitions.map(({ class: class_, value, exp }, i) => (
+        <Value key={i}>{`${class_}. ${value}`}</Value>
+      ))}
+    </>
+  );
+};
