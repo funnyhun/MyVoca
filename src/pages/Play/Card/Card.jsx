@@ -35,7 +35,7 @@ const Title = styled.h3`
 `;
 
 export const Card = () => {
-  const { words, changeMode } = useOutletContext();
+  const { words } = useOutletContext();
 
   const [point, setPoint] = useState(0);
   const [status, setStatus] = useState("word");
@@ -79,6 +79,6 @@ export const Card = () => {
       <CardPannel changeEvent={changeStatus} prevEvent={prevWord} nextEvent={nextWord} />
     </>
   ) : (
-    <Complete changeMode={changeMode} replayCard={replayCard} />
+    <Complete replayCard={replayCard} />
   );
 };

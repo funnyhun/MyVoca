@@ -1,5 +1,5 @@
 import { useState, useMemo, Suspense } from "react";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { ProgressBar } from "./ProgressBar";
@@ -20,16 +20,8 @@ const Wrapper = styled.div`
 export const Play = () => {
   const { wordMap, selectedDay } = useOutletContext();
   const wordData = useWordData();
-  const [mode, setMode] = useState("Card");
 
-  const words = useMemo(
-    () => wordMap[selectedDay].word.map((idx) => wordData[idx]),
-    [wordMap, selectedDay, mode]
-  );
-
-  const changeMode = () => {
-    setMode((prev) => (prev === "Card" ? "Quiz" : "Card"));
-  };
+  const words = useMemo(() => wordMap[selectedDay].word.map((idx) => wordData[idx]), [wordMap, selectedDay]);
 
   if (words.length === 0)
     return (
@@ -41,7 +33,7 @@ export const Play = () => {
   return (
     <Wrapper>
       <Suspense fallback={<div>불러올 단어가 없습니다.</div>} />
-      <Outlet context={{ words, changeMode }} />
+      <Outlet context={{ words }} />
     </Wrapper>
   );
 };

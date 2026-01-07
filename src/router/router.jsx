@@ -18,8 +18,8 @@ import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
 import { loadMetaData } from "./loadMetaData";
 
 const playContents = [
-  { path: "/play/card", element: <Card />, name: "카드" },
-  { path: "/play/quiz", element: <Quiz />, name: "퀴즈" },
+  { path: "card", element: <Card />, name: "카드" },
+  { path: "quiz", element: <Quiz />, name: "퀴즈" },
 ];
 
 export const pages = [
