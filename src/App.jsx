@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useState, useMemo } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
@@ -44,12 +44,23 @@ export const App = () => {
     validate(wordMap.length, calculateDate(now, userData.startedTime))
   );
 
+  const AppContext = useMemo(() => {
+    return {
+      nick,
+      wordMap,
+      userData,
+      now,
+      selectedDay,
+      setSelectedDay,
+    };
+  }, [nick, wordMap, userData, now, selectedDay]);
+
   return (
     <Layout>
       <Header />
       <Wrapper>
         <Suspense fallback={<div>Loading...</div>}>
-          <Outlet context={{ nick, wordMap, userData, now, selectedDay }} />
+          <Outlet context={AppContext} />
         </Suspense>
       </Wrapper>
       <Navigation />
