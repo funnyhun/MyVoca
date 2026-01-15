@@ -46,6 +46,7 @@ const Item = styled.li`
 export const Navigation = () => {
   const navigate = useNavigate();
   const located = useLocation().pathname.split("/")[1];
+  const items = pages.slice(1);
 
   const isLocated = (path) => path.split("/")[1] === located;
   const navigatePath = (path) => {
@@ -55,15 +56,15 @@ export const Navigation = () => {
 
   return (
     <Wrapper>
-      {pages.map((page) => {
+      {items.map((item) => {
         return (
           <Item
-            key={page.path}
-            onClick={() => navigatePath(page.path)}
-            $located={isLocated(page.path)}
+            key={item.path}
+            onClick={() => navigatePath(item.path)}
+            $located={isLocated(item.path)}
           >
-            {page.icon}
-            <p>{page.name}</p>
+            {item.icon}
+            <p>{item.name}</p>
           </Item>
         );
       })}

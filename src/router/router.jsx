@@ -24,11 +24,13 @@ import { loadMetaData } from "./loadMetaData";
 const playContents = [
   { index: true, element: <Navigate to="/play/card/0" replace /> },
   { path: "card", element: <Navigate to="/play/card/0" replace /> },
+  { path: "quiz", element: <Navigate to="/play/quiz/0" replace /> },
   { path: "card/:step", element: <Card />, name: "카드" },
   { path: "quiz/:step", element: <Quiz />, name: "퀴즈" },
 ];
 
 export const pages = [
+  { index: true, element: <Navigate to="/home" replace /> },
   { path: "/home", element: <Home />, name: "홈", icon: <HomeIcon /> },
   {
     path: "/play",
@@ -41,6 +43,7 @@ export const pages = [
 ];
 
 const onboardStep = [
+  { index: true, element: <Navigate to="/onboard/nickname" replace /> },
   { path: "/onboard/nickname", element: <StepToNick />, name: "닉네임 설정" },
   {
     path: "/onboard/generate-data",
@@ -54,21 +57,16 @@ const routes = [
   {
     path: "/",
     element: <App />,
+    hydrateFallbackElement: <></>,
     loader: loadUserData,
     name: "App",
-    children: [
-      { index: true, element: <Navigate to="/home" replace /> },
-      ...pages,
-    ],
+    children: pages,
   },
   {
     path: "/onboard",
     element: <Onboard />,
     name: "Onboard",
-    children: [
-      { index: true, element: <Navigate to="/onboard/nickname" replace /> },
-      ...onboardStep,
-    ],
+    children: onboardStep,
   },
   {
     path: "*",
