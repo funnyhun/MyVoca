@@ -2,7 +2,9 @@ import { useState, useMemo, Suspense } from "react";
 import { Outlet, useOutletContext, useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import { useStep } from "./useStep";
 import { useWordData } from "../../context/WordDataContext";
+import { shuffleArray } from "../../utils/initAppData";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -17,23 +19,22 @@ const Wrapper = styled.div`
 export const Play = () => {
   const { wordMap, selectedDay } = useOutletContext();
   const wordData = useWordData();
+  const { step } = useStep();
 
-  const words = useMemo(
-    () => wordMap[selectedDay].word.map((idx) => wordData[idx]),
-    [wordMap, selectedDay]
-  );
+  const context = useMemo(() => {
+    const words = wordMap[selectedDay].word.map((i) => wordData[i]);
 
-  if (words.length === 0)
-    return (
-      <Wrapper>
-        <div>불러올 단어가 없습니다.</div>
-      </Wrapper>
-    );
+    return {
+      words,
+      quizs: shuffleArray(words).filter((w) => w.done === false),
+    };
+  }, [wordMap, selectedDay, wordData]);
 
   return (
     <Wrapper>
-      <Suspense fallback={<div>불러올 단어가 없습니다.</div>} />
-      <Outlet context={{ words }} />
+      <Suspense fallback={<div>불러올 단어가 없습니다.</div>}>
+        <Outlet key={step} context={context} />
+      </Suspense>
     </Wrapper>
   );
 };

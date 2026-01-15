@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,6 +10,7 @@ import { BorderBox } from "../../../components/StyledBox";
 import { SpeakIcon } from "../../../assets/iconList";
 import { Definition } from "./Definition";
 import { Complete } from "./Complete";
+import { useCard } from "./useCard";
 
 const AudioButton = styled(SpeakIcon)`
   width: 2.5rem;
@@ -36,55 +37,22 @@ const Title = styled.h3`
 `;
 
 export const Card = () => {
-  const navigate = useNavigate();
-  const { words } = useOutletContext();
-
-  const step = useStep();
-  const [status, setStatus] = useState("word");
-
-  const changeStatus = () => {
-    setStatus((prev) => (prev === "word" ? "def" : "word"));
-  };
-
-  const changeStep = (step) => {
-    const path = `../${step}`;
-    navigate(path, { relative: "path" });
-  };
-
-  const prevCard = () => {
-    if (step === 0) return;
-    setStatus("word");
-    changeStep(step - 1);
-  };
-
-  const nextCard = () => {
-    if (step === words.length - 1) {
-      setStatus("complete");
-      return;
-    }
-    setStatus("word");
-    changeStep(step + 1);
-  };
-
-  const replayCard = () => {
-    setStatus("word");
-    changeStep(0);
-  };
-
-  const { word, definitions } = words[step];
+  const { mode, total, done, wordSet, events } = useCard();
+  const { changeMode, prevCard, nextCard, replayCard } = events;
+  const { word, definitions } = wordSet;
 
   const CONTENT = {
     word: <Title $length={word.length}>{word}</Title>,
     def: <Definition definitions={definitions} />,
   };
 
-  return status !== "complete" ? (
+  return mode !== "complete" ? (
     <>
-      <ProgressBar total={words.length} done={step} />
+      <ProgressBar total={total} done={done} />
       <AudioButton />
-      <CustomBorderBox>{CONTENT[status]}</CustomBorderBox>
+      <CustomBorderBox>{CONTENT[mode]}</CustomBorderBox>
       <CardPannel
-        changeEvent={changeStatus}
+        changeEvent={changeMode}
         prevEvent={prevCard}
         nextEvent={nextCard}
       />

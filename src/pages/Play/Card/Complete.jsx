@@ -50,16 +50,28 @@ const Pannel = styled.div`
 export const Complete = ({ replayCard }) => {
   const navigate = useNavigate();
 
-  const navigateQuiz = () => navigate("/play/quiz");
+  const navigateQuiz = () => navigate("/play/quiz/0");
 
   return (
     <Wrapper>
       <Image />
       <Title>학습 완료!</Title>
-      <Content>{"오늘의 단어를 모두 확인했습니다.\n퀴즈로 이동할까요?"}</Content>
+      <Content>
+        {"오늘의 단어를 모두 확인했습니다.\n퀴즈로 이동할까요?"}
+      </Content>
       <Pannel>
-        <ColumnButton label="퀴즈 풀러가기" color="main" bg="brand" onClick={navigateQuiz} />
-        <ColumnButton label="다시 학습하기" color="font" bg="main" onClick={replayCard} />
+        <ColumnButton
+          label="퀴즈 풀러가기"
+          color="main"
+          bg="brand"
+          onClick={navigateQuiz}
+        />
+        <ColumnButton
+          label="다시 학습하기"
+          color="font"
+          bg="main"
+          onClick={replayCard}
+        />
       </Pannel>
     </Wrapper>
   );

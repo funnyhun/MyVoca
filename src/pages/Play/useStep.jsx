@@ -1,7 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const useStep = () => {
+  const navigate = useNavigate();
   const { step } = useParams();
 
-  return Math.max(0, Math.floor(Number(step)) || 0);
+  const changeStep = (step) => {
+    const path = `../${step}`;
+    navigate(path, { relative: "path" });
+  };
+
+  return {
+    step: Math.max(0, Math.floor(Number(step)) || 0),
+    changeStep,
+  };
 };
