@@ -1,26 +1,29 @@
 import styled from "styled-components";
 
-import { BorderBox } from "./StyledBox";
+const Wrapper = styled.button`
+  height: 3rem;
 
-const CustomBorderBox = styled(BorderBox)`
+  display: flex;
   flex: 1 0 auto;
   justify-content: center;
-  background-color: ${({ $bg, theme }) => theme[$bg]};
-  border: 0px;
+  gap: 0.5rem;
 
-  margin-top: auto;
+  background-color: ${({ $bg, theme }) => theme[$bg]};
+
+  border: 0px;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
 
   cursor: pointer;
 `;
 
-const ButtonLabel = styled.span`
+const Label = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  line-height: 1.5;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.1rem;
   color: ${({ $color, theme }) => theme[$color]};
 
@@ -31,9 +34,9 @@ const ButtonLabel = styled.span`
 
 const Button = ({ label, color, bg, onClick, className }) => {
   return (
-    <CustomBorderBox className={className} onClick={onClick} $bg={bg}>
-      <ButtonLabel $color={color}>{label}</ButtonLabel>
-    </CustomBorderBox>
+    <Wrapper className={className} onClick={onClick} $bg={bg}>
+      <Label $color={color}>{label}</Label>
+    </Wrapper>
   );
 };
 

@@ -21,28 +21,47 @@ const StepButtons = styled.div`
   gap: 1rem;
 `;
 
+const PrevIcon = styled(LeftIcon)`
+  margin-left: -0.5rem;
+`;
+
+const NextIcon = styled(RightIcon)`
+  margin-right: -0.5rem;
+`;
+
 export const CardPannel = ({ changeEvent, prevEvent, nextEvent }) => {
+  const buttonLabels = {
+    left: (
+      <>
+        <PrevIcon />
+        이전
+      </>
+    ),
+    right: (
+      <>
+        다음
+        <NextIcon />
+      </>
+    ),
+  };
+
   return (
     <Wrapper>
-      <Button label={"뒤집기"} color={"main"} bg={"success"} onClick={changeEvent} />
+      <Button
+        label={"뒤집기"}
+        color={"main"}
+        bg={"success"}
+        onClick={changeEvent}
+      />
       <StepButtons>
         <Button
-          label={
-            <>
-              <LeftIcon /> 이전
-            </>
-          }
-          color="sub"
-          bg="week"
+          label={buttonLabels.left}
+          color="main"
+          bg="brand"
           onClick={prevEvent}
         />
         <Button
-          label={
-            <>
-              다음
-              <RightIcon />
-            </>
-          }
+          label={buttonLabels.right}
           color="main"
           bg="brand"
           onClick={nextEvent}
