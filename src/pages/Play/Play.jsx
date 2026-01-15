@@ -2,9 +2,6 @@ import { useState, useMemo, Suspense } from "react";
 import { Outlet, useOutletContext, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { ProgressBar } from "./ProgressBar";
-import { PlayPannel } from "./PlayPannel";
-
 import { useWordData } from "../../context/WordDataContext";
 
 const Wrapper = styled.div`
@@ -21,7 +18,10 @@ export const Play = () => {
   const { wordMap, selectedDay } = useOutletContext();
   const wordData = useWordData();
 
-  const words = useMemo(() => wordMap[selectedDay].word.map((idx) => wordData[idx]), [wordMap, selectedDay]);
+  const words = useMemo(
+    () => wordMap[selectedDay].word.map((idx) => wordData[idx]),
+    [wordMap, selectedDay]
+  );
 
   if (words.length === 0)
     return (

@@ -10,6 +10,7 @@ const Wrapper = styled.div`
 const Step = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
+  line-height: 1;
   color: ${({ theme }) => theme.label};
 `;
 
@@ -34,7 +35,8 @@ const Progress = styled.div`
   margin-bottom: -1rem;
 
   background-color: ${({ theme }) => theme.brand};
-  border-radius: ${({ $progress }) => ($progress === 100 ? "1rem" : "1rem 0 0 1rem")};
+  border-radius: ${({ $progress }) =>
+    $progress === 100 ? "1rem" : "1rem 0 0 1rem"};
 `;
 
 export const ProgressBar = ({ total, done }) => {

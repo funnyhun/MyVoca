@@ -16,13 +16,14 @@ const Wrapper = styled.div`
   // Navigation + ios-bottom-area
   height: calc(100vh - 3.5rem - env(safe-area-inset-bottom));
 
-  padding-top: calc(3.8rem + env(safe-area-inset-top));
   background-color: ${({ theme }) => theme.background};
 
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 
+  padding-top: calc(3.8rem + env(safe-area-inset-top));
+  padding-bottom: 1rem;
   margin: 0 auto;
 
   overflow-y: auto;
