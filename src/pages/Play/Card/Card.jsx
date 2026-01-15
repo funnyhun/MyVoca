@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
+import { useStep } from "../useStep";
 import { CardPannel } from "./CardPannel";
 import { ProgressBar } from "../ProgressBar";
 import { BorderBox } from "../../../components/StyledBox";
@@ -35,36 +36,42 @@ const Title = styled.h3`
 `;
 
 export const Card = () => {
+  const navigate = useNavigate();
   const { words } = useOutletContext();
 
-  const [point, setPoint] = useState(0);
+  const step = useStep();
   const [status, setStatus] = useState("word");
-
-  const prevWord = () => {
-    if (point === 0) return;
-    setPoint((prev) => prev - 1);
-    setStatus("word");
-  };
-
-  const nextWord = () => {
-    if (point === words.length - 1) {
-      setStatus("complete");
-      return;
-    }
-    setPoint((prev) => prev + 1);
-    setStatus("word");
-  };
 
   const changeStatus = () => {
     setStatus((prev) => (prev === "word" ? "def" : "word"));
   };
 
-  const replayCard = () => {
-    setPoint(0);
-    setStatus("word");
+  const changeStep = (step) => {
+    const path = `../${step}`;
+    navigate(path, { relative: "path" });
   };
 
-  const { word, definitions } = words[point];
+  const prevCard = () => {
+    if (step === 0) return;
+    setStatus("word");
+    changeStep(step - 1);
+  };
+
+  const nextCard = () => {
+    if (step === words.length - 1) {
+      setStatus("complete");
+      return;
+    }
+    setStatus("word");
+    changeStep(step + 1);
+  };
+
+  const replayCard = () => {
+    setStatus("word");
+    changeStep(0);
+  };
+
+  const { word, definitions } = words[step];
 
   const CONTENT = {
     word: <Title $length={word.length}>{word}</Title>,
@@ -73,10 +80,14 @@ export const Card = () => {
 
   return status !== "complete" ? (
     <>
-      <ProgressBar total={words.length} done={point} />
+      <ProgressBar total={words.length} done={step} />
       <AudioButton />
       <CustomBorderBox>{CONTENT[status]}</CustomBorderBox>
-      <CardPannel changeEvent={changeStatus} prevEvent={prevWord} nextEvent={nextWord} />
+      <CardPannel
+        changeEvent={changeStatus}
+        prevEvent={prevCard}
+        nextEvent={nextCard}
+      />
     </>
   ) : (
     <Complete replayCard={replayCard} />

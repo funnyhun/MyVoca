@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 
 import { loadUserData } from "./loadUserData";
 
@@ -18,8 +22,10 @@ import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
 import { loadMetaData } from "./loadMetaData";
 
 const playContents = [
-  { path: "card", element: <Card />, name: "카드" },
-  { path: "quiz", element: <Quiz />, name: "퀴즈" },
+  { index: true, element: <Navigate to="/play/card/0" replace /> },
+  { path: "card", element: <Navigate to="/play/card/0" replace /> },
+  { path: "card/:step", element: <Card />, name: "카드" },
+  { path: "quiz/:step", element: <Quiz />, name: "퀴즈" },
 ];
 
 export const pages = [
@@ -29,14 +35,19 @@ export const pages = [
     element: <Play />,
     name: "시작하기",
     icon: <PlayIcon />,
-    children: [{ index: true, element: <Navigate to="/play/card" replace /> }, ...playContents],
+    children: playContents,
   },
   { path: "/word", element: <Word />, name: "단어장", icon: <WordIcon /> },
 ];
 
 const onboardStep = [
   { path: "/onboard/nickname", element: <StepToNick />, name: "닉네임 설정" },
-  { path: "/onboard/generate-data", element: <StepToData />, loader: loadMetaData, name: "학습데이터 생성" },
+  {
+    path: "/onboard/generate-data",
+    element: <StepToData />,
+    loader: loadMetaData,
+    name: "학습데이터 생성",
+  },
 ];
 
 const routes = [
@@ -45,13 +56,19 @@ const routes = [
     element: <App />,
     loader: loadUserData,
     name: "App",
-    children: [{ index: true, element: <Navigate to="/home" replace /> }, ...pages],
+    children: [
+      { index: true, element: <Navigate to="/home" replace /> },
+      ...pages,
+    ],
   },
   {
     path: "/onboard",
     element: <Onboard />,
     name: "Onboard",
-    children: [{ index: true, element: <Navigate to="/onboard/nickname" replace /> }, ...onboardStep],
+    children: [
+      { index: true, element: <Navigate to="/onboard/nickname" replace /> },
+      ...onboardStep,
+    ],
   },
   {
     path: "*",
