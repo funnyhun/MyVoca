@@ -9,7 +9,11 @@ const WordDataContext = createContext(undefined);
 export const WordDataProvider = ({ children }) => {
   const memoizedPromise = useMemo(() => wordDataPromise, []);
 
-  return <WordDataContext.Provider value={memoizedPromise}>{children}</WordDataContext.Provider>;
+  return (
+    <WordDataContext.Provider value={memoizedPromise}>
+      {children}
+    </WordDataContext.Provider>
+  );
 };
 
 export const useWordData = () => {

@@ -18,6 +18,8 @@ const Wrapper = styled.button`
 `;
 
 const Label = styled.span`
+  width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;

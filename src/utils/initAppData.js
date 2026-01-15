@@ -67,7 +67,11 @@ const initUserData = async () => {
 };
 
 export const initAppData = async (length, bundleSize, setStatus) => {
-  await Promise.all([initWordMap(length, bundleSize), initUserData(), dummyProgress(1500, setStatus)]);
+  await Promise.all([
+    initWordMap(length, bundleSize),
+    initUserData(),
+    dummyProgress(1500, setStatus),
+  ]);
   setStatus(100);
   return true;
 };
