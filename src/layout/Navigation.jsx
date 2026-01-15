@@ -44,10 +44,14 @@ const Item = styled.li`
 `;
 
 export const Navigation = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const located = useLocation().pathname.split("/")[1];
 
-  const isLocated = (path) => path === located;
+  const isLocated = (path) => path.split("/")[1] === located;
+  const navigatePath = (path) => {
+    if (isLocated(path)) return;
+    navigate(path);
+  };
 
   return (
     <Wrapper>
@@ -55,8 +59,8 @@ export const Navigation = () => {
         return (
           <Item
             key={page.path}
-            onClick={() => navigation(page.path)}
-            $located={isLocated(page.path.split("/")[1])}
+            onClick={() => navigatePath(page.path)}
+            $located={isLocated(page.path)}
           >
             {page.icon}
             <p>{page.name}</p>
