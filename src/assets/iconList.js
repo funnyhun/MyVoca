@@ -20,6 +20,7 @@ import SpeakIcon from "./icon/speak.svg?react";
 // pages/play/quiz
 import CheckIcon from "./icon/check.svg?react";
 import CloseIcon from "./icon/close.svg?react";
+import CheckCircleIcon from "./icon/check_circle.svg?react";
 
 import DayIcon from "./icon/day.svg?react";
 import DoneIcon from "./icon/done.svg?react";
@@ -29,5 +30,5 @@ export { AccountIcon };
 export { BrandIcon, QuizIcon, LeftIcon, RightIcon };
 export { HomeIcon, PlayIcon, WordIcon };
 export { SpeakIcon };
-export { CheckIcon, CloseIcon };
+export { CheckIcon, CloseIcon, CheckCircleIcon };
 export { DayIcon, DoneIcon };

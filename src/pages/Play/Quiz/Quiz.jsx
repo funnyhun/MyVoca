@@ -3,8 +3,9 @@ import { useOutletContext } from "react-router-dom";
 
 import { ProgressBar } from "../ProgressBar";
 import { useStep } from "../useStep";
-import { QuizPannel } from "./QuizPannel";
+import { QuizSelection } from "./QuizSelection";
 import { useState } from "react";
+import { QuizPannel } from "./QuizPannel";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -39,7 +40,6 @@ export const Quiz = () => {
   const answer = "persistent";
 
   const nextQuiz = () => {
-    console.log("correct!");
     setIsCorrect(true);
   };
 
@@ -47,7 +47,8 @@ export const Quiz = () => {
     <Wrapper>
       <ProgressBar total={quizs.length} done={step} />
       <Content>Succes often coms to those who are [ ].</Content>
-      <QuizPannel onClick={nextQuiz} wrongs={wrongs} answer={answer} />
+      <QuizSelection onClick={nextQuiz} wrongs={wrongs} answer={answer} />
+      {isCorrect && <QuizPannel disable={isCorrect} />}
     </Wrapper>
   );
 };

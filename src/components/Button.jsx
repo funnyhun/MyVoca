@@ -1,12 +1,9 @@
 import styled from "styled-components";
 
 const Wrapper = styled.button`
-  height: 3rem;
-
   display: flex;
   flex: 1 0 auto;
   justify-content: center;
-  gap: 0.5rem;
 
   background-color: ${({ $bg, theme }) => theme[$bg]};
 
@@ -47,4 +44,12 @@ const ColumnButton = styled(Button)`
   flex: 0 0 auto;
 `;
 
-export { Button, ColumnButton };
+const SmallButton = styled(Button)`
+  padding: 0.5rem;
+
+  & > span {
+    font-size: 0.8rem;
+  }
+`;
+
+export { Button, ColumnButton, SmallButton };

@@ -14,6 +14,7 @@ const LightTheme = {
   brand: "#137FEC",
   week: "#C8DEF5",
   success: "#34C759",
+  week_success: "#7ED321",
   danger: "#FF3B30",
 };
 
