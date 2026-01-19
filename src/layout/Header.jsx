@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   z-index: 999;
 
   max-width: ${({ theme }) => theme.max_width};
+  min-width: ${({ theme }) => theme.min_width};
   width: 100%;
   height: calc(2.8rem + env(safe-area-inset-top));
 

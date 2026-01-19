@@ -12,6 +12,7 @@ const Wrapper = styled.ul`
   z-index: 999;
 
   max-width: ${({ theme }) => theme.max_width};
+  min-width: ${({ theme }) => theme.min_width};
   width: 100%;
   height: calc(3.5rem + env(safe-area-inset-bottom));
   background-color: ${({ theme }) => theme.main};
@@ -58,11 +59,7 @@ export const Navigation = () => {
     <Wrapper>
       {items.map((item) => {
         return (
-          <Item
-            key={item.path}
-            onClick={() => navigatePath(item.path)}
-            $located={isLocated(item.path)}
-          >
+          <Item key={item.path} onClick={() => navigatePath(item.path)} $located={isLocated(item.path)}>
             {item.icon}
             <p>{item.name}</p>
           </Item>

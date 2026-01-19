@@ -6,8 +6,9 @@ import { SmallButton } from "../../../components/Button";
 import { RightIcon, CheckCircleIcon } from "../../../assets/iconList";
 
 const Wrapper = styled.div`
+  max-width: ${({ theme }) => theme.max_width};
+  min-width: ${({ theme }) => theme.min_width};
   width: 100%;
-  max-width: 768px;
   height: 3.8rem;
 
   position: fixed;
