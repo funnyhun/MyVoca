@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { ProgressBar } from "../ProgressBar";
 import { useStep } from "../useStep";
+
+import { PlayProgressBar } from "../PlayProgressBar";
 import { QuizSelection } from "./QuizSelection";
-import { useState } from "react";
 import { QuizPannel } from "./QuizPannel";
 
 const Wrapper = styled.div`
@@ -45,7 +46,7 @@ export const Quiz = () => {
 
   return (
     <Wrapper>
-      <ProgressBar total={quizs.length} done={step} />
+      <PlayProgressBar total={quizs.length} done={step} />
       <Content>Succes often coms to those who are [ ].</Content>
       <QuizSelection onClick={nextQuiz} wrongs={wrongs} answer={answer} />
       {isCorrect && <QuizPannel disable={isCorrect} />}

@@ -3,14 +3,16 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { useStep } from "../useStep";
-import { CardPannel } from "./CardPannel";
-import { ProgressBar } from "../ProgressBar";
+import { useCard } from "./useCard";
+
 import { BorderBox } from "../../../components/StyledBox";
 
-import { SpeakIcon } from "../../../assets/iconList";
+import { PlayProgressBar } from "../PlayProgressBar";
 import { Definition } from "./Definition";
 import { Complete } from "./Complete";
-import { useCard } from "./useCard";
+import { CardPannel } from "./CardPannel";
+
+import { SpeakIcon } from "../../../assets/iconList";
 
 const AudioButton = styled(SpeakIcon)`
   width: 2.5rem;
@@ -38,6 +40,7 @@ const Title = styled.h3`
 
 export const Card = () => {
   const { mode, total, done, wordSet, events } = useCard();
+
   const { changeMode, prevCard, nextCard, replayCard } = events;
   const { word, definitions } = wordSet;
 
@@ -48,7 +51,7 @@ export const Card = () => {
 
   return mode !== "complete" ? (
     <>
-      <ProgressBar total={total} done={done} />
+      <PlayProgressBar total={total} done={done} />
       <AudioButton />
       <CustomBorderBox>{CONTENT[mode]}</CustomBorderBox>
       <CardPannel
