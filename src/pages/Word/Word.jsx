@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { BorderBox } from "../../components/StyledBox";
+import { WordList } from "./WordList";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,12 +14,9 @@ const Wrapper = styled.div`
 export const Word = () => {
   const { wordMap } = useOutletContext();
 
-  console.log(wordMap);
   return (
     <Wrapper>
-      {wordMap.map(({ id, length, done }, i) => {
-        return <BorderBox key={i}>{`Day-${id} 단어 갯수 : ${length} Done : ${done}`}</BorderBox>;
-      })}
+      <WordList wordMap={wordMap} />
     </Wrapper>
   );
 };
