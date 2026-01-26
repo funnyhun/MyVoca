@@ -61,6 +61,7 @@ const initUserData = async () => {
     continued: 0,
     today: 0,
     learned: 0,
+    selected: 0,
   };
 
   window.localStorage.setItem("userData", JSON.stringify(UserData));

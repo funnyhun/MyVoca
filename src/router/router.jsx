@@ -5,6 +5,8 @@ import {
 } from "react-router-dom";
 
 import { loadUserData } from "./loadUserData";
+import { loadPlay } from "./loadPlay";
+import { loadMetaData } from "./loadMetaData";
 
 import { App } from "../App";
 
@@ -13,20 +15,22 @@ import { StepToNick } from "../onboard/StepToNick";
 import { StepToData } from "../onboard/StepToData";
 
 import { Home } from "../pages/Home/Home";
-
 import { Play, Card, Quiz } from "../pages/Play";
-
 import { Word } from "../pages/Word/Word";
 
 import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
-import { loadMetaData } from "./loadMetaData";
 
 const playContents = [
-  { index: true, element: <Navigate to="/play/card/0" replace /> },
-  { path: "card", element: <Navigate to="/play/card/0" replace /> },
-  { path: "quiz", element: <Navigate to="/play/quiz/0" replace /> },
-  { path: "card/:step", element: <Card />, name: "카드" },
-  { path: "quiz/:step", element: <Quiz />, name: "퀴즈" },
+  { index: true, loader: loadPlay },
+  {
+    path: ":selected",
+    children: [
+      { path: "card", element: <Navigate to="0" replace /> },
+      { path: "quiz", element: <Navigate to="0" replace /> },
+      { path: "card/:step", element: <Card />, name: "카드" },
+      { path: "quiz/:step", element: <Quiz />, name: "퀴즈" },
+    ],
+  },
 ];
 
 export const pages = [

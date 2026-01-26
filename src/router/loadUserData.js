@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
-import { loadLocalStorage } from "../utils/utils";
+
+import { loadLocalStorage, calculateDate } from "../utils/utils";
 
 export const loadUserData = async () => {
   const nick = loadLocalStorage("nick");
