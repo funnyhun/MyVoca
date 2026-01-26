@@ -53,7 +53,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ul, ol {
-    list-style-position: inside;
+    list-style: none;
   }
 
   a {
