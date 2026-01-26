@@ -25,10 +25,20 @@ import CheckCircleIcon from "./icon/check_circle.svg?react";
 import DayIcon from "./icon/day.svg?react";
 import DoneIcon from "./icon/done.svg?react";
 
-export { HiIcon };
-export { AccountIcon };
-export { BrandIcon, QuizIcon, LeftIcon, RightIcon };
-export { HomeIcon, PlayIcon, WordIcon };
-export { SpeakIcon };
-export { CheckIcon, CloseIcon, CheckCircleIcon };
-export { DayIcon, DoneIcon };
+export {
+  HiIcon,
+  AccountIcon,
+  BrandIcon,
+  QuizIcon,
+  LeftIcon,
+  RightIcon,
+  HomeIcon,
+  PlayIcon,
+  WordIcon,
+  SpeakIcon,
+  CheckIcon,
+  CloseIcon,
+  CheckCircleIcon,
+  DayIcon,
+  DoneIcon,
+};
