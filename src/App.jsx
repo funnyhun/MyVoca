@@ -36,14 +36,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const validate = (max, selected) => (selected < max ? selected : max - 1);
-
 export const App = () => {
   const now = new Date();
-  const { nick, wordMap, userData } = useLoaderData();
-  const [selectedDay, setSelectedDay] = useState(
-    validate(wordMap.length, calculateDate(now, userData.startedTime))
-  );
+  const { nick, wordMap, userData, selectedWord } = useLoaderData();
 
   const AppContext = useMemo(() => {
     return {
@@ -51,10 +46,9 @@ export const App = () => {
       wordMap,
       userData,
       now,
-      selectedDay,
-      setSelectedDay,
+      selectedWord,
     };
-  }, [nick, wordMap, userData, now, selectedDay]);
+  }, [nick, wordMap, userData, now, selectedWord]);
 
   return (
     <Layout>

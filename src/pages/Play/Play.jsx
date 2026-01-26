@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useStep } from "./useStep";
 import { useWordData } from "../../context/WordDataContext";
 import { shuffleArray } from "../../utils/initAppData";
+import { useWord } from "../../hooks/useWord";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -17,18 +18,15 @@ const Wrapper = styled.div`
 `;
 
 export const Play = () => {
-  const { wordMap, selectedDay } = useOutletContext();
-  const wordData = useWordData();
+  const { words } = useWord();
   const { step } = useStep();
 
   const context = useMemo(() => {
-    const words = wordMap[selectedDay].word.map((i) => wordData[i]);
-
     return {
       words,
       quizs: shuffleArray(words).filter((w) => w.done === false),
     };
-  }, [wordMap, selectedDay, wordData]);
+  }, [words]);
 
   return (
     <Wrapper>
