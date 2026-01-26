@@ -4,6 +4,8 @@ import { CircleTimer } from "./CircleTimer";
 import { SmallButton } from "../../../components/Button";
 
 import { RightIcon, CheckCircleIcon } from "../../../assets/iconList";
+import { useNavigate } from "react-router-dom";
+import { useStep } from "../useStep";
 
 const Wrapper = styled.div`
   max-width: ${({ theme }) => theme.max_width};
@@ -65,9 +67,15 @@ const NextIcon = styled(RightIcon)`
 `;
 
 export const QuizPannel = ({ disable }) => {
+  const { step, changeStep } = useStep();
+
+  const navNextQuiz = () => {
+    changeStep(step + 1);
+  };
+
   return (
     <Wrapper>
-      <CircleTimer max={3} />
+      <CircleTimer max={3} callback={navNextQuiz} />
       <Text>
         <Content>
           <CheckIcon />
@@ -84,6 +92,7 @@ export const QuizPannel = ({ disable }) => {
         }
         color="main"
         bg="brand"
+        onClick={navNextQuiz}
       />
     </Wrapper>
   );

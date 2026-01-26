@@ -46,7 +46,23 @@ const ProgressCircle = styled.circle`
   animation: ${progress} ${({ $duration }) => $duration}s linear forwards;
 `;
 
-export const CircleTimer = ({ second = 3 }) => {
+export const CircleTimer = ({ second = 3, callback }) => {
+  useEffect(() => {
+    let timerId;
+
+    const startTimer = () => {
+      timerId = setTimeout(() => {
+        callback();
+      }, second * 1000);
+    };
+
+    startTimer();
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, []);
+
   return (
     <TimerWrapper>
       <Svg viewBox="0 0 100 100">
