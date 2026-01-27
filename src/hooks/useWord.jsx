@@ -3,12 +3,13 @@ import { useOutletContext } from "react-router-dom";
 
 import { useWordData } from "../context/WordDataContext";
 
-export const useWord = () => {
+export const useWord = (selected) => {
   const { wordMap, userData } = useOutletContext();
   const wordData = useWordData();
+  const idx = selected ?? userData.selected;
 
   const words = useMemo(() => {
-    return wordMap[userData.selected].word.map((i) => wordData[i]);
+    return wordMap[idx].word.map((i) => wordData[i]);
   }, [wordMap, userData, wordData]);
 
   return { words };
