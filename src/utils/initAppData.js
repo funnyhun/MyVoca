@@ -35,7 +35,7 @@ const initWordMap = async (length, bundle) => {
 
   const map = [];
   let idx = 0;
-  let mapId = 1;
+  let mapId = 0;
 
   while (idx < length) {
     const chunk = randomWordNode.slice(idx, idx + bundle);
@@ -68,11 +68,7 @@ const initUserData = async () => {
 };
 
 export const initAppData = async (length, bundleSize, setStatus) => {
-  await Promise.all([
-    initWordMap(length, bundleSize),
-    initUserData(),
-    dummyProgress(1500, setStatus),
-  ]);
+  await Promise.all([initWordMap(length, bundleSize), initUserData(), dummyProgress(1500, setStatus)]);
   setStatus(100);
   return true;
 };

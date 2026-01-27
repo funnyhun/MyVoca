@@ -8,5 +8,5 @@ export const loadPlay = () => {
 
   if (wordMap.length < selected) selected = 0;
 
-  return redirect(`/play/${selected}/card`);
+  return redirect(`/play/${selected}/card/0`);
 };
