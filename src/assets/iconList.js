@@ -22,6 +22,11 @@ import CheckIcon from "./icon/check.svg?react";
 import CloseIcon from "./icon/close.svg?react";
 import CheckCircleIcon from "./icon/check_circle.svg?react";
 
+// pages/word
+import CircleIcon from "./icon/circle.svg?react";
+import MoreVIcon from "./icon/more_v.svg?react";
+import SearchIcon from "./icon/search.svg?react";
+
 import DayIcon from "./icon/day.svg?react";
 import DoneIcon from "./icon/done.svg?react";
 
@@ -39,6 +44,9 @@ export {
   CheckIcon,
   CloseIcon,
   CheckCircleIcon,
+  CircleIcon,
   DayIcon,
   DoneIcon,
+  MoreVIcon,
+  SearchIcon,
 };
