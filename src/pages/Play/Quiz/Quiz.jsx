@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
+import { useStep } from "../../../hooks/useMyParam";
+
 import { PlayProgressBar } from "../PlayProgressBar";
 import { QuizSelection } from "./QuizSelection";
 import { QuizPannel } from "./QuizPannel";

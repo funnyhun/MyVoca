@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-import { CheckCircleIcon, WordIcon, RightIcon } from "../../assets/iconList";
 import { WordProgressBar } from "./WordProgressBar";
+
+import { CheckCircleIcon, WordIcon, RightIcon } from "../../assets/iconList";
 
 const Wrapper = styled.li`
   width: 100%;
@@ -50,7 +51,7 @@ export const WordItem = ({ item }) => {
   const { id, length, done } = item;
 
   const navItemDetail = () => {
-    console.log("move!");
+    changeStep(id);
   };
 
   return (

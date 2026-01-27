@@ -19,6 +19,15 @@ import { Play, Card, Quiz } from "../pages/Play";
 import { Word } from "../pages/Word/Word";
 
 import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
+import { WordDetail } from "../pages/Word/Detail/WordDetail";
+
+const wordContents = [
+  { index: true, element: <Word /> },
+  {
+    path: ":selected",
+    children: [{ index: true, element: <WordDetail /> }],
+  },
+];
 
 const playContents = [
   { index: true, loader: loadPlay },
@@ -43,7 +52,12 @@ export const pages = [
     icon: <PlayIcon />,
     children: playContents,
   },
-  { path: "/word", element: <Word />, name: "단어장", icon: <WordIcon /> },
+  {
+    path: "/word",
+    name: "단어장",
+    icon: <WordIcon />,
+    children: wordContents,
+  },
 ];
 
 const onboardStep = [

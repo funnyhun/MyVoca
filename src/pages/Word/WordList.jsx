@@ -8,8 +8,6 @@ const Wrapper = styled.ul`
 `;
 
 export const WordList = ({ wordMap }) => {
-  const exp = wordMap[0];
-
   return (
     <Wrapper>
       {wordMap.map((item, i) => {
