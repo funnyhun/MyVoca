@@ -1,11 +1,11 @@
-import { useState, useMemo, Suspense } from "react";
-import { Outlet, useOutletContext, useParams } from "react-router-dom";
+import { useMemo, Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
-import { useStep } from "./useStep";
-import { useWordData } from "../../context/WordDataContext";
-import { shuffleArray } from "../../utils/initAppData";
 import { useWord } from "../../hooks/useWord";
+import { useStep } from "../../hooks/useMyParam";
+
+import { shuffleArray } from "../../utils/initAppData";
 
 const Wrapper = styled.div`
   height: 100%;

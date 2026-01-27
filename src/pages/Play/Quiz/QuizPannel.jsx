@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
+import { useStep } from "../../../hooks/useMyParam";
+
 import { CircleTimer } from "./CircleTimer";
 import { SmallButton } from "../../../components/Button";
 
 import { RightIcon, CheckCircleIcon } from "../../../assets/iconList";
-import { useNavigate } from "react-router-dom";
-import { useStep } from "../useStep";
 
 const Wrapper = styled.div`
   max-width: ${({ theme }) => theme.max_width};

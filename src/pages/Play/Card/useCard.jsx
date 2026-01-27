@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { useStep } from "../useStep";
+import { useStep } from "../../../hooks/useMyParam";
 
 export const useCard = () => {
   const { words } = useOutletContext();

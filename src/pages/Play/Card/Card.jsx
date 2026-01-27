@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { useStep } from "../useStep";
 import { useCard } from "./useCard";
 
 import { BorderBox } from "../../../components/StyledBox";
