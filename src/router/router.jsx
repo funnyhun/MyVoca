@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
 import { loadUserData } from "./loadUserData";
 import { loadPlay } from "./loadPlay";
@@ -16,17 +12,16 @@ import { StepToData } from "../onboard/StepToData";
 
 import { Home } from "../pages/Home/Home";
 import { Play, Card, Quiz } from "../pages/Play";
-import { Word } from "../pages/Word/Word";
+
+import { Voca } from "../pages/Voca/Voca";
+import { VocaList } from "../pages/Voca/VocaList";
+import { WordList } from "../pages/Voca/Word/WordList";
 
 import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
-import { WordDetail } from "../pages/Word/Detail/WordDetail";
 
 const wordContents = [
-  { index: true, element: <Word /> },
-  {
-    path: ":selected",
-    children: [{ index: true, element: <WordDetail /> }],
-  },
+  { index: true, element: <VocaList /> },
+  { path: ":selected", element: <WordList /> },
 ];
 
 const playContents = [
@@ -34,6 +29,7 @@ const playContents = [
   {
     path: ":selected",
     children: [
+      { index: true, element: <Navigate to="card/0" replace /> },
       { path: "card", element: <Navigate to="0" replace /> },
       { path: "quiz", element: <Navigate to="0" replace /> },
       { path: "card/:step", element: <Card />, name: "카드" },
@@ -53,7 +49,8 @@ export const pages = [
     children: playContents,
   },
   {
-    path: "/word",
+    path: "/voca",
+    element: <Voca />,
     name: "단어장",
     icon: <WordIcon />,
     children: wordContents,

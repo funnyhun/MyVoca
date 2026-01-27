@@ -18,7 +18,7 @@ const Percentage = styled.span`
   font-weight: 600;
 `;
 
-export const WordProgressBar = ({ status }) => {
+export const VocaProgressBar = ({ status }) => {
   return (
     <Wrapper>
       <Percentage>{`${status}%`}</Percentage>

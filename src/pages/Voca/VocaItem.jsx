@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-import { WordProgressBar } from "./WordProgressBar";
+import { VocaProgressBar } from "./VocaProgressBar";
 
 import { CheckCircleIcon, WordIcon, RightIcon } from "../../assets/iconList";
+import { useSelected } from "../../hooks/useMyParam";
 
 const Wrapper = styled.li`
   width: 100%;
@@ -24,46 +25,44 @@ const IncompleteIcon = styled(WordIcon)`
   color: ${({ theme }) => theme.brand};
 `;
 
-const ItemStatus = styled.div`
+const Status = styled.div`
   display: flex;
   align-items: center;
 
-  background-color: ${({ $status, theme }) =>
-    $status ? theme.success : theme.week};
+  background-color: ${({ $status, theme }) => ($status ? theme.success : theme.week)};
 
   padding: 0.75rem 0.7rem;
   border-radius: 3rem;
 `;
 
-const ItemLabel = styled.h3`
+const Label = styled.h3`
   font-size: 1rem;
 `;
-const ItemLength = styled.span`
+const Length = styled.span`
   color: ${({ theme }) => theme.label};
   font-size: 0.8rem;
 `;
 
-const ItemContent = styled.div``;
+const Content = styled.div``;
 
 const NextButton = styled(RightIcon)``;
 
-export const WordItem = ({ item }) => {
+export const VocaItem = ({ item }) => {
   const { id, length, done } = item;
+  const { changeSelected } = useSelected();
 
   const navItemDetail = () => {
-    changeStep(id);
+    changeSelected(id);
   };
 
   return (
     <Wrapper>
-      <ItemStatus $status={done}>
-        {done ? <CompleteIcon /> : <IncompleteIcon />}
-      </ItemStatus>
-      <ItemContent>
-        <ItemLabel>{`Day ${id}`}</ItemLabel>
-        <ItemLength>{`단어 ${length}개`}</ItemLength>
-      </ItemContent>
-      <WordProgressBar status={60} />
+      <Status $status={done}>{done ? <CompleteIcon /> : <IncompleteIcon />}</Status>
+      <Content>
+        <Label>{`Day ${id + 1}`}</Label>
+        <Length>{`단어 ${length}개`}</Length>
+      </Content>
+      <VocaProgressBar status={60} />
       <NextButton onClick={navItemDetail} />
     </Wrapper>
   );
