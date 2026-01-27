@@ -6,7 +6,10 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.5rem;
+
+  padding: 0.1rem;
 `;
 
 const Label = styled.label`
@@ -17,12 +20,13 @@ const Label = styled.label`
 
 const CustomInput = styled.input`
   padding: 0.5rem 1rem;
+  padding-left: ${({ $hasIcon }) => ($hasIcon ? "2rem" : "0.5rem")};
 
-  border: 0.1rem solid ${({ theme }) => theme.sub};
+  border: ${({ $isBorder, theme }) => ($isBorder ? `0.1rem solid ${theme.sub}` : "none")};
   border-radius: 0.5rem;
 
   &:focus {
-    outline: 0.1rem solid ${({ theme }) => theme.label};
+    outline: ${({ $isOutline, theme }) => ($isOutline ? `0.1rem solid ${theme.label}` : "none")};
   }
 
   &::placeholder {
@@ -37,13 +41,47 @@ const Notice = styled.p`
   padding-left: 0.2rem;
 `;
 
-export const Input = ({ label, value, onChange, notice }) => {
+const IconWrapper = styled.div`
+  position: absolute;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+`;
+
+export const Input = ({
+  icon: Icon,
+  label,
+  value,
+  onChange,
+  notice,
+  placeholder,
+  className,
+  $isBorder = true,
+  $isOutline = true,
+}) => {
   const id = useId();
 
   return (
-    <Wrapper>
-      <Label htmlFor={id}>{label}</Label>
-      <CustomInput id={id} value={value} onChange={onChange} placeholder="닉네임 입력(2~10글자)" />
+    <Wrapper className={className}>
+      {Icon && (
+        <IconWrapper>
+          <Icon />
+        </IconWrapper>
+      )}
+      {label && <Label htmlFor={id}>{label}</Label>}
+      <CustomInput
+        autoComplete="off"
+        id={id}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        $hasIcon={!!Icon}
+        $isBorder={$isBorder}
+        $isOutline={$isOutline}
+      />
       {notice && <Notice>{notice}</Notice>}
     </Wrapper>
   );
