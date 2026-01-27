@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { ColumnButton } from "../components/Button";
+import { VerticalButton } from "../components/Button";
 import { Input } from "../components/Input";
 
 import { HiIcon } from "../assets/iconList";
@@ -14,8 +14,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   gap: 1rem;
-
-  padding: 0rem 1rem;
 `;
 
 const Header = styled.div`
@@ -68,6 +66,8 @@ export const StepToNick = () => {
     navigate("/onboard/generate-data");
   };
 
+  const changeNick = (e) => setNick(e.target.value);
+
   return (
     <Wrapper>
       <Header>
@@ -85,12 +85,11 @@ export const StepToNick = () => {
       <Input
         label="닉네임"
         value={nick}
-        onChange={(e) => {
-          setNick(e.target.value);
-        }}
+        onChange={changeNick}
+        placeholder="닉네임 입력(2~10글자)"
         notice="한글, 영문, 숫자 포함 2~10 자로 입력해주세요."
       />
-      <ColumnButton label="다음으로" color="main" bg="brand" onClick={submitNick} />
+      <VerticalButton label="다음으로" color="main" bg="brand" onClick={submitNick} />
     </Wrapper>
   );
 };

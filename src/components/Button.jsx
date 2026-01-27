@@ -10,6 +10,7 @@ const Wrapper = styled.button`
   border: 0px;
   border-radius: 0.5rem;
   padding: 0.75rem;
+  margin-top: auto;
 
   cursor: pointer;
 `;
@@ -39,11 +40,6 @@ const Button = ({ label, color, bg, onClick, className }) => {
   );
 };
 
-// flex layout - column
-const ColumnButton = styled(Button)`
-  flex: 0 0 auto;
-`;
-
 const SmallButton = styled(Button)`
   padding: 0.5rem;
 
@@ -52,4 +48,8 @@ const SmallButton = styled(Button)`
   }
 `;
 
-export { Button, ColumnButton, SmallButton };
+const VerticalButton = styled(Button)`
+  flex: none;
+`;
+
+export { Button, SmallButton, VerticalButton };

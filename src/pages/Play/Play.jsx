@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  padding: 0rem 1rem;
+  padding: 1rem 1rem;
 `;
 
 export const Play = () => {

@@ -1,10 +1,10 @@
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import { ProgressBar } from "../components/ProgressBar";
-import { ColumnButton } from "../components/Button";
 import { initAppData } from "../utils/initAppData";
+import { VerticalButton } from "../components/Button";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -12,8 +12,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
-  padding: 1rem 1rem;
 `;
 
 const Header = styled.div`
@@ -112,7 +110,7 @@ export const StepToData = () => {
         </ProgressHeader>
         <ProgressBar status={status} />
       </ProgressUI>
-      {status === 100 && <ColumnButton label="다음으로" color="main" bg="brand" onClick={startApp} />}
+      {status === 100 && <VerticalButton label="다음으로" color="main" bg="brand" onClick={startApp} />}
     </Wrapper>
   );
 };

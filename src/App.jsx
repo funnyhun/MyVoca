@@ -22,18 +22,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 
-  padding-top: calc(3.8rem + env(safe-area-inset-top));
-  padding-bottom: 1rem;
+  padding-top: calc(2.8rem + env(safe-area-inset-top));
   margin: 0 auto;
 
   overflow-y: auto;
-
-  -ms-overflow-style: none; /* IE, Edge */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
 `;
 
 export const App = () => {
