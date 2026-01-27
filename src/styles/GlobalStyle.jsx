@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.font};
   }
 
-  @media (min-width: 375px) { :root { font-size: 14px; } }
+  @media (min-width: 375px) { :root { font-size: 16px; } }
   @media (min-width: 414px) { :root { font-size: 16px; } }
   @media (min-width: 768px) { :root { font-size: 18px; } }
   @media (min-width: 1024px) { :root { font-size: 20px; } }
@@ -17,13 +17,24 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    // prevent touch-zoom
+    touch-action: manipulation;
+
+    // prevent tap-highlight
     -webkit-tap-highlight-color: transparent;
+
+    // prevent default scroll
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
   }
 
   html, body, #root {
     height: 100vh;
     width: 100%;
-    /* scrollbar-gutter: stable; */
   }
 
   body {
@@ -44,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
 
   span { line-height: 1; }
 
-  input, button { border: 0; }
+  input, button { border: none; }
   button { cursor: pointer; background: none; }
 
   textarea, button, select, input, option, ul, ol, a {
