@@ -50,6 +50,7 @@ export const Navigation = () => {
   const items = pages.slice(1);
 
   const isLocated = (path) => path.split("/")[1] === located;
+
   const navigatePath = (path) => {
     if (isLocated(path)) return;
     navigate(path);

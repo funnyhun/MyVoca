@@ -74,6 +74,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* ICON */
   svg {
+    display: flex;
+    flex: 0 0 auto;
     width: 1.5rem;
     height: 1.5rem;
     color: ${({ theme }) => theme.sub};

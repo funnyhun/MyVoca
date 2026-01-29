@@ -6,6 +6,7 @@ import { Input } from "../../../components/Input";
 import { SearchIcon } from "../../../assets/iconList";
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
 `;

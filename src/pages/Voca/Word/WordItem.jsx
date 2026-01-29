@@ -5,7 +5,7 @@ import { CheckCircleIcon, CircleIcon, MoreVIcon } from "../../../assets/iconList
 const Wrapper = styled.li`
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.5rem;
 
   background-color: ${({ theme }) => theme.main};
 
@@ -19,10 +19,6 @@ const CompleteIcon = styled(CheckCircleIcon)`
 
 const InCompleteIcon = styled(CircleIcon)`
   color: ${({ theme }) => theme.label};
-`;
-
-const MoreButton = styled(MoreVIcon)`
-  margin-left: auto;
 `;
 
 const Status = styled.div`
@@ -42,9 +38,23 @@ const Label = styled.h3`
 
 const Explain = styled.span`
   color: ${({ theme }) => theme.label};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.3rem;
+
+  margin-left: 0.5rem;
+`;
+
+const MoreButton = styled(MoreVIcon)`
+  margin-left: auto;
+`;
 
 export const WordItem = ({ word }) => {
   const { word: label, definitions, done } = word;
@@ -54,7 +64,7 @@ export const WordItem = ({ word }) => {
       <Status $status={done}>{done ? <CompleteIcon /> : <InCompleteIcon />}</Status>
       <Content>
         <Label>{label}</Label>
-        <Explain>{`${definitions[0].class}.${definitions[0].value} ...`}</Explain>
+        <Explain>{`${definitions[0].class}.${definitions[0].value}`}</Explain>
       </Content>
       <MoreButton />
     </Wrapper>

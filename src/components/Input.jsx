@@ -43,7 +43,7 @@ const Notice = styled.p`
 
 const IconWrapper = styled.div`
   position: absolute;
-  left: 1.5rem;
+  left: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
