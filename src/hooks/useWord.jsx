@@ -8,11 +8,13 @@ export const useWord = (selected) => {
   const wordData = useWordData();
 
   // param의 현재 학습 데이터가 아닌 데이터 조회 시 인자로 주입
-  const idx = selected ?? userData.selected;
+  const idx = typeof selected === "number" ? selected : userData.selected;
 
   const words = useMemo(() => {
+    if (!wordMap || !wordMap[idx]) return [];
+
     return wordMap[idx].word.map((i) => wordData[i]);
-  }, [wordMap, userData, wordData]);
+  }, [wordMap, idx, wordData]);
 
   return { words };
 };
