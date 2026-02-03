@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 
 const Wrapper = styled.div`
-  min-width: 360px;
+  min-width: ${({ theme }) => theme.min_width};
 
   // Navigation + ios-bottom-area
   height: calc(100vh - env(safe-area-inset-bottom));

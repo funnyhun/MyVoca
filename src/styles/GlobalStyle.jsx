@@ -1,87 +1,74 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    font-size : 14px;
+    /* 테마 값을 CSS 변수로 주입 (성능 최적화 핵심) */
+    --bg-color: ${({ theme }) => theme.theme};
+    --font-color: ${({ theme }) => theme.font};
+    --sub-color: ${({ theme }) => theme.sub};
+    
+    font-size: 14px;
     font-family: 'Noto Sans', sans-serif;
-    color: ${({ theme }) => theme.font};
   }
 
+  /* 반응형 폰트 사이즈 (중복 제거) */
   @media (min-width: 375px) { :root { font-size: 16px; } }
-  @media (min-width: 414px) { :root { font-size: 16px; } }
   @media (min-width: 768px) { :root { font-size: 18px; } }
   @media (min-width: 1024px) { :root { font-size: 20px; } }
-  @media (min-width: 1280px) { :root { font-size: 22px; } }
 
+  /* 초기화 (필요한 것만 엄격하게) */
   *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-    // prevent touch-zoom
-    touch-action: manipulation;
-
-    // prevent tap-highlight
     -webkit-tap-highlight-color: transparent;
-
-    // prevent default scroll
-    -ms-overflow-style: none; /* IE, Edge */
-    scrollbar-width: none; /* Firefox */
-    &::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
-    }
   }
 
   html, body, #root {
-    height: 100vh;
+    height: 100%;
     width: 100%;
+    /* 스크롤바 숨김은 여기서 한 번만 */
+    overflow: overlay; 
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
   }
 
   body {
-    background-color: ${({ theme }) => theme.theme};
+    background-color: var(--bg-color);
+    color: var(--font-color);
     font-size: 1rem;
-    font-weight: 400;
+    line-height: 1.5;
     user-select: none;
+    touch-action: manipulation;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 { font-weight: 400; }
+  /* 타이포그래피 계층화 */
+  h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.2; }
   h1 { font-size: 2.5rem; }
   h2 { font-size: 2rem; }
   h3 { font-size: 1.5rem; }
-  h4 { font-size: 1.1rem; }
-  h5, h6 { font-size: 1rem; }
 
-  span { line-height: 1; }
-
-  input, button { border: none; }
-  button { cursor: pointer; background: none; }
-
-  textarea, button, select, input, option, ul, ol, a {
-    font-family: inherit;
-    font-size: 1rem; 
-    color: ${({ theme }) => theme.font};
+  /* 폼 요소 초기화 */
+  input, button, select, textarea {
+    font: inherit;
+    color: inherit;
+    border: none;
+    background: none;
   }
 
-  ul, ol {
-    list-style: none;
-  }
+  button { cursor: pointer; }
+  ul, ol { list-style: none; }
+  a { text-decoration: none; color: inherit; }
 
-  a {
-    text-decoration: none;
-  }
-
-  /* ICON */
+  /* 아이콘 최적화 */
   svg {
-    display: flex;
-    flex: 0 0 auto;
+    display: inline-block;
+    vertical-align: middle;
     width: 1.5rem;
     height: 1.5rem;
-    color: ${({ theme }) => theme.sub};
-
-    & * {
-      fill: currentColor;
-    }
+    fill: var(--sub-color);
+    flex-shrink: 0;
   }
 `;
