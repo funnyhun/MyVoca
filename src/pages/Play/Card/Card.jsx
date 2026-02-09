@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
@@ -37,11 +37,34 @@ const Title = styled.h3`
   letter-spacing: 0.2rem;
 `;
 
+const createAudio = () => {
+  const audio = new SpeechSynthesisUtterance();
+
+  audio.lang = "en-US";
+  audio.rate = 0.9;
+
+  return audio;
+};
+
 export const Card = () => {
   const { mode, total, done, wordSet, events } = useCard();
 
   const { changeMode, prevCard, nextCard, replayCard } = events;
   const { word, definitions } = wordSet;
+
+  const AUDIO = useMemo(() => createAudio(), []);
+
+  useEffect(() => {
+    return () => window.speechSynthesis.cancel();
+  });
+
+  const playAudio = () => {
+    window.speechSynthesis.cancel();
+
+    AUDIO.text = word;
+
+    window.speechSynthesis.speak(AUDIO);
+  };
 
   const CONTENT = {
     word: <Title $length={word.length}>{word}</Title>,
@@ -51,7 +74,7 @@ export const Card = () => {
   return mode !== "complete" ? (
     <>
       <PlayProgressBar total={total} done={done} />
-      <AudioButton />
+      <AudioButton onClick={playAudio} />
       <CustomBorderBox>{CONTENT[mode]}</CustomBorderBox>
       <CardPannel
         changeEvent={changeMode}
