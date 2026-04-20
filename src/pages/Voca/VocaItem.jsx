@@ -48,7 +48,7 @@ const Content = styled.div``;
 const NextButton = styled(RightIcon)``;
 
 export const VocaItem = ({ item }) => {
-  const { id, length, done } = item;
+  const { id, length, done, progress } = item;
   const { changeSelected } = useSelected();
 
   const navItemDetail = () => {
@@ -62,8 +62,9 @@ export const VocaItem = ({ item }) => {
         <Label>{`Day ${id + 1}`}</Label>
         <Length>{`단어 ${length}개`}</Length>
       </Content>
-      <VocaProgressBar status={60} />
+      <VocaProgressBar status={progress} />
       <NextButton onClick={navItemDetail} />
     </Wrapper>
   );
 };
+

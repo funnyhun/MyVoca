@@ -29,21 +29,7 @@ export const VocaList = () => {
       {wordMap.map((item, i) => {
         return <VocaItem item={item} key={i} />;
       })}
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
-      <VocaItem item={wordMap[0]} />
     </Wrapper>
+
   );
 };

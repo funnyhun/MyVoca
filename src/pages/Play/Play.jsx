@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import { useWord } from "../../hooks/useWord";
-import { useStep } from "../../hooks/useMyParam";
+import { useStep, useSelected } from "../../hooks/useMyParam";
 
 import { shuffleArray } from "../../utils/initAppData";
 
@@ -18,15 +18,16 @@ const Wrapper = styled.div`
 `;
 
 export const Play = () => {
-  const { words } = useWord();
+  const { selected } = useSelected();
+  const { words } = useWord(selected);
   const { step } = useStep();
 
   const context = useMemo(() => {
     return {
       words,
-      quizs: shuffleArray(words).filter((w) => w.done === false),
+      quizs: shuffleArray([...words]).filter((w) => w.done === false),
     };
-  }, [words]);
+  }, [selected, words.length]); // Re-calculate only when day changes or words are loaded/changed in count
 
   return (
     <Wrapper>

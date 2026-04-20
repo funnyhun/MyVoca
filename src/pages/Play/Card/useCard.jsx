@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-
 import { useStep } from "../../../hooks/useMyParam";
+import { updateWordStatus } from "../../../utils/voca";
 
 export const useCard = () => {
   const { words } = useOutletContext();
@@ -18,6 +18,12 @@ export const useCard = () => {
   };
 
   const nextCard = () => {
+    // 현재 단어 학습 완료 처리
+    const currentWord = words[step];
+    if (currentWord) {
+      updateWordStatus(currentWord.id, true);
+    }
+
     if (step === words.length - 1) {
       setMode("complete");
       return;
@@ -28,6 +34,7 @@ export const useCard = () => {
   const replayCard = () => {
     changeStep(0);
   };
+
 
   return {
     mode,

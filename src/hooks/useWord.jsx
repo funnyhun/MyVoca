@@ -11,10 +11,26 @@ export const useWord = (selected) => {
   const idx = typeof selected === "number" ? selected : userData.selected;
 
   const words = useMemo(() => {
-    if (!wordMap || !wordMap[idx]) return [];
+    if (!wordMap || !wordMap[idx]) {
+      console.warn(`Day ${idx}에 해당하는 wordMap이 없습니다.`);
+      return [];
+    }
 
-    return wordMap[idx].word.map((i) => wordData[i]);
+    return wordMap[idx].word.map((i) => {
+      // 숫자, 문자열, 혹은 공백이 섞인 경우를 모두 대비한 룩업
+      const data = wordData[i] || wordData[String(i)] || wordData[Number(i)];
+      
+      if (!data) {
+        console.error(`단어 데이터 찾기 실패: ID ${i} (타입: ${typeof i})`, { 
+          wordDataKeys: Object.keys(wordData).slice(0, 5),
+          isTypeMatch: Object.keys(wordData).includes(String(i))
+        });
+      }
+      return data;
+    }).filter(Boolean);
+
   }, [wordMap, idx, wordData]);
+
 
   return { words };
 };

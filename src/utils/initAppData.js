@@ -1,3 +1,5 @@
+import { supabase } from "./supabase";
+
 const dummyProgress = (duration, setStatus) => {
   const steps = 100;
   const interval = duration / steps;
@@ -29,33 +31,58 @@ export const shuffleArray = (array) => {
   return result;
 };
 
-const initWordMap = async (length, bundle) => {
-  let wordNode = Array.from({ length: length }, (_, i) => i);
-  const randomWordNode = shuffleArray(wordNode);
+const initWordMap = async (length, bundleSize) => {
+  const { data: { session } } = await supabase.auth.getSession();
 
-  const map = [];
+  // 1. Supabase에서 실제 단어 ID 목록 가져오기 (Anon-key로 가능)
+  const { data: words, error } = await supabase.from("Word").select("word_id");
+  
+  if (error || !words) {
+    console.error("단어 ID 목록 로드 실패:", error?.message);
+    return;
+  }
+
+  // 실제 ID들로 셔플링 수행
+  const wordIds = words.map(w => w.word_id);
+  const shuffledIds = shuffleArray(wordIds);
+  const wordMap = [];
+
   let idx = 0;
-  let mapId = 0;
-
-  while (idx < length) {
-    const chunk = randomWordNode.slice(idx, idx + bundle);
-
-    map.push({
-      id: mapId++,
+  let dayNum = 0;
+  while (idx < shuffledIds.length) {
+    const chunk = shuffledIds.slice(idx, idx + bundleSize);
+    wordMap.push({
+      id: dayNum++,
       word: chunk,
       length: chunk.length,
       done: false,
     });
-
-    idx += bundle;
+    idx += bundleSize;
   }
 
-  window.localStorage.setItem("wordMap", JSON.stringify(map));
+  // 2. LocalStorage에 저장 (기본)
+  window.localStorage.setItem("wordMap", JSON.stringify(wordMap));
+
+  // 3. 로그인된 상태라면 Supabase Voca 테이블에도 동기화
+  if (session) {
+    const vocaInserts = [];
+    wordMap.forEach((day) => {
+      day.word.forEach((id) => {
+        vocaInserts.push({
+          user_id: session.user.id,
+          word_id: id,
+          day_number: day.id,
+          status: false,
+        });
+      });
+    });
+    await supabase.from("Voca").upsert(vocaInserts);
+  }
 };
+
 
 const initUserData = async () => {
   const now = new Date();
-
   const UserData = {
     startedTime: now.setHours(0, 0, 0, 0),
     continued: 0,
@@ -63,12 +90,14 @@ const initUserData = async () => {
     learned: 0,
     selected: 0,
   };
-
   window.localStorage.setItem("userData", JSON.stringify(UserData));
 };
 
 export const initAppData = async (length, bundleSize, setStatus) => {
-  await Promise.all([initWordMap(length, bundleSize), initUserData(), dummyProgress(1500, setStatus)]);
+  // 실제 데이터 초기화 작업 진행
+  await Promise.all([initWordMap(length, bundleSize), initUserData(), dummyProgress(2000, setStatus)]);
   setStatus(100);
   return true;
 };
+
+

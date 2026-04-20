@@ -1,10 +1,9 @@
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 import { Header, Navigation } from "./layout";
-
-import { calculateDate } from "./utils/utils";
+import { supabase } from "./utils/supabase";
 
 const Layout = styled.div`
   min-width: ${({ theme }) => theme.min_width};
@@ -54,3 +53,4 @@ export const App = () => {
     </Layout>
   );
 };
+

@@ -35,9 +35,6 @@ function WordFilter({ currentFilter, setFilterType }) {
           {FILTER_SET[key].label}
         </FilterItem>
       ))}
-      <FilterItem>임시필터</FilterItem>
-      <FilterItem>임시필터</FilterItem>
-      <FilterItem>임시필터</FilterItem>
     </Wrapper>
   );
 }

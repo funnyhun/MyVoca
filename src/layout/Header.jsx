@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // icon
 import { AccountIcon } from "../assets/iconList";
+import { NotificationList } from "../components/NotificationList";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -37,15 +39,39 @@ const Title = styled.h1`
   cursor: pointer;
 `;
 
+const RightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+`;
+
+const NotificationBtn = styled.div`
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: ${({ theme, $hasUnread }) => ($hasUnread ? theme.brand : theme.sub)};
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+`;
+
 export const Header = () => {
   const navigation = useNavigate();
+  const [showNoti, setShowNoti] = useState(false);
 
   const navHome = () => navigation("/home");
+  const toggleNoti = () => setShowNoti((prev) => !prev);
 
   return (
-    <Wrapper>
-      <Title onClick={navHome}>MyVoca</Title>
-      <AccountIcon />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Title onClick={navHome}>MyVoca</Title>
+        <RightSection>
+          <NotificationBtn $hasUnread={true} onClick={toggleNoti} />
+          <AccountIcon />
+        </RightSection>
+      </Wrapper>
+      {showNoti && <NotificationList onClose={() => setShowNoti(false)} />}
+    </>
   );
 };
+

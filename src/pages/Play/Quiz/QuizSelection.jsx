@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import { Option } from "./Option";
@@ -9,16 +10,18 @@ const Wrapper = styled.div`
 `;
 
 export const QuizSelection = ({ onClick, wrongs, answer }) => {
-  const options = [...wrongs, answer];
+  const options = useMemo(() => {
+    return [...wrongs, answer].sort(() => 0.5 - Math.random());
+  }, [wrongs, answer]);
 
   return (
     <Wrapper>
-      {options.map((label) => (
+      {options.map((label, idx) => (
         <Option
-          key={label}
+          key={`${label}-${idx}`}
           label={label}
           corrected={label === answer}
-          onClick={label === answer && onClick}
+          onClick={label === answer ? onClick : undefined}
         />
       ))}
     </Wrapper>

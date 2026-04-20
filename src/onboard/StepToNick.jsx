@@ -6,6 +6,7 @@ import { VerticalButton } from "../components/Button";
 import { Input } from "../components/Input";
 
 import { HiIcon } from "../assets/iconList";
+import { supabase } from "../utils/supabase";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -61,10 +62,14 @@ export const StepToNick = () => {
   const [nick, setNick] = useState("");
 
   const submitNick = () => {
-    // 유효성 검사 생략
+    if (nick.length < 2) return;
+
+    // Guest 유저: LocalStorage에 닉네임 저장
     window.localStorage.setItem("nick", nick);
     navigate("/onboard/generate-data");
   };
+
+
 
   const changeNick = (e) => setNick(e.target.value);
 
