@@ -16,8 +16,9 @@ import { Play, Card, Quiz } from "../pages/Play";
 import { Voca } from "../pages/Voca/Voca";
 import { VocaList } from "../pages/Voca/VocaList";
 import { WordList } from "../pages/Voca/Word/WordList";
+import { Settings } from "../pages/Settings/Settings";
 
-import { HomeIcon, PlayIcon, WordIcon } from "../assets/iconList";
+import { HomeIcon, PlayIcon, WordIcon, AccountIcon } from "../assets/iconList";
 
 const wordContents = [
   { index: true, element: <VocaList /> },
@@ -54,6 +55,12 @@ export const pages = [
     name: "단어장",
     icon: <WordIcon />,
     children: wordContents,
+  },
+  {
+    path: "/settings",
+    element: <Settings />,
+    name: "설정",
+    icon: <AccountIcon />,
   },
 ];
 
