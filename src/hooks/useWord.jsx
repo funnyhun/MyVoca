@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { useWordData } from "../context/WordDataContext";
 
 export const useWord = (selected) => {
-  const { wordMap, userData } = useOutletContext();
+  const { wordMap, userData, wordStatusMap = {} } = useOutletContext();
   const wordData = useWordData();
 
   // param의 현재 학습 데이터가 아닌 데이터 조회 시 인자로 주입
@@ -25,11 +25,17 @@ export const useWord = (selected) => {
           wordDataKeys: Object.keys(wordData).slice(0, 5),
           isTypeMatch: Object.keys(wordData).includes(String(i))
         });
+        return null;
       }
-      return data;
+      
+      // 유저의 학습 상태(done) 반영
+      return {
+        ...data,
+        done: wordStatusMap[i] || wordStatusMap[String(i)] || wordStatusMap[Number(i)] || false
+      };
     }).filter(Boolean);
 
-  }, [wordMap, idx, wordData]);
+  }, [wordMap, idx, wordData, wordStatusMap]);
 
 
   return { words };

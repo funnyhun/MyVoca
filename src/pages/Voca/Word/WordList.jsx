@@ -46,9 +46,19 @@ export const WordList = () => {
   };
 
   const filteredWords = useMemo(() => {
-    const filter = FILTER_SET[filterType].callback;
-    return filter(words);
-  }, [words, filterType]);
+    let result = FILTER_SET[filterType].callback(words);
+    if (keyword.trim()) {
+      const lowerKeyword = keyword.toLowerCase();
+      result = result.filter(
+        (word) =>
+          word.word.toLowerCase().includes(lowerKeyword) ||
+          word.definitions.some((def) =>
+            def.value.toLowerCase().includes(lowerKeyword)
+          )
+      );
+    }
+    return result;
+  }, [words, filterType, keyword]);
 
   const renderContentUI = useCallback(() => {
     if (words.length === 0) return <WordEmpty />;
@@ -62,7 +72,7 @@ export const WordList = () => {
 
   return (
     <Wrapper>
-      <WordSearch />
+      <WordSearch keyword={keyword} setKeyword={setKeyword} />
       <WordFilter currentFilter={filterType} setFilterType={setFilterType} />
       <Content>{renderContentUI()}</Content>
     </Wrapper>

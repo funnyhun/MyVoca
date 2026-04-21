@@ -18,7 +18,7 @@ const Wrapper = styled.li`
 `;
 
 const CompleteIcon = styled(CheckCircleIcon)`
-  color: ${({ theme }) => theme.success};
+  color: ${({ theme }) => theme.main};
 `;
 
 const IncompleteIcon = styled(WordIcon)`
@@ -28,11 +28,13 @@ const IncompleteIcon = styled(WordIcon)`
 const Status = styled.div`
   display: flex;
   align-items: center;
-
-  background-color: ${({ $status, theme }) => ($status ? theme.success : theme.week)};
-
+  background-color: ${({ theme }) => theme.week};
   padding: 0.75rem 0.7rem;
   border-radius: 3rem;
+
+  & > svg {
+    fill: ${({ $status, theme }) => ($status ? theme.success : theme.brand)};
+  }
 `;
 
 const Label = styled.h3`

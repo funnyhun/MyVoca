@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 
 import { Input } from "../../../components/Input";
 
@@ -11,17 +10,15 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const WordSearch = () => {
-  const [value, setValue] = useState("");
-
-  const changeValue = (e) => setValue(e.target.value);
+export const WordSearch = ({ keyword, setKeyword }) => {
+  const changeValue = (e) => setKeyword(e.target.value);
 
   return (
     <Wrapper>
       <Input
         icon={SearchIcon}
         label=""
-        value={value}
+        value={keyword}
         onChange={changeValue}
         notice={""}
         placeholder={"단어 또는 뜻 검색"}

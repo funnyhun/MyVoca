@@ -22,14 +22,14 @@ export const updateWordStatus = async (wordId, status = true) => {
     if (!wordMap) return;
 
     // 해당 단어가 포함된 Day를 찾아 진행도 업데이트
+    let learnedIncrement = 0;
     const updatedWordMap = wordMap.map((day) => {
       if (day.word.includes(wordId)) {
-        // 단어별 개별 status 관리가 현재 로컬 구조에 없으므로
-        // 간단하게 해당 단어가 있는 Day의 progress를 업데이트하거나 
-        // 추후 개별 단어 status 저장을 위한 객체 구조로 변경 필요.
-        // 현재는 UI 일관성을 위해 progress만 소폭 상승시키는 등의 처리 가능.
         const finishedInDay = day.finishedCount || 0;
+        // 임시 방편: 단순히 증가시키되 중복 방지는 현재 구조상 어려움 (추후 단어별 상태 저장 필요)
         const newFinishedCount = Math.min(finishedInDay + 1, day.length);
+        if (newFinishedCount > finishedInDay) learnedIncrement = 1;
+        
         return {
           ...day,
           finishedCount: newFinishedCount,
@@ -41,6 +41,14 @@ export const updateWordStatus = async (wordId, status = true) => {
     });
 
     window.localStorage.setItem("wordMap", JSON.stringify(updatedWordMap));
+
+    if (learnedIncrement > 0) {
+      const userData = JSON.parse(window.localStorage.getItem("userData"));
+      if (userData) {
+        userData.learned += learnedIncrement;
+        window.localStorage.setItem("userData", JSON.stringify(userData));
+      }
+    }
   }
 };
 

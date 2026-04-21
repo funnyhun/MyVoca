@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-import { CheckCircleIcon, CircleIcon, MoreVIcon } from "../../../assets/iconList";
+import { useRevalidator } from "react-router-dom";
+import { updateWordStatus } from "../../../utils/voca";
+import { CheckCircleIcon, WordIcon, MoreVIcon } from "../../../assets/iconList";
 
 const Wrapper = styled.li`
   display: flex;
@@ -17,18 +19,20 @@ const CompleteIcon = styled(CheckCircleIcon)`
   color: ${({ theme }) => theme.main};
 `;
 
-const InCompleteIcon = styled(CircleIcon)`
-  color: ${({ theme }) => theme.label};
+const InCompleteIcon = styled(WordIcon)`
+  color: ${({ theme }) => theme.brand};
 `;
 
 const Status = styled.div`
   display: flex;
   align-items: center;
-
-  background-color: ${({ $status, theme }) => ($status ? theme.brand : theme.sub)};
-
+  background-color: ${({ theme }) => theme.week};
   padding: 0.75rem 0.7rem;
   border-radius: 3rem;
+
+  & > svg {
+    fill: ${({ $status, theme }) => ($status ? theme.success : theme.brand)};
+  }
 `;
 
 const Label = styled.h3`
@@ -57,11 +61,19 @@ const MoreButton = styled(MoreVIcon)`
 `;
 
 export const WordItem = ({ word }) => {
-  const { word: label, definitions, done } = word;
+  const { revalidate } = useRevalidator();
+  const { word: label, definitions, done, id } = word;
+
+  const handleToggle = async () => {
+    await updateWordStatus(id, !done);
+    revalidate();
+  };
 
   return (
     <Wrapper>
-      <Status $status={done}>{done ? <CompleteIcon /> : <InCompleteIcon />}</Status>
+      <Status $status={done} onClick={handleToggle} style={{ cursor: "pointer" }}>
+        {done ? <CompleteIcon /> : <InCompleteIcon />}
+      </Status>
       <Content>
         <Label>{label}</Label>
         <Explain>{`${definitions[0].class}.${definitions[0].value}`}</Explain>
