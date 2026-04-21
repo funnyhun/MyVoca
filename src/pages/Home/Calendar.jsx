@@ -54,7 +54,7 @@ const DayCircle = styled.div`
   width: 2.5rem;
   height: 2.5rem;
 
-  visibility: ${({ $isLearned }) => ($isLearned !== null ? "visible" : "hidden")};
+  visibility: ${({ $isEmpty }) => ($isEmpty ? "hidden" : "visible")};
 
   text-align: center;
   line-height: 1;
@@ -130,7 +130,8 @@ export const Calendar = ({ mode, userData, now, wordMap }) => {
                   key={`${i}${j}`}
                   $isSunday={j === 0}
                   $isToday={isValidYearMonth && isToday}
-                  $isDone={day && day.status}
+                  $isLearned={day && day.status === true}
+                  $isEmpty={!day}
                 >
                   {day ? day.value : day}
                 </DayCircle>

@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { useOutletContext } from "react-router-dom";
 
-import { UserDataSection } from "./UserDataSection";
-import { PlayButton } from "./PlayButton";
 import { Calendar } from "./Calendar";
+import { StatsDashboard } from "./StatsDashboard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,8 +18,7 @@ export const Home = () => {
 
   return (
     <Wrapper>
-      <UserDataSection userData={userData} />
-      <PlayButton />
+      <StatsDashboard userData={userData} wordMap={wordMap} />
       <Calendar mode={"compact"} now={now} selectedDay={selectedDay} userData={userData} wordMap={wordMap} />
     </Wrapper>
   );
