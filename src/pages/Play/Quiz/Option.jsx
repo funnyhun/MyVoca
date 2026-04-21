@@ -14,10 +14,11 @@ const OptionButton = styled(Button)`
   }
 `;
 
-export const Option = ({ label, corrected, onClick }) => {
+export const Option = ({ label, corrected, onClick, disabled }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const clickedOption = () => {
+    if (disabled) return;
     setIsClicked(true);
     if (corrected) onClick();
   };
@@ -40,6 +41,7 @@ export const Option = ({ label, corrected, onClick }) => {
       color={buttonProperty.color}
       onClick={clickedOption}
       $isClicked={isClicked}
+      disabled={disabled}
     />
   );
 };

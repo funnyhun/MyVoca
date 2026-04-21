@@ -61,7 +61,7 @@ export const CircleTimer = ({ second = 3, callback }) => {
     return () => {
       clearTimeout(timerId);
     };
-  }, []);
+  }, [second, callback]);
 
   return (
     <TimerWrapper>

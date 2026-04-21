@@ -75,7 +75,7 @@ export const QuizPannel = ({ disable }) => {
 
   return (
     <Wrapper>
-      <CircleTimer max={3} callback={navNextQuiz} />
+      <CircleTimer second={3} callback={navNextQuiz} />
       <Text>
         <Content>
           <CheckIcon />

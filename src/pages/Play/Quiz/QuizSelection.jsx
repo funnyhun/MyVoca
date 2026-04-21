@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   gap: 0.5rem;
 `;
 
-export const QuizSelection = ({ onClick, wrongs, answer }) => {
+export const QuizSelection = ({ onClick, wrongs, answer, disabled }) => {
   const options = useMemo(() => {
     return [...wrongs, answer].sort(() => 0.5 - Math.random());
   }, [wrongs, answer]);
@@ -22,6 +22,7 @@ export const QuizSelection = ({ onClick, wrongs, answer }) => {
           label={label}
           corrected={label === answer}
           onClick={label === answer ? onClick : undefined}
+          disabled={disabled}
         />
       ))}
     </Wrapper>
