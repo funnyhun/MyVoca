@@ -20,12 +20,17 @@ const LightTheme = {
 
 const DarkTheme = {
   ...AppSetting,
-  themeColor: "#000",
-  inverseColor: "#fff",
-  color: "#F5F5F5",
-  subColor: "#9b9b9bff",
-  accentColor: "#232222",
-  borderColor: "#373737",
+  main: "#000",
+  inverse: "#fff",
+  background: "#121212",
+  font: "#F5F5F5",
+  label: "#9b9b9b",
+  sub: "#9b9b9bff",
+  brand: "#137FEC",
+  week: "#2c3e50",
+  success: "#34C759",
+  week_success: "#7ED321",
+  danger: "#FF3B30",
 };
 
 export { LightTheme, DarkTheme };

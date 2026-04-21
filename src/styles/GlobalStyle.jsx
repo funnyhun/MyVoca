@@ -3,7 +3,7 @@ import { createGlobalStyle, css } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   :root {
     /* 테마 값을 CSS 변수로 주입 (성능 최적화 핵심) */
-    --bg-color: ${({ theme }) => theme.theme};
+    --bg-color: ${({ theme }) => theme.background};
     --font-color: ${({ theme }) => theme.font};
     --sub-color: ${({ theme }) => theme.sub};
     

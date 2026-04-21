@@ -3,10 +3,10 @@ import styled from "styled-components";
 export const BorderBox = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
+  flex: 1;
   gap: 0.5rem;
 
-  padding: 0.75rem;
+  padding: 1rem;
 
   text-align: left;
   background-color: ${({ theme }) => theme.main};

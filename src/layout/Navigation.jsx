@@ -35,12 +35,15 @@ const Item = styled.li`
   list-style: none;
   line-height: 1;
   font-size: 0.6rem;
-  font-weight: 300;
+  font-weight: ${({ $located }) => ($located ? 600 : 300)};
 
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  color: ${({ $located, theme }) => ($located ? theme.brand : theme.sub)};
 
   & > svg {
-    color: ${({ $located, theme }) => ($located ? theme.brand : theme.sub)};
+    fill: ${({ $located, theme }) => ($located ? theme.brand : theme.sub)};
   }
 `;
 
