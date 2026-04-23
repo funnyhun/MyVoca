@@ -29,21 +29,23 @@ const Wrapper = styled.div`
 
 export const App = () => {
   const now = new Date();
-  const { nick, wordMap, userData, selectedWord } = useLoaderData();
+  const { nick, wordMap, wordStatusMap, notifications, userData, selectedWord } = useLoaderData();
 
   const AppContext = useMemo(() => {
     return {
       nick,
       wordMap,
+      wordStatusMap,
+      notifications,
       userData,
       now,
       selectedWord,
     };
-  }, [nick, wordMap, userData, now, selectedWord]);
+  }, [nick, wordMap, wordStatusMap, notifications, userData, now, selectedWord]);
 
   return (
     <Layout>
-      <Header />
+      <Header notifications={notifications} />
       <Wrapper>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet context={AppContext} />

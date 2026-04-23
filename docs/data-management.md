@@ -53,3 +53,15 @@
 ## 4. 데이터 마이그레이션 (Migration)
 
 게스트 모드로 사용하던 사용자가 로그인을 할 경우, `migrateLocalDataToSupabase` 함수가 실행되어 로컬에 저장되어 있던 학습 기록을 Supabase DB로 통합합니다. 이를 통해 기기 변경 시에도 학습 데이터를 유지할 수 있습니다.
+
+---
+
+## 5. 알림(Notification) 시스템
+
+알림 시스템은 시스템 공지와 사용자 개인 알림을 관리합니다.
+
+- **데이터 스키마**: `public.Notification` 테이블에 `title`, `content`, `type`, `user_id` 등의 구조로 알림 데이터를 저장합니다.
+- **데이터 흐름**:
+    1. 클라이언트의 `NotificationList` 컴포넌트가 마운트될 때 Supabase에서 알림 데이터를 최신순(`created_at` 내림차순)으로 Fetch합니다.
+    2. RLS 정책을 통해 전체 사용자 대상 공지(`user_id IS NULL`)와 현재 로그인한 사용자 본인의 알림만 수신합니다.
+    3. 클라이언트 코드(Front-end) 레벨에서 로그인 여부에 따른 필수 시스템 알림(예: 데이터 동기화 권장, 동기화 완료 상태)을 Fetch된 데이터 상단에 병합(Merge)하여 노출합니다.

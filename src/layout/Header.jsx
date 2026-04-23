@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // icon
-import { AccountIcon } from "../assets/iconList";
 import { NotificationList } from "../components/NotificationList";
 
 const Wrapper = styled.div`
@@ -54,10 +53,9 @@ const NotificationBtn = styled.div`
   position: relative;
 `;
 
-export const Header = () => {
+export const Header = ({ notifications }) => {
   const navigation = useNavigate();
   const [showNoti, setShowNoti] = useState(false);
-
   const navHome = () => navigation("/home");
   const toggleNoti = () => setShowNoti((prev) => !prev);
 
@@ -66,11 +64,12 @@ export const Header = () => {
       <Wrapper>
         <Title onClick={navHome}>MyVoca</Title>
         <RightSection>
-          <NotificationBtn $hasUnread={true} onClick={toggleNoti} />
-          <AccountIcon />
+          <NotificationBtn $hasUnread={notifications?.length > 0} onClick={toggleNoti} />
         </RightSection>
       </Wrapper>
-      {showNoti && <NotificationList onClose={() => setShowNoti(false)} />}
+      {showNoti && (
+        <NotificationList notifications={notifications} onClose={() => setShowNoti(false)} />
+      )}
     </>
   );
 };

@@ -6,6 +6,35 @@ import { migrateLocalDataToSupabase } from "../utils/migration";
 export const loadUserData = async () => {
   const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
+  // 3. 공통: 알림 데이터 로드 (깜빡임 방지를 위해 로더로 이동)
+  let dbNotis = [];
+  try {
+    const { data } = await supabase
+      .from("Notification")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (data) dbNotis = data;
+  } catch (e) {
+    console.warn("알림 로드 실패:", e);
+  }
+
+  const notifications = [...dbNotis];
+  if (!session) {
+    notifications.unshift({
+      id: "sync_req",
+      title: "데이터 동기화 권장",
+      content: "로그인하여 단어장 데이터를 안전하게 보호하고 기기 간 동기화를 시작하세요.",
+      type: "sync",
+    });
+  } else {
+    notifications.unshift({
+      id: "sync_ok",
+      title: "동기화 완료",
+      content: "현재 카카오 계정으로 실시간 데이터 동기화가 활성화되어 있습니다.",
+      type: "status",
+    });
+  }
+
   // 1. OAuth 로그인 유저: Supabase DB 우선 로드
   if (session && !sessionError) {
     console.log("현재 세션 유저 ID:", session.user.id);
@@ -23,17 +52,11 @@ export const loadUserData = async () => {
     }
 
     try {
-      // 디버깅을 위해 조건 없이 전체 데이터를 일단 가져와 봅니다.
-      const { data: debugData } = await supabase.from("Voca").select("user_id");
-      console.log("Voca 내 현재 유저의 학습 데이터 쌍:", debugData?.map(d => d.user_id));
-
       const { data: userProfile, error: profileError } = await supabase
         .from("User")
         .select("*")
         .eq("user_id", session.user.id)
         .maybeSingle();
-
-
 
       if (userProfile && !profileError) {
         console.log("Voca 데이터 조회 시작 (userId):", session.user.id);
@@ -42,14 +65,8 @@ export const loadUserData = async () => {
           .select("*")
           .eq("user_id", session.user.id);
 
-        if (vocaError) {
-          console.error("Voca 데이터 조회 에러 상세:", vocaError);
-        }
-        console.log("Voca 조회 결과 데이터:", vocaData);
-
         if (vocaData && vocaData.length > 0 && !vocaError) {
-
-          // 1. Day 단위로 그룹화 (객체 사용으로 sparse array 방지)
+          // 1. Day 단위로 그룹화
           const dayGroups = vocaData.reduce((acc, curr) => {
             const dayId = curr.day_number;
             if (!acc[dayId]) {
@@ -62,27 +79,32 @@ export const loadUserData = async () => {
             return acc;
           }, {});
 
-          // 2. Day 번호를 인덱스로 하는 배열 생성 (Sparse Array 대응)
           const maxDay = Math.max(...Object.keys(dayGroups).map(Number), 0);
           const processedWordMap = Array.from({ length: maxDay + 1 }, (_, i) => {
             const day = dayGroups[i];
-            if (!day) return null; // 데이터가 없는 Day는 null 처리
+            if (!day) return null;
             return {
               ...day,
-              progress: Math.floor((day.finishedCount / day.length) * 100)
+              progress: Math.floor((day.finishedCount / day.length) * 100),
             };
           });
 
+          const wordStatusMap = vocaData.reduce((acc, curr) => {
+            acc[curr.word_id] = curr.status;
+            return acc;
+          }, {});
 
           return {
             nick: loadLocalStorage("nick") || userProfile.nick,
             wordMap: processedWordMap,
+            wordStatusMap,
+            notifications,
             userData: {
               startedTime: new Date(userProfile.created_at).getTime(),
               continued: 0,
               today: 0,
-              learned: vocaData.filter(v => v.status).length,
-              selected: 0
+              learned: vocaData.filter((v) => v.status).length,
+              selected: 0,
             },
           };
         }
@@ -100,13 +122,10 @@ export const loadUserData = async () => {
   if (!nick) return redirect("/onboard/nickname");
   if (!wordMap || !userData) return redirect("/onboard/generate-data");
 
-  // 게스트 유저도 동일하게 진행도(progress) 계산 (구버전 데이터 호환성 및 UI 일관성)
-  const processedWordMap = wordMap.map(day => {
-    // 만약 단어별 status가 없다면 기본적으로 0% 또는 계산 로직 적용
-    // 현재 로컬 구조는 Day 단위로 done 여부만 관리하므로 이를 progress로 변환
+  const processedWordMap = wordMap.map((day) => {
     return {
       ...day,
-      progress: day.progress ?? (day.done ? 100 : 0)
+      progress: day.progress ?? (day.done ? 100 : 0),
     };
   });
 
@@ -114,8 +133,10 @@ export const loadUserData = async () => {
     nick,
     wordMap: processedWordMap,
     userData,
+    notifications,
   };
 };
+
 
 
 
