@@ -103,7 +103,7 @@ export const Calendar = ({ mode, userData, now, wordMap }) => {
       <Header>
         <Title>학습기록</Title>
         <Label>
-          연속 학습 <span>{`${userData.learned}일 째`}</span>
+          연속 학습 <span>{`${userData.continued ?? 0}일 째`}</span>
         </Label>
         <Pannel>
           <LeftIcon onClick={prevMonth} />

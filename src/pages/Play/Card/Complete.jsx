@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Button } from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelected } from "../../../hooks/useMyParam";
+import { useEffect } from "react";
+import { updateLearningStats } from "../../../utils/utils";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -50,6 +52,10 @@ const Pannel = styled.div`
 export const Complete = ({ replayCard }) => {
   const navigate = useNavigate();
   const { selected } = useSelected();
+
+  useEffect(() => {
+    updateLearningStats();
+  }, []);
 
   const navigateQuiz = () => navigate(`/play/${selected}/quiz/0`);
 

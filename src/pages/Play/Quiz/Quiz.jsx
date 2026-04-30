@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
 import { updateWordStatus } from "../../../utils/voca";
 
@@ -65,7 +65,7 @@ export const Quiz = () => {
     }
 
     return { question, answer, wrongs };
-  }, [currentQuiz, quizs]);
+  }, [currentQuiz, step]);
 
   if (step >= quizs.length) {
     return <Complete />;

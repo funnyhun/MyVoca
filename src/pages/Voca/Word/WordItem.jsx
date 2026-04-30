@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 import { useRevalidator } from "react-router-dom";
 import { updateWordStatus } from "../../../utils/voca";
 import { CheckCircleIcon, WordIcon, MoreVIcon } from "../../../assets/iconList";
+import { WordDetail } from "./WordDetail";
 
 const Wrapper = styled.li`
   display: flex;
@@ -58,11 +60,14 @@ const Content = styled.div`
 
 const MoreButton = styled(MoreVIcon)`
   margin-left: auto;
+  cursor: pointer;
+  flex-shrink: 0;
 `;
 
 export const WordItem = ({ word }) => {
   const { revalidate } = useRevalidator();
   const { word: label, definitions, done, id } = word;
+  const [showDetail, setShowDetail] = useState(false);
 
   const handleToggle = async () => {
     await updateWordStatus(id, !done);
@@ -70,15 +75,18 @@ export const WordItem = ({ word }) => {
   };
 
   return (
-    <Wrapper>
-      <Status $status={done} onClick={handleToggle} style={{ cursor: "pointer" }}>
-        {done ? <CompleteIcon /> : <InCompleteIcon />}
-      </Status>
-      <Content>
-        <Label>{label}</Label>
-        <Explain>{`${definitions[0].class}.${definitions[0].value}`}</Explain>
-      </Content>
-      <MoreButton />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Status $status={done} onClick={handleToggle} style={{ cursor: "pointer" }}>
+          {done ? <CompleteIcon /> : <InCompleteIcon />}
+        </Status>
+        <Content>
+          <Label>{label}</Label>
+          <Explain>{`${definitions[0].class}.${definitions[0].value}`}</Explain>
+        </Content>
+        <MoreButton onClick={() => setShowDetail(true)} />
+      </Wrapper>
+      {showDetail && <WordDetail word={word} onClose={() => setShowDetail(false)} />}
+    </>
   );
 };

@@ -6,7 +6,7 @@ import { migrateLocalDataToSupabase } from "../utils/migration";
 export const loadUserData = async () => {
   const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
-  // 3. 공통: 알림 데이터 로드 (깜빡임 방지를 위해 로더로 이동)
+  // 공통: 알림 데이터 로드 (깜빡임 방지를 위해 로더로 이동)
   let dbNotis = [];
   try {
     const { data } = await supabase
@@ -37,14 +37,10 @@ export const loadUserData = async () => {
 
   // 1. OAuth 로그인 유저: Supabase DB 우선 로드
   if (session && !sessionError) {
-    console.log("현재 세션 유저 ID:", session.user.id);
-
     // DB 조회 전 마이그레이션 필요 여부 확인 및 수행
     const hasLocalData = window.localStorage.getItem("wordMap");
     if (hasLocalData) {
-      console.log("로컬 데이터 발견, 렌더링 전 마이그레이션을 시작합니다...");
       await migrateLocalDataToSupabase();
-      console.log("마이그레이션 완료. DB에서 최신 데이터를 가져옵니다.");
       // URL의 해시(#access_token 등)가 남아있다면 깔끔하게 제거
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
@@ -59,14 +55,13 @@ export const loadUserData = async () => {
         .maybeSingle();
 
       if (userProfile && !profileError) {
-        console.log("Voca 데이터 조회 시작 (userId):", session.user.id);
         const { data: vocaData, error: vocaError } = await supabase
           .from("Voca")
           .select("*")
           .eq("user_id", session.user.id);
 
         if (vocaData && vocaData.length > 0 && !vocaError) {
-          // 1. Day 단위로 그룹화
+          // Day 단위로 그룹화
           const dayGroups = vocaData.reduce((acc, curr) => {
             const dayId = curr.day_number;
             if (!acc[dayId]) {
@@ -129,16 +124,20 @@ export const loadUserData = async () => {
     };
   });
 
+  // Guest 유저의 wordStatusMap: wordMap의 각 Day 완료 여부를 단어별로 역산
+  const guestWordStatusMap = {};
+  wordMap.forEach((day) => {
+    const dayDone = day.done || false;
+    (day.word || []).forEach((wordId) => {
+      guestWordStatusMap[wordId] = dayDone;
+    });
+  });
+
   return {
     nick,
     wordMap: processedWordMap,
+    wordStatusMap: guestWordStatusMap,
     userData,
     notifications,
   };
 };
-
-
-
-
-
-
