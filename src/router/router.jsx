@@ -1,8 +1,7 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
-import { loadUserData } from "./loadUserData";
-import { loadPlay } from "./loadPlay";
-import { loadMetaData } from "./loadMetaData";
+import { loadUserData } from "./user";
+import { loadPlay } from "./play";
 
 import { App } from "../App";
 
@@ -70,7 +69,6 @@ const onboardStep = [
   {
     path: "/onboard/generate-data",
     element: <StepToData />,
-    loader: loadMetaData,
     name: "학습데이터 생성",
   },
 ];

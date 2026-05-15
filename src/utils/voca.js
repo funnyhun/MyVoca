@@ -21,7 +21,7 @@ export const updateWordStatus = async (wordId, status = true) => {
     if (error) console.error("DB 상태 업데이트 실패:", error.message);
   } else {
     // 2. Guest 유저: LocalStorage 업데이트
-    const wordMaps = JSON.parse(window.localStorage.getItem("wordMaps"));
+    const wordMaps = JSON.parse(window.localStorage.getItem("wordMap"));
     const userData = JSON.parse(window.localStorage.getItem("userData"));
     if (!wordMaps || !userData) return;
 
@@ -58,7 +58,7 @@ export const updateWordStatus = async (wordId, status = true) => {
     });
 
     wordMaps[currentLevel] = updatedWordMap;
-    window.localStorage.setItem("wordMaps", JSON.stringify(wordMaps));
+    window.localStorage.setItem("wordMap", JSON.stringify(wordMaps));
 
     if (learnedIncrement > 0) {
       const latestUserData = JSON.parse(window.localStorage.getItem("userData"));

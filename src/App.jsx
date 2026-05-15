@@ -29,20 +29,22 @@ const Wrapper = styled.div`
 
 export const App = () => {
   const now = new Date();
-  const { nick, wordMap, wordStatusMap, notifications, userData, selectedWord } = useLoaderData();
+  const { nick, wordMap, wordStatusMap, wordData, notifications, userData, selectedWord } = useLoaderData();
 
   const AppContext = useMemo(() => {
     return {
       nick,
       wordMap,
       wordStatusMap,
+      wordData, // 마스터 데이터 포함
       notifications,
       userData,
       now,
       selectedWord,
     };
-  }, [nick, wordMap, wordStatusMap, notifications, userData, now, selectedWord]);
+  }, [nick, wordMap, wordStatusMap, wordData, notifications, userData, now, selectedWord]);
 
+  console.log(wordMap);
   return (
     <Layout>
       <Header notifications={notifications} />

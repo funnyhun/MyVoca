@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { BorderBox } from "../../components/StyledBox";
 
-import { calculateCalendarData } from "./util";
+import { calculateCalendarData } from "../../utils/utils";
 import { LeftIcon, RightIcon } from "../../assets/iconList";
 
 const Header = styled.div`

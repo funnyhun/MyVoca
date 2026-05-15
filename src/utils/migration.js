@@ -12,7 +12,7 @@ export const migrateLocalDataToSupabase = async () => {
 
   const userId = session.user.id;
   const nick = loadLocalStorage("nick");
-  const wordMaps = loadLocalStorage("wordMaps");
+  const wordMaps = loadLocalStorage("wordMap");
 
   try {
     // 1. User 프로필 생성/업데이트
@@ -36,7 +36,7 @@ export const migrateLocalDataToSupabase = async () => {
                 vocaInserts.push({
                   user_id: userId,
                   word_id: Number(wordId),
-                  day_number: Number(day.id),
+                  day_number: day.day || (Number(day.id) + 1), // DB 원본 day_number 우선 사용
                   status: day.done || false,
                 });
               });
@@ -66,10 +66,8 @@ export const migrateLocalDataToSupabase = async () => {
 
     console.log("마이그레이션 최종 완료 (userId):", userId);
     
-    // 마이그레이션 성공 후 로컬 데이터 정리
+    // 마이그레이션 성공 후 닉네임만 정리 (구조/진행 정보는 loadUserData에서 동기화됨)
     window.localStorage.removeItem("nick");
-    window.localStorage.removeItem("wordMaps");
-    window.localStorage.removeItem("userData");
 
     return { success: true };
 

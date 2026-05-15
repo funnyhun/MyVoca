@@ -29,7 +29,7 @@ export const signInWithKakao = async () => {
 
 /**
  * 로그아웃을 수행합니다.
- * [Used In] (미사용 - Settings.jsx에서 supabase.auth.signOut() 직접 호출)
+ * [Used In] src/pages/Settings/Settings.jsx
  */
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();

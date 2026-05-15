@@ -13,14 +13,13 @@ const Wrapper = styled.div`
 `;
 
 export const Voca = () => {
-  const { wordMap, wordStatusMap } = useOutletContext();
+  const parentContext = useOutletContext();
 
   const context = useMemo(() => {
     return {
-      wordMap,
-      wordStatusMap,
+      ...parentContext,
     };
-  }, [wordMap, wordStatusMap]);
+  }, [parentContext]);
 
   return (
     <Wrapper>

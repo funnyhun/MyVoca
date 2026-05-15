@@ -116,7 +116,9 @@ export const StatsDashboard = ({ userData, wordMap }) => {
   const navigate = useNavigate();
   const currentDayIndex = userData?.selected ?? 0;
 
-  const totalWords = wordMap.reduce((acc, curr) => acc + curr.length, 0);
+  const totalWords = (wordMap || [])
+    .filter(Boolean)
+    .reduce((acc, curr) => acc + (curr.length || 0), 0);
   const learnedWords = userData.learned || 0;
   const progressPercent = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0;
 

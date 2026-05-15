@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Button } from "../../components/Button";
 import { supabase } from "../../utils/supabase";
 import { initAppData } from "../../utils/initAppData";
+import { signOut } from "../../utils/auth";
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 
@@ -114,7 +115,7 @@ export const Settings = () => {
     if (isGuest) {
       window.localStorage.clear();
     } else {
-      await supabase.auth.signOut();
+      await signOut();
       window.localStorage.removeItem("nick");
     }
     window.location.href = "/";
@@ -162,7 +163,7 @@ export const Settings = () => {
       }
 
       // 2. 로컬스토리지 학습 데이터 초기화
-      window.localStorage.removeItem("wordMaps");
+      window.localStorage.removeItem("wordMap");
       window.localStorage.removeItem("userData");
 
       // 3. 새로운 단어 배정

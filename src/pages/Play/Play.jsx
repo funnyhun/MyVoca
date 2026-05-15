@@ -1,5 +1,5 @@
 import { useMemo, Suspense } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useOutletContext, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { useWord } from "../../hooks/useWord";
@@ -42,6 +42,7 @@ const AllDoneDesc = styled.p`
 `;
 
 export const Play = () => {
+  const parentContext = useOutletContext();
   const { selected } = useSelected();
   const { words } = useWord(selected);
   const { step } = useStep();
@@ -49,10 +50,11 @@ export const Play = () => {
 
   const context = useMemo(() => {
     return {
+      ...parentContext,
       words,
       quizs: shuffleArray([...words]).filter((w) => w.done === false),
     };
-  }, [selected, words.length]); // Re-calculate only when day changes or words are loaded/changed in count
+  }, [parentContext, selected, words]); // Re-calculate when parent context or words change
 
   // 퀴즈 진입 시 모든 단어가 이미 암기 완료인 경우
   const isQuizRoute = window.location.pathname.includes("/quiz");
