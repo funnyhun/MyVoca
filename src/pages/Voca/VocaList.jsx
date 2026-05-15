@@ -26,7 +26,7 @@ export const VocaList = () => {
 
   return (
     <Wrapper>
-      {wordMap.map((item, i) => {
+      {wordMap.filter(Boolean).map((item, i) => {
         return <VocaItem item={item} key={i} />;
       })}
     </Wrapper>

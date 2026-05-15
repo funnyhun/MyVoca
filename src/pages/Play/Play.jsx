@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useWord } from "../../hooks/useWord";
 import { useStep, useSelected } from "../../hooks/useMyParam";
 
-import { shuffleArray } from "../../utils/initAppData";
+import { shuffleArray } from "../../utils/utils";
 import { Button } from "../../components/Button";
 
 const Wrapper = styled.div`

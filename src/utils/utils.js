@@ -19,6 +19,12 @@ export const loadLocalStorage = (key) => {
 // 1000 * 60 * 60 * 24
 const msToDay = 86400000;
 
+/**
+ * 특정 시점으로부터 경과한 일수를 계산합니다.
+ * @param {Date|string} now 현재 시점 (Date 객체 또는 ISO 문자열)
+ * @param {Date|string} startedTime 시작 시점 (Date 객체 또는 ISO 문자열)
+ * @returns {number} 경과 일수 (정수)
+ */
 export const calculateDate = (now, startedTime) => {
   const currentTime = new Date(now).setHours(0, 0, 0, 0);
   const diff = currentTime - startedTime;
@@ -71,4 +77,18 @@ export const updateLearningStats = () => {
   };
 
   window.localStorage.setItem("userData", JSON.stringify(updated));
+};
+
+/**
+ * fisher-yates 알고리즘을 사용하여 배열을 무작위로 섞습니다.
+ * @param {Array} array 섞을 배열
+ * @returns {Array} 섞인 새 배열
+ */
+export const shuffleArray = (array) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
 };

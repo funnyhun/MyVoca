@@ -46,6 +46,23 @@ const Value = styled.span`
   color: ${({ theme }) => theme.font};
 `;
 
+const LevelButtons = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const LevelButton = styled.button`
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid ${({ theme, $active }) => ($active ? theme.brand : "transparent")};
+  background-color: ${({ theme, $active }) => ($active ? theme.week : theme.main)};
+  color: ${({ theme, $active }) => ($active ? theme.brand : theme.font)};
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+`;
+
 const LoadingOverlay = styled.div`
   position: fixed;
   inset: 0;
@@ -103,6 +120,21 @@ export const Settings = () => {
     window.location.href = "/";
   };
 
+  const handleLevelChange = (newLevel) => {
+    if (userData?.level === newLevel) return;
+    const confirmed = window.confirm(
+      "학습 난이도를 변경하시겠습니까?\n이전 난이도의 학습 상태는 유지됩니다."
+    );
+    if (!confirmed) return;
+
+    const currentLocal = JSON.parse(window.localStorage.getItem("userData") || "{}");
+    currentLocal.level = newLevel;
+    window.localStorage.setItem("userData", JSON.stringify(currentLocal));
+    
+    // 새로고침하여 데이터 리로드
+    window.location.href = "/";
+  };
+
   const handleReset = async () => {
     const confirmed = window.confirm(
       "⚠️ 학습 데이터를 완전히 초기화할까요?\n\n진행률, 단어 배정이 모두 삭제되고\n새로운 단어 배정이 시작됩니다.\n\n이 작업은 되돌릴 수 없습니다."
@@ -130,32 +162,11 @@ export const Settings = () => {
       }
 
       // 2. 로컬스토리지 학습 데이터 초기화
-      window.localStorage.removeItem("wordMap");
+      window.localStorage.removeItem("wordMaps");
       window.localStorage.removeItem("userData");
 
       // 3. 새로운 단어 배정
-      await initAppData(undefined, 20, setResetProgress);
-
-      // 4. DB 유저라면 새 데이터 재동기화
-      if (session) {
-        const newWordMap = JSON.parse(
-          window.localStorage.getItem("wordMap") || "[]"
-        );
-        const vocaInserts = [];
-        newWordMap.forEach((day) => {
-          (day.word || []).forEach((wordId) => {
-            vocaInserts.push({
-              user_id: session.user.id,
-              word_id: Number(wordId),
-              day_number: Number(day.id),
-              status: false,
-            });
-          });
-        });
-        if (vocaInserts.length > 0) {
-          await supabase.from("Voca").upsert(vocaInserts);
-        }
-      }
+      await initAppData(userData?.level || "default", setResetProgress);
 
       setResetProgress(100);
       window.location.href = "/";
@@ -194,6 +205,30 @@ export const Settings = () => {
               </>
             )}
           </UserInfo>
+        </Section>
+
+        <Section>
+          <SectionTitle>학습 난이도</SectionTitle>
+          <LevelButtons>
+            <LevelButton 
+              $active={userData?.level === "default"} 
+              onClick={() => handleLevelChange("default")}
+            >
+              초급 (Default)
+            </LevelButton>
+            <LevelButton 
+              $active={userData?.level === "800"} 
+              onClick={() => handleLevelChange("800")}
+            >
+              중급 (800)
+            </LevelButton>
+            <LevelButton 
+              $active={userData?.level === "900"} 
+              onClick={() => handleLevelChange("900")}
+            >
+              고급 (900)
+            </LevelButton>
+          </LevelButtons>
         </Section>
 
         <Section>

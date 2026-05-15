@@ -3,6 +3,8 @@ import { loadLocalStorage } from "./utils";
 
 /**
  * 특정 단어의 학습 상태를 업데이트합니다.
+ * - 로그인 유저: Supabase DB 업데이트
+ * - Guest 유저: LocalStorage의 wordMaps 내 단어별 status 개별 갱신
  */
 export const updateWordStatus = async (wordId, status = true) => {
   const { data: { session } } = await supabase.auth.getSession();
@@ -18,38 +20,51 @@ export const updateWordStatus = async (wordId, status = true) => {
     if (error) console.error("DB 상태 업데이트 실패:", error.message);
   } else {
     // 2. Guest 유저: LocalStorage 업데이트
-    const wordMap = JSON.parse(window.localStorage.getItem("wordMap"));
-    if (!wordMap) return;
+    const wordMaps = JSON.parse(window.localStorage.getItem("wordMaps"));
+    const userData = JSON.parse(window.localStorage.getItem("userData"));
+    if (!wordMaps || !userData) return;
 
-    // 해당 단어가 포함된 Day를 찾아 진행도 업데이트
+    const currentLevel = userData.level || "default";
+    const wordMap = wordMaps[currentLevel] || [];
+
     let learnedIncrement = 0;
+
     const updatedWordMap = wordMap.map((day) => {
-      if (day.word.includes(wordId)) {
-        const finishedInDay = day.finishedCount || 0;
-        // 임시 방편: 단순히 증가시키되 중복 방지는 현재 구조상 어려움 (추후 단어별 상태 저장 필요)
-        const newFinishedCount = Math.min(finishedInDay + 1, day.length);
-        if (newFinishedCount > finishedInDay) learnedIncrement = 1;
-        
-        return {
-          ...day,
-          finishedCount: newFinishedCount,
-          progress: Math.floor((newFinishedCount / day.length) * 100),
-          done: newFinishedCount === day.length
-        };
+      if (!day.word.includes(wordId)) return day;
+
+      // 단어별 개별 status 맵 (서버의 wordStatusMap과 동일한 구조)
+      const wordStatus = { ...(day.wordStatus || {}) };
+      const wasAlreadyDone = wordStatus[wordId] === true;
+      wordStatus[wordId] = status;
+
+      // finishedCount: 중복 집계 방지 (이미 done인 단어를 다시 true로 해도 증가 안 함)
+      let { finishedCount = 0 } = day;
+      if (status && !wasAlreadyDone) {
+        finishedCount += 1;
+        learnedIncrement = 1;
+      } else if (!status && wasAlreadyDone) {
+        finishedCount = Math.max(0, finishedCount - 1);
       }
-      return day;
+
+      const newDone = finishedCount === day.length;
+      return {
+        ...day,
+        wordStatus,
+        finishedCount,
+        progress: Math.floor((finishedCount / day.length) * 100),
+        done: newDone,
+      };
     });
 
-    window.localStorage.setItem("wordMap", JSON.stringify(updatedWordMap));
+    wordMaps[currentLevel] = updatedWordMap;
+    window.localStorage.setItem("wordMaps", JSON.stringify(wordMaps));
 
     if (learnedIncrement > 0) {
-      const userData = JSON.parse(window.localStorage.getItem("userData"));
-      if (userData) {
-        userData.learned += learnedIncrement;
-        window.localStorage.setItem("userData", JSON.stringify(userData));
+      const latestUserData = JSON.parse(window.localStorage.getItem("userData"));
+      if (latestUserData) {
+        latestUserData.learned = (latestUserData.learned || 0) + learnedIncrement;
+        window.localStorage.setItem("userData", JSON.stringify(latestUserData));
       }
     }
   }
 };
-
-

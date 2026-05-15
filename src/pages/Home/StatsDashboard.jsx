@@ -13,10 +13,25 @@ const DashboardWrapper = styled(BorderBox)`
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 `;
 
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Title = styled.h2`
   font-size: 1.1rem;
   font-weight: 700;
   color: ${({ theme }) => theme.font};
+`;
+
+const LevelBadge = styled.div`
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  background-color: ${({ theme }) => theme.week};
+  color: ${({ theme }) => theme.brand};
+  border-radius: 1rem;
 `;
 
 const ProgressContainer = styled.div`
@@ -105,9 +120,19 @@ export const StatsDashboard = ({ userData, wordMap }) => {
   const learnedWords = userData.learned || 0;
   const progressPercent = totalWords > 0 ? Math.round((learnedWords / totalWords) * 100) : 0;
 
+  const levelLabels = {
+    "default": "초급 (Default)",
+    "800": "중급 (800)",
+    "900": "고급 (900)"
+  };
+  const currentLevelLabel = levelLabels[userData?.level] || "알 수 없음";
+
   return (
     <DashboardWrapper>
-      <Title>학습 대시보드</Title>
+      <HeaderContainer>
+        <Title>학습 대시보드</Title>
+        <LevelBadge>{currentLevelLabel}</LevelBadge>
+      </HeaderContainer>
       
       <ProgressContainer>
         <ProgressLabel>

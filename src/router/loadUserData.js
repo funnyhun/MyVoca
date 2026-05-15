@@ -23,25 +23,31 @@ export const loadUserData = async () => {
     notifications.unshift({
       id: "sync_req",
       title: "데이터 동기화 권장",
-      content: "로그인하여 단어장 데이터를 안전하게 보호하고 기기 간 동기화를 시작하세요.",
+      content: "로그인하여 단어장 데이터를 안전하게 보호하고 기기 동기화를 시작하세요.",
       type: "sync",
     });
   } else {
     notifications.unshift({
       id: "sync_ok",
       title: "동기화 완료",
-      content: "현재 카카오 계정으로 실시간 데이터 동기화가 활성화되어 있습니다.",
+      content: "현재 계정으로 실시간 데이터 동기화가 활성화되어 있습니다.",
       type: "status",
     });
   }
 
   // 1. OAuth 로그인 유저: Supabase DB 우선 로드
   if (session && !sessionError) {
-    // DB 조회 전 마이그레이션 필요 여부 확인 및 수행
-    const hasLocalData = window.localStorage.getItem("wordMap");
+    // 마이그레이션 전에 level을 미리 확보 (마이그레이션 시 로컬스토리지 삭제됨)
+    const localUserDataBeforeMigrate = loadLocalStorage("userData");
+    const currentLevel = localUserDataBeforeMigrate?.level || "default";
+
+    // level 문자열 → DB의 숫자 컬럼 매핑
+    const levelToNumber = { "default": 0, "800": 800, "900": 900 };
+    const dbLevel = levelToNumber[currentLevel] ?? 0;
+
+    const hasLocalData = window.localStorage.getItem("wordMaps");
     if (hasLocalData) {
       await migrateLocalDataToSupabase();
-      // URL의 해시(#access_token 등)가 남아있다면 깔끔하게 제거
       if (window.location.hash) {
         window.history.replaceState(null, "", window.location.pathname);
       }
@@ -55,15 +61,22 @@ export const loadUserData = async () => {
         .maybeSingle();
 
       if (userProfile && !profileError) {
+        const localUserData = loadLocalStorage("userData");
+
+        // Voca 테이블에서 현재 레벨에 해당하는 단어들의 학습 상태만 가져옴
         const { data: vocaData, error: vocaError } = await supabase
           .from("Voca")
-          .select("*")
-          .eq("user_id", session.user.id);
+          .select(`
+            *,
+            Word!inner(level, day)
+          `)
+          .eq("user_id", session.user.id)
+          .eq("Word.level", dbLevel);
 
         if (vocaData && vocaData.length > 0 && !vocaError) {
-          // Day 단위로 그룹화
+          // Day 단위로 그룹화 (Word 테이블의 day 컬럼 사용, 0-based index)
           const dayGroups = vocaData.reduce((acc, curr) => {
-            const dayId = curr.day_number;
+            const dayId = (curr.Word?.day ?? curr.day_number) - 1; // 1-based → 0-based
             if (!acc[dayId]) {
               acc[dayId] = { id: dayId, word: [], length: 0, done: true, finishedCount: 0 };
             }
@@ -75,6 +88,7 @@ export const loadUserData = async () => {
           }, {});
 
           const maxDay = Math.max(...Object.keys(dayGroups).map(Number), 0);
+          // null을 유지해야 인덱스가 흐트러지지 않음 (useWord에서 wordMap[idx]로 접근)
           const processedWordMap = Array.from({ length: maxDay + 1 }, (_, i) => {
             const day = dayGroups[i];
             if (!day) return null;
@@ -84,6 +98,7 @@ export const loadUserData = async () => {
             };
           });
 
+          // 단어별 개별 완료 상태 맵 구성
           const wordStatusMap = vocaData.reduce((acc, curr) => {
             acc[curr.word_id] = curr.status;
             return acc;
@@ -99,7 +114,8 @@ export const loadUserData = async () => {
               continued: 0,
               today: 0,
               learned: vocaData.filter((v) => v.status).length,
-              selected: 0,
+              selected: localUserData?.selected || 0,
+              level: currentLevel,
             },
           };
         }
@@ -111,25 +127,37 @@ export const loadUserData = async () => {
 
   // 2. Guest 유저 또는 세션 정보 부족 시: LocalStorage 로드
   const nick = loadLocalStorage("nick");
-  const wordMap = loadLocalStorage("wordMap");
+  const wordMaps = loadLocalStorage("wordMaps");
   const userData = loadLocalStorage("userData");
 
   if (!nick) return redirect("/onboard/nickname");
-  if (!wordMap || !userData) return redirect("/onboard/generate-data");
+  if (!wordMaps || !userData) return redirect("/onboard/generate-data");
+
+  const currentLevel = userData.level || "default";
+  const wordMap = wordMaps[currentLevel] || [];
 
   const processedWordMap = wordMap.map((day) => {
+    if (!day) return null;
+    const finishedCount = day.finishedCount || 0;
+    const length = day.length || 1;
     return {
       ...day,
-      progress: day.progress ?? (day.done ? 100 : 0),
+      // finishedCount가 있으면 정밀 계산, 없으면 done 여부로 fallback
+      progress: finishedCount > 0
+        ? Math.floor((finishedCount / length) * 100)
+        : (day.progress ?? (day.done ? 100 : 0)),
     };
   });
 
-  // Guest 유저의 wordStatusMap: wordMap의 각 Day 완료 여부를 단어별로 역산
+  // wordStatus: 단어별 개별 완료 상태 (서버의 wordStatusMap과 동일한 형태)
   const guestWordStatusMap = {};
   wordMap.forEach((day) => {
-    const dayDone = day.done || false;
     (day.word || []).forEach((wordId) => {
-      guestWordStatusMap[wordId] = dayDone;
+      // day.wordStatus에 개별 상태가 있으면 그것을, 없으면 day.done으로 fallback
+      const status = day.wordStatus
+        ? (day.wordStatus[wordId] ?? false)
+        : (day.done || false);
+      guestWordStatusMap[wordId] = status;
     });
   });
 

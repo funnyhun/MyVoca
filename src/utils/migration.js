@@ -11,7 +11,7 @@ export const migrateLocalDataToSupabase = async () => {
 
   const userId = session.user.id;
   const nick = loadLocalStorage("nick");
-  const wordMap = loadLocalStorage("wordMap");
+  const wordMaps = loadLocalStorage("wordMaps");
 
   try {
     // 1. User 프로필 생성/업데이트
@@ -23,43 +23,51 @@ export const migrateLocalDataToSupabase = async () => {
     }
 
     // 2. 학습 진행 데이터(Voca 테이블) 이식
-    if (wordMap && Array.isArray(wordMap)) {
+    if (wordMaps && typeof wordMaps === "object") {
       const vocaInserts = [];
-      wordMap.forEach((day) => {
-        day.word.forEach((wordId) => {
-          vocaInserts.push({
-            user_id: userId,
-            word_id: Number(wordId),
-            day_number: Number(day.id),
-            status: day.done || false,
+      
+      Object.keys(wordMaps).forEach((level) => {
+        const levelDays = wordMaps[level];
+        if (Array.isArray(levelDays)) {
+          levelDays.forEach((day) => {
+            if (day && Array.isArray(day.word)) {
+              day.word.forEach((wordId) => {
+                vocaInserts.push({
+                  user_id: userId,
+                  word_id: Number(wordId),
+                  day_number: Number(day.id),
+                  status: day.done || false,
+                });
+              });
+            }
           });
-        });
+        }
       });
 
       console.log("마이그레이션 시도 데이터 수:", vocaInserts.length);
-      console.log("전송 데이터 전체:", JSON.stringify(vocaInserts));
 
       if (vocaInserts.length > 0) {
-        const { data, error: vocaError } = await supabase
-          .from("Voca")
-          .upsert(vocaInserts, { onConflict: "user_id, word_id" })
-          .select();
-          
-        if (vocaError) {
-          console.error("Voca Upsert 에러 상세:", vocaError);
-          throw vocaError;
+        // Chunk inserts to avoid Supabase limits on large payloads
+        const CHUNK_SIZE = 1000;
+        for (let i = 0; i < vocaInserts.length; i += CHUNK_SIZE) {
+          const chunk = vocaInserts.slice(i, i + CHUNK_SIZE);
+          const { error: vocaError } = await supabase
+            .from("Voca")
+            .upsert(chunk, { onConflict: "user_id, word_id" });
+            
+          if (vocaError) {
+            console.error("Voca Upsert 에러 상세:", vocaError);
+            throw vocaError;
+          }
         }
-        console.log("DB 실제 삽입 결과 (Response):", data);
       }
     }
 
     console.log("마이그레이션 최종 완료 (userId):", userId);
-
-
     
     // 마이그레이션 성공 후 로컬 데이터 정리
     window.localStorage.removeItem("nick");
-    window.localStorage.removeItem("wordMap");
+    window.localStorage.removeItem("wordMaps");
     window.localStorage.removeItem("userData");
 
     return { success: true };
