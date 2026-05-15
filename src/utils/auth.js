@@ -2,7 +2,7 @@ import { supabase } from "./supabase";
 
 /**
  * Kakao OAuth 로그인을 수행합니다.
- * 비즈앱이 아닌 경우 이메일 권한이 없으므로 profile_nickname만 요청하도록 설정합니다.
+ * [Used In] src/components/NotificationList.jsx
  */
 export const signInWithKakao = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
@@ -29,6 +29,7 @@ export const signInWithKakao = async () => {
 
 /**
  * 로그아웃을 수행합니다.
+ * [Used In] (미사용 - Settings.jsx에서 supabase.auth.signOut() 직접 호출)
  */
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();

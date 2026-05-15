@@ -107,6 +107,12 @@ const initUserData = async (level) => {
   window.localStorage.setItem("userData", JSON.stringify(UserData));
 };
 
+/**
+ * 앱 초기 데이터를 설정합니다. (단어 맵 생성 및 사용자 데이터 초기화)
+ * [Used In] src/pages/Settings/Settings.jsx, src/onboard/StepToData.jsx
+ * @param {string} level 선택된 레벨
+ * @param {Function} setStatus 진행률 업데이트 함수
+ */
 export const initAppData = async (level, setStatus) => {
   await Promise.all([initWordMap(), initUserData(level), dummyProgress(2000, setStatus)]);
   setStatus(100);

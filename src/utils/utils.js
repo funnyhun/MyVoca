@@ -1,3 +1,9 @@
+/**
+ * 로컬스토리지에서 데이터를 가져와 파싱합니다.
+ * [Used In] src/hooks/useTheme.jsx, src/router/loadUserData.js, src/router/loadPlay.js, src/utils/voca.js, src/utils/migration.js
+ * @param {string} key 로컬스토리지 키
+ * @returns {any} 파싱된 데이터 또는 원본 문자열
+ */
 export const loadLocalStorage = (key) => {
   try {
     const res = window.localStorage.getItem(key);
@@ -21,9 +27,10 @@ const msToDay = 86400000;
 
 /**
  * 특정 시점으로부터 경과한 일수를 계산합니다.
- * @param {Date|string} now 현재 시점 (Date 객체 또는 ISO 문자열)
- * @param {Date|string} startedTime 시작 시점 (Date 객체 또는 ISO 문자열)
- * @returns {number} 경과 일수 (정수)
+ * [Used In] src/pages/Home/util.js, src/pages/Play/util.js
+ * @param {Date|string} now 현재 시점
+ * @param {Date|string} startedTime 시작 시점
+ * @returns {number} 경과 일수
  */
 export const calculateDate = (now, startedTime) => {
   const currentTime = new Date(now).setHours(0, 0, 0, 0);
@@ -33,9 +40,8 @@ export const calculateDate = (now, startedTime) => {
 };
 
 /**
- * 카드 또는 퀴즈 완료 시 학습 통계를 업데이트합니다.
- * - today: 오늘 완료한 세션 수 증가
- * - continued: 연속 학습일 계산 및 업데이트 (카드/퀴즈 완료 기준)
+ * 학습 통계(연속 학습일, 오늘 학습량)를 업데이트합니다.
+ * [Used In] src/pages/Play/Card/Complete.jsx, src/pages/Play/Quiz/Complete.jsx
  */
 export const updateLearningStats = () => {
   const userData = loadLocalStorage("userData");
@@ -80,8 +86,9 @@ export const updateLearningStats = () => {
 };
 
 /**
- * fisher-yates 알고리즘을 사용하여 배열을 무작위로 섞습니다.
- * @param {Array} array 섞을 배열
+ * 배열을 무작위로 섞습니다 (Fisher-Yates).
+ * [Used In] src/pages/Play/Play.jsx
+ * @param {Array} array 원본 배열
  * @returns {Array} 섞인 새 배열
  */
 export const shuffleArray = (array) => {

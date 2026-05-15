@@ -1,5 +1,7 @@
-import { calculateDate } from "../../utils/utils";
-
+/**
+ * (중복 로직: Home/util.js와 동일) 캘린더 데이터를 생성합니다.
+ * [Used In] src/pages/Play/Play.jsx
+ */
 export const calculateCalendarData = (year, month, startedTime, wordMap) => {
   const start = new Date(year, month, 1).getDay();
   const total = new Date(year, month + 1, 0).getDate();

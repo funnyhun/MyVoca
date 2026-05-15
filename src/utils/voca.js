@@ -2,9 +2,10 @@ import { supabase } from "./supabase";
 import { loadLocalStorage } from "./utils";
 
 /**
- * 특정 단어의 학습 상태를 업데이트합니다.
- * - 로그인 유저: Supabase DB 업데이트
- * - Guest 유저: LocalStorage의 wordMaps 내 단어별 status 개별 갱신
+ * 특정 단어의 학습 상태를 업데이트합니다. (로그인 유저: Supabase, Guest: LocalStorage)
+ * [Used In] src/pages/Voca/Word/WordItem.jsx, src/pages/Play/Card/useCard.jsx, src/pages/Play/Quiz/Quiz.jsx
+ * @param {number} wordId 단어 ID
+ * @param {boolean} status 학습 완료 여부
  */
 export const updateWordStatus = async (wordId, status = true) => {
   const { data: { session } } = await supabase.auth.getSession();

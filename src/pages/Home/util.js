@@ -1,5 +1,12 @@
-import { calculateDate } from "../../utils/utils";
-
+/**
+ * 연도와 월에 해당하는 캘린더 데이터를 생성하고 학습 완료 상태를 매핑합니다.
+ * [Used In] src/pages/Home/Calendar.jsx
+ * @param {number} year 연도
+ * @param {number} month 월 (0-11)
+ * @param {number} startedTime 학습 시작 시점 (ms)
+ * @param {Array} wordMap 학습 데이터 배열
+ * @returns {Array} 캘린더 데이터 행렬
+ */
 export const calculateCalendarData = (year, month, startedTime, wordMap) => {
   const start = new Date(year, month, 1).getDay();
   const total = new Date(year, month + 1, 0).getDate();

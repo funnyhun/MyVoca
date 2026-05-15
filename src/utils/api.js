@@ -1,5 +1,10 @@
 import { supabase } from "./supabase";
 
+/**
+ * 단어 마스터 데이터를 가져옵니다.
+ * [Used In] src/context/WordDataContext.jsx
+ * @returns {Object} 단어 ID를 키로 하는 단어 정보 객체
+ */
 export const fetchWordData = async () => {
   const { data: { session } } = await supabase.auth.getSession();
   console.log("마스터 데이터 조회 시점 세션:", session ? `유저(${session.user.id})` : "비로그인");
@@ -50,6 +55,10 @@ export const fetchWordData = async () => {
 
 
 
+/**
+ * 단어 메타데이터(전체 개수 등)를 가져옵니다.
+ * [Used In] src/router/loadMetaData.js
+ */
 export const fetchMetaData = async () => {
   // 메타데이터가 필요하다면 추가 (현재는 단어 개수 등)
   const { count } = await supabase.from("Word").select("*", { count: "exact", head: true });

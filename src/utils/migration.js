@@ -2,8 +2,9 @@ import { supabase } from "./supabase";
 import { loadLocalStorage } from "./utils";
 
 /**
- * LocalStorage에 저장된 데이터를 Supabase DB로 마이그레이션합니다.
- * OAuth 로그인 직후 호출되는 것을 권장합니다.
+ * 로컬스토리지 데이터를 Supabase로 마이그레이션합니다.
+ * [Used In] src/router/loadUserData.js
+ * @returns {Promise<Object>} 성공 여부 객체
  */
 export const migrateLocalDataToSupabase = async () => {
   const { data: { session } } = await supabase.auth.getSession();

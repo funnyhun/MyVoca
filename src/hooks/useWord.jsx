@@ -3,6 +3,12 @@ import { useOutletContext } from "react-router-dom";
 
 import { useWordData } from "../context/WordDataContext";
 
+/**
+ * 특정 Day의 단어 리스트와 개별 학습 상태(done)를 결합하여 반환하는 핵심 커스텀 훅입니다.
+ * [Used In] src/pages/Play/Play.jsx, src/pages/Voca/Word/WordList.jsx
+ * @param {number} [selected] 조회할 Day 인덱스 (생략 시 userData.selected 사용)
+ * @returns {Object} { words: Array }
+ */
 export const useWord = (selected) => {
   const { wordMap, userData, wordStatusMap = {} } = useOutletContext();
   const wordData = useWordData();

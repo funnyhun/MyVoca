@@ -3,6 +3,12 @@ import { supabase } from "../utils/supabase";
 import { loadLocalStorage } from "../utils/utils";
 import { migrateLocalDataToSupabase } from "../utils/migration";
 
+/**
+ * 앱 진입 시 사용자 데이터를 로드합니다. (세션 체크, 프로필, 학습 진행도, 마이그레이션 포함)
+ * 상세 로직은 src/router/AGENT.md를 참조하십시오.
+ * [Used In] src/router/router.jsx
+ * @returns {Promise<Object|Response>} 사용자 데이터 객체 또는 리다이렉션
+ */
 export const loadUserData = async () => {
   const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 

@@ -12,7 +12,34 @@
 | 학습 통계 | `userData` | `Voca` 테이블 집계 (Aggregate) 및 `User` 가입일 |
 | 단어 마스터 데이터 | `resources/data.json` | `Word` & `Definition` 테이블 |
 
-## 2. 세부 데이터 플로우 (Data Flow)
+## 2. 데이터 흐름 다이어그램 (Visual Flow)
+
+```mermaid
+graph TD
+    subgraph "Client Side (Browser)"
+        LS[(LocalStorage)]
+        App[MyVoca App]
+    end
+
+    subgraph "Server Side (Supabase)"
+        Auth[Auth Service]
+        DB[(PostgreSQL DB)]
+    end
+
+    App -- "1. Auth Check" --> Auth
+    Auth -- "2. Session" --> App
+
+    App -- "3. If Logged In: Sync" --> DB
+    App -- "4. If Guest: Local Read/Write" --> LS
+
+    DB -- "Fetch Profile/Voca" --> App
+    LS -- "Fetch Guest Data" --> App
+
+    App -- "5. Update Progress" --> DB
+    App -- "5. Update Progress" --> LS
+```
+
+## 3. 세부 데이터 플로우 (Data Flow)
 
 ### A. 사용자 가입 및 초기화 (Onboarding)
 1. **닉네임 등록**: `User` 테이블에 `user_id` (Auth UID)와 `nick`을 저장합니다.

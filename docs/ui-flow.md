@@ -10,7 +10,7 @@ graph TD
     Start[진입 /] --> CheckData{데이터 존재 여부}
     CheckData -- 없음 --> Nick[닉네임 설정 /onboard/nickname]
     Nick --> DataGen[데이터 생성 /onboard/generate-data]
-    DataGen --> Home[홈 화면 /home]
+    DataGen --> Home[홈 화면 /]
     CheckData -- 있음 --> Home
 ```
 
