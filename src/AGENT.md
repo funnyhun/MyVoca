@@ -7,26 +7,26 @@
 MyVoca는 다음과 같은 4단계 계층 구조로 동작합니다.
 
 ### Layer 1: Router & Loaders (`src/router`)
-- **역할**: URL 기반 페이지 전환 및 진입 전 필수 데이터 로드.
+- **역할**: URL 기반 페이지 전환 및 진입 전 필수 데이터 로드(Hydration).
 - **핵심 파일**:
-  - `loadUserData.js`: 사용자 세션, 프로필, 학습 진행도(Voca) 데이터 로드 및 Guest 데이터 마이그레이션 처리.
-  - `loadPlay.js`: 학습(Play) 페이지 진입 시 필요한 특정 Day의 단어 데이터 구성.
+  - `src/router/user/index.js`: `loadUserData` (사용자 세션/프로필/학습 데이터 통합 로더).
+  - `src/router/user/utils.js`: 데이터 가공용 순수 함수.
 
-### Layer 2: Context & State (`src/context`, `src/hooks`)
-- **역할**: 전역 상태 관리 및 비즈니스 로직 캡슐화.
-- **핵심 파일**:
-  - `WordDataContext.jsx`: 서버로부터 가져온 단어 마스터 데이터를 전역에서 접근 가능하도록 제공.
-  - `useWord.jsx`: 현재 학습 진행 상태와 단어 맵을 연결하는 브릿지 로직.
+### Layer 2: API Layer (`src/api`)
+- **역할**: 데이터 소스(Supabase, LocalStorage) 접근 로직 추상화 및 모듈화.
+- **구조**:
+  - `auth/`: 세션 및 인증 관리.
+  - `user/`: 회원 프로필 및 학습 데이터(DB) 접근.
+  - `guest/`: 게스트 스토리지(LocalStorage) 제어.
+  - `voca.js`: 회원/게스트 통합 업데이트 인터페이스.
 
-### Layer 3: Pages & Components (`src/pages`, `src/components`)
-- **역할**: UI 렌더링 및 사용자 인터랙션 처리.
-- **주요 서비스**:
-  - **Home**: 학습 통계 및 대시보드 표시.
-  - **Voca**: 전체 단어 목록 조회 및 개별 단어 학습 상태 업데이트.
-  - **Play**: 카드/퀴즈 방식의 실제 학습 인터페이스.
+### Layer 3: UI & Components (`src/pages`, `src/components`)
+- **역할**: UI 렌더링 및 사용자 인터랙션 처리. 로더로부터 주입받은 데이터를 `useOutletContext`를 통해 소비합니다.
+- **핵심 훅**:
+  - `useWord.jsx`: 현재 선택된 Day의 단어 리스트와 상태를 연결하는 브릿지.
 
 ### Layer 4: Infrastructure & Utils (`src/utils`)
-- **역할**: 외부 서비스(Supabase) 연동, 로컬 스토리지 제어, 공통 유틸리티 제공.
+- **역할**: 저수준 유틸리티(날짜 계산, 배열 셔플 등) 및 외부 라이브러리 설정.
 
 ## 2. 핵심 데이터 흐름 (Core Data Flow)
 
@@ -34,26 +34,26 @@ MyVoca는 다음과 같은 4단계 계층 구조로 동작합니다.
 sequenceDiagram
     participant U as User (Guest/Member)
     participant R as Router (Loader)
-    participant L as LocalStorage
-    participant S as Supabase
-    participant C as Context (App)
+    participant A as API Layer (src/api)
+    participant D as Data Source (DB/LS)
+    participant C as UI Context (App)
 
     U->>R: 페이지 접속
-    R->>S: 세션 체크
+    R->>A: getSession() 호출
+    A->>D: 세션 확인
     alt 로그인 상태
-        R->>L: 로컬 데이터 존재 확인
-        opt 데이터 존재
-            R->>S: 마이그레이션 실행 (migration.js)
-        end
-        R->>S: Voca/User 데이터 로드
+        R->>A: Member 전용 데이터 요청
+        A->>D: Supabase 쿼리
     else 비로그인 상태
-        R->>L: LocalStorage (wordMaps/userData) 로드
+        R->>A: Guest 전용 데이터 요청
+        A->>D: LocalStorage 조회
     end
-    R->>C: 데이터 주입
+    R->>C: 데이터 주입 (useLoaderData)
     C->>U: UI 렌더링
 ```
 
 ## 3. 핵심 설계 규칙
-1. **데이터 정규화**: `wordMaps`는 레벨별로 구분되며, 단어별 개별 상태는 `wordStatus` 객체로 관리하여 중복 집계를 방지함.
-2. **이중화 지원**: 모든 핵심 로직은 로그인 유저(Supabase)와 Guest 유저(LocalStorage)를 동시에 지원해야 함.
-3. **안전한 수정**: 유틸리티 함수 수정 시 반드시 `[Used In]` 명세를 확인하여 사이드 이펙트를 체크할 것.
+1. **로더 중심 데이터 처리**: 컴포넌트 내부의 `useEffect` 데이터 패칭을 지양하고, Router Loader에서 필요한 데이터를 미리 확보합니다.
+2. **API 추상화**: UI 컴포넌트는 데이터 소스(DB vs LS)를 직접 알지 못하며, `src/api`에서 제공하는 통합 인터페이스를 사용합니다.
+3. **JSDoc 의무화**: 모든 API와 유틸리티 함수에는 매개변수와 반환 타입을 명시하여 데이터 무결성을 보장합니다.
+4. **순수 함수 지향**: 비즈니스 로직(가공, 필터링 등)은 부수 효과가 없는 순수 함수로 작성하여 `utils` 폴더에서 관리합니다.
