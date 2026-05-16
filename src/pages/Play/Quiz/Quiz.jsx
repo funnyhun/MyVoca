@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
-import { updateWordStatus } from "../../../utils/voca";
+import { updateWordStatus } from "../../../api/voca";
 
 import { useStep } from "../../../hooks/useMyParam";
 

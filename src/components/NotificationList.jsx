@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { signInWithKakao } from "../utils/auth";
+import { signInWithKakao } from "../api/auth/actions";
 
 const Overlay = styled.div`
   position: fixed;

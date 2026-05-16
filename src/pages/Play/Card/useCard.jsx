@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useStep } from "../../../hooks/useMyParam";
-import { updateWordStatus } from "../../../utils/voca";
+import { updateWordStatus } from "../../../api/voca";
 
 export const useCard = () => {
   const { words } = useOutletContext();

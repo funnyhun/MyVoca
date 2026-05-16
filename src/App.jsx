@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 import { Header, Navigation } from "./layout";
-import { supabase } from "./utils/supabase";
+import { supabase } from "./api/common/supabase";
 
 const Layout = styled.div`
   min-width: ${({ theme }) => theme.min_width};
@@ -44,7 +44,7 @@ export const App = () => {
     };
   }, [nick, wordMap, wordStatusMap, wordData, notifications, userData, now, selectedWord]);
 
-  console.log(wordMap);
+
   return (
     <Layout>
       <Header notifications={notifications} />

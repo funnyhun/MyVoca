@@ -1,48 +1,134 @@
 import { redirect } from "react-router-dom";
-import { supabase } from "../../utils/supabase";
-import { fetchWordData } from "../../utils/api";
-import { handleMemberFlow, handleGuestFlow } from "./utils";
+import { supabase } from "../../api/common/supabase";
+import { getSession } from "../../api/auth/session";
+import { getMasterWordData } from "../../api/user/master";
+import { getUserProfile } from "../../api/user/profile";
+import { fetchUserVocaData } from "../../api/user/voca";
+import { getStorageItem, KEYS } from "../../api/guest/storage";
+import { processWordMap, createGuestStatusMap } from "./utils";
+import { migrateLocalDataToSupabase } from "../../api/user/migration";
+import { initWordMap } from "../../api/voca";
 
 /**
- * [Orchestrator] 사용자 데이터를 로드하고 세션 상태에 따라 분기 처리합니다.
+ * [Orchestrator] 어플리케이션 진입 시 필요한 모든 데이터를 로드하고 상태에 따라 분기합니다.
+ * 
+ * @returns {Promise<Object|Response>} 앱 컨텍스트 데이터 또는 리다이렉트 응답
  */
 export const loadUserData = async () => {
   try {
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
+    const session = await getSession();
+    
     // 1. 공통 데이터 로드 (마스터 데이터 및 알림)
     const [wordData, dbNotisResult] = await Promise.all([
-      fetchWordData(),
+      getMasterWordData(),
       supabase.from("Notification").select("*").order("created_at", { ascending: false })
     ]);
 
     const notifications = dbNotisResult.data || [];
-
-    // 동기화 알림 추가
     notifications.unshift(
       session 
-        ? { id: "sync_ok", title: "동기화 완료", content: "현재 계정으로 실시간 데이터 동기화가 활성화되어 있습니다.", type: "status" }
-        : { id: "sync_req", title: "데이터 동기화 권장", content: "로그인하여 데이터를 안전하게 보호하세요.", type: "sync" }
+        ? { id: "sync_ok", title: "동기화 완료", content: "계정 데이터와 실시간 동기화 중입니다.", type: "status" }
+        : { id: "sync_req", title: "데이터 동기화 권장", content: "로그인하여 학습 기록을 안전하게 보관하세요.", type: "sync" }
     );
 
-    // 2. 세션 여부에 따른 데이터 로딩 흐름 분기
-    let result;
-    if (session && !sessionError) {
-      result = await handleMemberFlow(session, wordData, notifications);
+    // 2. 세션 여부에 따른 흐름 제어
+    if (session) {
+      return await handleMemberLoading(session, wordData, notifications);
     } else {
-      result = handleGuestFlow(wordData, notifications);
+      return handleGuestLoading(wordData, notifications);
     }
-
-    // 3. 리다이렉트 처리
-    if (result.redirect) {
-      return redirect(result.redirect);
-    }
-
-    return result;
 
   } catch (error) {
     console.error("[loadUserData] Critical Error:", error);
-    // 최후의 보루: 게스트 모드 시도 혹은 온보딩 리다이렉트
     return redirect("/onboard/nickname");
   }
 };
+
+/**
+ * 로그인 사용자(Member)를 위한 데이터 로딩 및 가공
+ */
+async function handleMemberLoading(session, wordData, notifications) {
+  const userId = session.user.id;
+  const localUserData = getStorageItem(KEYS.USER_DATA);
+  const currentLevel = localUserData?.level || "default";
+  
+  // 난이도별 DB 코드 매핑
+  const levelToNumber = { "default": 0, "800": 800, "900": 900 };
+  const dbLevel = levelToNumber[currentLevel] ?? 0;
+
+  // 1. 마이그레이션 체크 및 기본 데이터 로드
+  let wordMaps = getStorageItem(KEYS.WORD_MAP);
+  
+  // 레거시 로컬 데이터가 있으면 DB로 이전
+  if (wordMaps) {
+    await migrateLocalDataToSupabase();
+    // 마이그레이션 후 로컬 데이터가 삭제되므로 다시 로드 (초기화 필요성 체크)
+    wordMaps = getStorageItem(KEYS.WORD_MAP);
+  }
+
+  // 2. 프로필 및 학습 데이터 병렬 로드
+  const [userProfile, vocaData] = await Promise.all([
+    getUserProfile(userId),
+    fetchUserVocaData(userId, dbLevel)
+  ]);
+
+  if (!userProfile) throw new Error("User profile not found");
+
+  // 3. 템플릿 로드 (없으면 초기화)
+  if (!wordMaps) {
+    await initWordMap();
+    wordMaps = getStorageItem(KEYS.WORD_MAP);
+  }
+  const baseWordMap = wordMaps?.[currentLevel] || [];
+
+  // 4. 상태 맵 생성 및 데이터 병합
+  const wordStatusMap = (vocaData || []).reduce((acc, curr) => {
+    acc[curr.word_id] = curr.status;
+    return acc;
+  }, {});
+
+  const processedWordMap = processWordMap(baseWordMap, wordStatusMap);
+
+  return {
+    nick: getStorageItem(KEYS.NICK) || userProfile.nick,
+    wordMap: processedWordMap,
+    wordStatusMap,
+    wordData,
+    notifications,
+    userData: {
+      startedTime: new Date(userProfile.created_at).getTime(),
+      continued: 0,
+      today: 0,
+      learned: (vocaData || []).filter(v => v.status).length,
+      selected: localUserData?.selected || 0,
+      level: currentLevel,
+    }
+  };
+}
+
+/**
+ * 미인증 사용자(Guest)를 위한 데이터 로딩 및 가공
+ */
+function handleGuestLoading(wordData, notifications) {
+  const nick = getStorageItem(KEYS.NICK);
+  const wordMaps = getStorageItem(KEYS.WORD_MAP);
+  const userData = getStorageItem(KEYS.USER_DATA);
+
+  if (!nick) return redirect("/onboard/nickname");
+  if (!wordMaps || !userData) return redirect("/onboard/generate-data");
+
+  const currentLevel = userData.level || "default";
+  const rawWordMap = wordMaps[currentLevel] || [];
+  
+  const statusMap = createGuestStatusMap(rawWordMap);
+  const processedWordMap = processWordMap(rawWordMap, statusMap);
+
+  return {
+    nick,
+    wordMap: processedWordMap,
+    wordStatusMap: statusMap,
+    wordData,
+    userData,
+    notifications,
+  };
+}

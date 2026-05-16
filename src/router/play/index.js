@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
-import { supabase } from "../../utils/supabase";
-import { loadLocalStorage } from "../../utils/utils";
+import { supabase } from "../../api/common/supabase";
+import { getStorageItem, KEYS } from "../../api/guest/storage";
 
 /**
  * 학습(Play) 페이지 진입 시 마지막 학습 위치 또는 기본 위치로 리다이렉트합니다.
@@ -13,9 +13,9 @@ export const loadPlay = async () => {
     return redirect(`/play/0/card/0`);
   }
 
-  // 2. Guest: LocalStorage 데이터 사용
-  const userData = loadLocalStorage("userData");
-  const wordMaps = loadLocalStorage("wordMap");
+  // 2. Guest: Guest Storage 데이터 사용
+  const userData = getStorageItem(KEYS.USER_DATA);
+  const wordMaps = getStorageItem(KEYS.WORD_MAP);
   
   if (!userData || !wordMaps) {
     return { words: [] };

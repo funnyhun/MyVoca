@@ -1,10 +1,18 @@
 import styled from "styled-components";
 import { Button } from "../../components/Button";
-import { supabase } from "../../utils/supabase";
-import { initAppData } from "../../utils/initAppData";
-import { signOut } from "../../utils/auth";
+import { supabase } from "../../api/common/supabase";
+import { initializeAppData } from "../../api/voca";
+import { signOut } from "../../api/auth/actions";
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
+import { 
+  getStorageItem, 
+  setStorageItem, 
+  removeStorageItem, 
+  clearStorage, 
+  checkIsGuest, 
+  KEYS 
+} from "../../api/guest/storage";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -95,14 +103,14 @@ const ProgressFill = styled.div`
   border-radius: 4px;
 `;
 
+
+
 export const Settings = () => {
   const { nick, userData } = useOutletContext();
   const [resetting, setResetting] = useState(false);
   const [resetProgress, setResetProgress] = useState(0);
 
-  const isGuest = !Object.keys(window.localStorage).some((k) =>
-    k.includes("auth-token")
-  );
+  const isGuest = checkIsGuest();
 
   const handleLogout = async () => {
     const confirmed = window.confirm(
@@ -113,10 +121,10 @@ export const Settings = () => {
     if (!confirmed) return;
 
     if (isGuest) {
-      window.localStorage.clear();
+      clearStorage();
     } else {
       await signOut();
-      window.localStorage.removeItem("nick");
+      removeStorageItem(KEYS.NICK);
     }
     window.location.href = "/";
   };
@@ -128,9 +136,9 @@ export const Settings = () => {
     );
     if (!confirmed) return;
 
-    const currentLocal = JSON.parse(window.localStorage.getItem("userData") || "{}");
+    const currentLocal = getStorageItem(KEYS.USER_DATA) || {};
     currentLocal.level = newLevel;
-    window.localStorage.setItem("userData", JSON.stringify(currentLocal));
+    setStorageItem(KEYS.USER_DATA, currentLocal);
     
     // 새로고침하여 데이터 리로드
     window.location.href = "/";
@@ -163,11 +171,11 @@ export const Settings = () => {
       }
 
       // 2. 로컬스토리지 학습 데이터 초기화
-      window.localStorage.removeItem("wordMap");
-      window.localStorage.removeItem("userData");
+      removeStorageItem(KEYS.WORD_MAP);
+      removeStorageItem(KEYS.USER_DATA);
 
       // 3. 새로운 단어 배정
-      await initAppData(userData?.level || "default", setResetProgress);
+      await initializeAppData(userData?.level || "default", setResetProgress);
 
       setResetProgress(100);
       window.location.href = "/";

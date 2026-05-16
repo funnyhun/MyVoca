@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import { useRevalidator } from "react-router-dom";
-import { updateWordStatus } from "../../../utils/voca";
+import { updateWordStatus } from "../../../api/voca";
 import { CheckCircleIcon, WordIcon, MoreVIcon } from "../../../assets/iconList";
 import { WordDetail } from "./WordDetail";
 

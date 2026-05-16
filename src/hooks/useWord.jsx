@@ -23,10 +23,7 @@ export const useWord = (selected) => {
       const data = wordData[i] || wordData[String(i)] || wordData[Number(i)];
       
       if (!data) {
-        console.error(`단어 데이터 찾기 실패: ID ${i} (타입: ${typeof i})`, { 
-          wordDataKeys: Object.keys(wordData).slice(0, 5),
-          isTypeMatch: Object.keys(wordData).includes(String(i))
-        });
+        console.error(`[Hook/useWord] Word Data Missing: ID ${i}`);
         return null;
       }
       

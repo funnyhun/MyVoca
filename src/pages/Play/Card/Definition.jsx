@@ -15,7 +15,7 @@ const Value = styled.p`
 `;
 
 export const Definition = ({ definitions }) => {
-  console.log(definitions);
+
   return (
     <>
       {definitions.map(({ class: class_, value, exp }, i) => (

@@ -6,7 +6,8 @@ import { VerticalButton } from "../components/Button";
 import { Input } from "../components/Input";
 
 import { HiIcon } from "../assets/iconList";
-import { supabase } from "../utils/supabase";
+import { supabase } from "../api/common/supabase";
+import { setStorageItem, KEYS } from "../api/guest/storage";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -64,8 +65,8 @@ export const StepToNick = () => {
   const submitNick = () => {
     if (nick.length < 2) return;
 
-    // Guest 유저: LocalStorage에 닉네임 저장
-    window.localStorage.setItem("nick", nick);
+    // Guest 유저: Guest Storage에 닉네임 저장
+    setStorageItem(KEYS.NICK, nick);
     navigate("/onboard/generate-data");
   };
 

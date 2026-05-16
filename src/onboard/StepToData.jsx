@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ProgressBar } from "../components/ProgressBar";
-import { initAppData } from "../utils/initAppData";
+import { initializeAppData } from "../api/voca";
 import { VerticalButton } from "../components/Button";
+import { getStorageItem, KEYS } from "../api/guest/storage";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -83,13 +84,13 @@ const ProgressStatus = styled.span`
 
 export const StepToData = () => {
   const navigate = useNavigate();
-  const nick = window.localStorage.getItem("nick");
+  const nick = getStorageItem(KEYS.NICK);
 
   const [status, setStatus] = useState(-1);
 
   const handleSelectLevel = (level) => {
     setStatus(0); // Start progress
-    initAppData(level, setStatus);
+    initializeAppData(level, setStatus);
   };
 
   const startApp = () => {

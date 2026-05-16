@@ -3,7 +3,7 @@ import { Button } from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelected } from "../../../hooks/useMyParam";
 import { useEffect } from "react";
-import { updateLearningStats } from "../../../utils/utils";
+import { updateLearningStats } from "../../../api/stats";
 
 const Wrapper = styled.div`
   height: 100%;

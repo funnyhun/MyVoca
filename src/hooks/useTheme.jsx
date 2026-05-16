@@ -2,7 +2,7 @@ import { useState, createContext, useContext, useEffect, useCallback } from "rea
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 import { LightTheme, DarkTheme } from "../styles/theme";
-import { loadLocalStorage } from "../utils/utils";
+import { getStorageItem, setStorageItem, KEYS } from "../api/guest/storage";
 
 const themeContext = createContext({
   theme: "light",
@@ -10,7 +10,7 @@ const themeContext = createContext({
 });
 
 const loadTheme = () => {
-  const theme = loadLocalStorage("theme");
+  const theme = getStorageItem(KEYS.THEME);
   if (theme === null) return "light";
   return theme;
 };
@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(loadTheme());
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
+    setStorageItem(KEYS.THEME, theme);
   }, [theme]);
 
   const handleTheme = useCallback(() => {
