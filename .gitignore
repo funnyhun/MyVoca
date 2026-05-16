@@ -27,5 +27,6 @@ dist-ssr
 .env
 
 # Only Local
+/backend
 /supabase
 agent.md
